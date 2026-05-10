@@ -364,13 +364,13 @@
     <div class="modal-field">
       <label>Icon / Emoji</label>
       <div style="display:flex;align-items:center;gap:10px;">
-        <span id="cnEmojiDisplay" style="font-size:1.8rem;cursor:pointer;" title="Tap to change"></span>
-        <button type="button" class="btn-cancel" style="padding:6px 14px;font-size:.8rem;" onclick="openEmojiPicker(e=>{ document.getElementById('cnEmojiDisplay').textContent=e; })">Change ✏️</button>
+        <span id="cnEmojiDisplay" style="font-size:1.8rem;cursor:pointer;" title="Tap to change" onclick="openEmojiPicker(function(e){ var d=document.getElementById('cnEmojiDisplay'); d.textContent=e; d.dataset.custom='1'; })">🌟</span>
+        <button type="button" class="btn-cancel" style="padding:6px 14px;font-size:.8rem;" onclick="openEmojiPicker(function(e){ var d=document.getElementById('cnEmojiDisplay'); d.textContent=e; d.dataset.custom='1'; })">Change ✏️</button>
       </div>
     </div>
     <div class="modal-field">
       <label>Character</label>
-      <select id="cnChar" onchange="if(!document.getElementById('cnEmojiDisplay').dataset.custom){ document.getElementById('cnEmojiDisplay').textContent=getEmoji(this.value); }"></select>
+      <select id="cnChar" onchange="cnCharChanged(this.value)"></select>
     </div>
     <div class="modal-field">
       <label>Friendship Level (1–10)</label>
@@ -419,8 +419,8 @@
     <div class="modal-field">
       <label>Icon / Emoji</label>
       <div style="display:flex;align-items:center;gap:10px;">
-        <span id="clEmojiDisplay" style="font-size:1.8rem;cursor:pointer;" title="Tap to change"></span>
-        <button type="button" class="btn-cancel" style="padding:6px 14px;font-size:.8rem;" onclick="openEmojiPicker(e=>{ document.getElementById('clEmojiDisplay').textContent=e; document.getElementById('clEmojiDisplay').dataset.custom='1'; })">Change ✏️</button>
+        <span id="clEmojiDisplay" style="font-size:1.8rem;cursor:pointer;" title="Tap to change" onclick="openEmojiPicker(function(e){ var d=document.getElementById('clEmojiDisplay'); d.textContent=e; d.dataset.custom='1'; })">🌟</span>
+        <button type="button" class="btn-cancel" style="padding:6px 14px;font-size:.8rem;" onclick="openEmojiPicker(function(e){ var d=document.getElementById('clEmojiDisplay'); d.textContent=e; d.dataset.custom='1'; })">Change ✏️</button>
       </div>
     </div>
     <div class="modal-field">
@@ -1501,9 +1501,18 @@ function openEmojiPicker(callback){
   document.getElementById("emojiSearch").value = "";
   buildEmojiCats();
   filterEmojis();
-  document.getElementById("emojiPickerModal").classList.remove("hidden");
+  const picker = document.getElementById("emojiPickerModal");
+  picker.classList.remove("hidden");
+  picker.style.zIndex = "999";
+  // scroll picker to top
+  picker.querySelector(".emoji-picker-box").scrollTop = 0;
 }
 function closeEmojiPicker(){ document.getElementById("emojiPickerModal").classList.add("hidden"); emojiCallback=null; }
+
+function cnCharChanged(val){
+  const disp = document.getElementById("cnEmojiDisplay");
+  if(!disp.dataset.custom) disp.textContent = getEmoji(val);
+}
 
 function buildEmojiCats(){
   const el = document.getElementById("emojiCats");
