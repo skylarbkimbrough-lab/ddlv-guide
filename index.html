@@ -1,1 +1,1159 @@
+<!DOCTYPE html>
 
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>✨ Dreamlight Valley Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --gold:#f5c842; --deep-purple:#1a0a2e; --soft-pink:#f0a8d0;
+    --teal:#5cd6d6; --star:#fffbe6; --card-bg:rgba(45,27,94,0.85);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Nunito',sans-serif;background:var(--deep-purple);color:var(--star);min-height:100vh;overflow-x:hidden;}
+  body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 50%,rgba(123,94,167,.3) 0%,transparent 50%),radial-gradient(ellipse at 80% 20%,rgba(92,214,214,.2) 0%,transparent 40%),radial-gradient(ellipse at 60% 80%,rgba(240,168,208,.15) 0%,transparent 40%),linear-gradient(135deg,#0d0520 0%,#1a0a2e 40%,#0a1a2e 100%);z-index:-2;}
+  .stars{position:fixed;inset:0;z-index:-1;pointer-events:none;}
+  .star-dot{position:absolute;border-radius:50%;background:#fff;animation:twinkle var(--dur) ease-in-out infinite var(--delay);}
+  @keyframes twinkle{0%,100%{opacity:.1;transform:scale(1);}50%{opacity:.9;transform:scale(1.4);}}
+  header{text-align:center;padding:48px 24px 32px;}
+  .crown{font-size:2.5rem;display:block;margin-bottom:8px;animation:float 3s ease-in-out infinite;}
+  @keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
+  h1{font-family:'Cinzel Decorative',serif;font-size:clamp(1.4rem,4vw,2.4rem);color:var(--gold);text-shadow:0 0 30px rgba(245,200,66,.5),0 2px 4px rgba(0,0,0,.8);line-height:1.2;}
+  .subtitle{color:var(--soft-pink);margin-top:8px;font-size:.95rem;opacity:.9;}
+  .search-wrap{max-width:640px;margin:24px auto 0;padding:0 16px;position:relative;}
+  .search-wrap input{width:100%;padding:14px 20px 14px 48px;border-radius:50px;border:2px solid rgba(245,200,66,.4);background:rgba(255,255,255,.08);backdrop-filter:blur(12px);color:#fff;font-family:'Nunito',sans-serif;font-size:1rem;outline:none;transition:border-color .3s,box-shadow .3s;}
+  .search-wrap input::placeholder{color:rgba(255,255,255,.4);}
+  .search-wrap input:focus{border-color:var(--gold);box-shadow:0 0 20px rgba(245,200,66,.25);}
+  .search-icon{position:absolute;left:32px;top:50%;transform:translateY(-50%);font-size:1.1rem;pointer-events:none;}
+  .filters{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:20px 16px 0;max-width:900px;margin:0 auto;}
+  .filter-btn{padding:6px 16px;border-radius:50px;border:1.5px solid rgba(255,255,255,.2);background:transparent;color:rgba(255,255,255,.7);font-family:'Nunito',sans-serif;font-size:.85rem;cursor:pointer;transition:all .2s;}
+  .filter-btn:hover{border-color:var(--gold);color:var(--gold);}
+  .filter-btn.active{background:var(--gold);border-color:var(--gold);color:var(--deep-purple);font-weight:700;}
+  .sub-filters{display:none;flex-wrap:wrap;gap:6px;justify-content:center;padding:10px 16px 0;max-width:900px;margin:0 auto;}
+  .sub-filters.visible{display:flex;}
+  .sub-btn{padding:4px 12px;border-radius:50px;border:1px solid rgba(255,255,255,.15);background:transparent;color:rgba(255,255,255,.55);font-family:'Nunito',sans-serif;font-size:.78rem;cursor:pointer;transition:all .2s;}
+  .sub-btn:hover{border-color:#f0a8d0;color:#f0a8d0;}
+  .sub-btn.active{background:rgba(240,168,208,.25);border-color:#f0a8d0;color:#f0a8d0;font-weight:700;}
+  .results-info{text-align:center;padding:14px;color:rgba(255,255,255,.45);font-size:.82rem;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(265px,1fr));gap:14px;padding:4px 18px 60px;max-width:1300px;margin:0 auto;}
+  .card{background:var(--card-bg);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:16px 18px;transition:transform .2s,box-shadow .2s,border-color .2s;text-decoration:none;display:block;position:relative;overflow:hidden;backdrop-filter:blur(8px);animation:fadeIn .3s ease both;}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+  .card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.04) 0%,transparent 60%);pointer-events:none;}
+  .card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.5),0 0 20px rgba(245,200,66,.15);border-color:rgba(245,200,66,.4);}
+  .card.no-link{cursor:default;}.card.no-link:hover{transform:translateY(-2px);}
+  .card-emoji{font-size:1.6rem;margin-bottom:8px;display:block;}
+  .card-category{font-size:.68rem;text-transform:uppercase;letter-spacing:1.5px;font-weight:700;margin-bottom:6px;padding:3px 10px;border-radius:50px;display:inline-block;}
+  .cat-basics{background:rgba(92,214,214,.2);color:var(--teal);}
+  .cat-character{background:rgba(240,168,208,.2);color:var(--soft-pink);}
+  .cat-quest{background:rgba(245,200,66,.2);color:var(--gold);}
+  .cat-expansion{background:rgba(123,94,167,.3);color:#c9a7ff;}
+  .cat-repeatable{background:rgba(100,220,100,.15);color:#7ddf7d;}
+  .cat-appetizer{background:rgba(255,180,100,.2);color:#ffb464;}
+  .cat-entree{background:rgba(255,100,130,.2);color:#ff7a9a;}
+  .cat-dessert{background:rgba(200,160,255,.2);color:#c8a0ff;}
+  .card-title{font-size:.97rem;font-weight:700;color:#fff;line-height:1.3;margin-bottom:5px;}
+  .card-desc{font-size:.78rem;color:rgba(255,255,255,.52);line-height:1.5;}
+  .card-ingredients{margin-top:8px;font-size:.75rem;color:rgba(255,255,255,.45);line-height:1.6;}
+  .card-ingredients strong{color:rgba(255,255,255,.7);}
+  .tag{display:inline-block;font-size:.65rem;padding:2px 7px;border-radius:50px;margin-top:6px;margin-right:3px;background:rgba(255,255,255,.06);color:rgba(255,255,255,.4);border:1px solid rgba(255,255,255,.1);}
+  .card-link-hint{font-size:.72rem;color:var(--gold);margin-top:8px;opacity:.7;}
+  .empty{grid-column:1/-1;text-align:center;padding:60px 20px;color:rgba(255,255,255,.4);}
+  .empty .emoji{font-size:3rem;display:block;margin-bottom:12px;}
+  /* ICYMI */
+  .icymi-wrap{max-width:900px;margin:0 auto;padding:8px 18px 60px;}
+  .icymi-intro{text-align:center;padding:10px 20px 24px;color:rgba(255,255,255,.55);font-size:.88rem;line-height:1.6;}
+  .icymi-intro strong{color:var(--gold);}
+  .update-card{background:var(--card-bg);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:20px 22px;margin-bottom:14px;backdrop-filter:blur(8px);animation:fadeIn .3s ease both;position:relative;overflow:hidden;}
+  .update-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.04) 0%,transparent 60%);pointer-events:none;}
+  .update-card.highlight{border-color:rgba(245,200,66,.35);box-shadow:0 0 20px rgba(245,200,66,.08);}
+  .update-header{display:flex;align-items:flex-start;gap:14px;margin-bottom:10px;}
+  .update-emoji{font-size:2rem;flex-shrink:0;margin-top:2px;}
+  .update-meta{}
+  .update-date{font-size:.7rem;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,.35);margin-bottom:3px;}
+  .update-name{font-family:'Cinzel Decorative',serif;font-size:1rem;color:var(--gold);line-height:1.3;}
+  .update-badge{display:inline-block;font-size:.65rem;padding:2px 8px;border-radius:50px;margin-left:8px;font-family:'Nunito',sans-serif;text-transform:uppercase;letter-spacing:1px;font-weight:700;vertical-align:middle;}
+  .badge-free{background:rgba(100,220,100,.15);color:#7ddf7d;border:1px solid rgba(100,220,100,.3);}
+  .badge-paid{background:rgba(123,94,167,.3);color:#c9a7ff;border:1px solid rgba(123,94,167,.5);}
+  .update-bullets{list-style:none;padding:0;}
+  .update-bullets li{font-size:.82rem;color:rgba(255,255,255,.65);padding:4px 0 4px 18px;position:relative;line-height:1.5;border-bottom:1px solid rgba(255,255,255,.05);}
+  .update-bullets li:last-child{border-bottom:none;}
+  .update-bullets li::before{content:'✦';position:absolute;left:0;color:var(--gold);font-size:.6rem;top:6px;opacity:.7;}
+  .update-bullets li strong{color:rgba(255,255,255,.9);}
+  .qol-section{margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,.07);}
+  .qol-label{font-size:.68rem;text-transform:uppercase;letter-spacing:1.2px;color:var(--teal);margin-bottom:6px;font-weight:700;}
+  .icymi-section-header{text-align:center;padding:24px 0 10px;font-size:.75rem;text-transform:uppercase;letter-spacing:2px;color:rgba(255,255,255,.3);}
+
+/* ── SHARED PANEL ── */
+.panel-wrap{max-width:900px;margin:0 auto;padding:8px 18px 60px;display:none;}
+.panel-wrap.visible{display:block;}
+.panel-add-btn{display:flex;align-items:center;gap:10px;margin:0 auto 24px;padding:12px 24px;border-radius:50px;border:2px dashed rgba(245,200,66,.4);background:transparent;color:var(–gold);font-family:‘Nunito’,sans-serif;font-size:.95rem;font-weight:700;cursor:pointer;transition:all .2s;width:100%;}
+.panel-add-btn:hover{background:rgba(245,200,66,.08);border-color:var(–gold);}
+.panel-add-btn span{font-size:1.3rem;}
+
+/* ── MODAL ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(6px);z-index:100;display:flex;align-items:center;justify-content:center;padding:16px;}
+.modal-overlay.hidden{display:none;}
+.modal{background:#1e1040;border:1px solid rgba(245,200,66,.3);border-radius:20px;padding:28px 24px;width:100%;max-width:480px;max-height:85vh;overflow-y:auto;}
+.modal h2{font-family:‘Cinzel Decorative’,serif;font-size:1.1rem;color:var(–gold);margin-bottom:20px;text-align:center;}
+.modal-field{margin-bottom:14px;}
+.modal-field label{display:block;font-size:.75rem;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,.45);margin-bottom:5px;}
+.modal-field select,.modal-field input,.modal-field textarea{width:100%;padding:10px 14px;border-radius:10px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:#fff;font-family:‘Nunito’,sans-serif;font-size:.9rem;outline:none;transition:border-color .2s;}
+.modal-field select option{background:#1e1040;color:#fff;}
+.modal-field select:focus,.modal-field input:focus,.modal-field textarea:focus{border-color:var(–gold);}
+.modal-field textarea{resize:vertical;min-height:70px;line-height:1.5;}
+.modal-field input::placeholder,.modal-field textarea::placeholder{color:rgba(255,255,255,.3);}
+.modal-btns{display:flex;gap:10px;margin-top:20px;}
+.btn-save{flex:1;padding:11px;border-radius:50px;border:none;background:var(–gold);color:var(–deep-purple);font-family:‘Nunito’,sans-serif;font-weight:700;font-size:.9rem;cursor:pointer;transition:opacity .2s;}
+.btn-save:hover{opacity:.85;}
+.btn-cancel{flex:1;padding:11px;border-radius:50px;border:1.5px solid rgba(255,255,255,.2);background:transparent;color:rgba(255,255,255,.6);font-family:‘Nunito’,sans-serif;font-size:.9rem;cursor:pointer;transition:all .2s;}
+.btn-cancel:hover{border-color:rgba(255,255,255,.4);color:#fff;}
+.gift-row{display:flex;gap:8px;align-items:center;margin-bottom:6px;}
+.gift-row input{flex:1;}
+.gift-row .gift-num{font-size:.7rem;color:rgba(255,255,255,.35);min-width:18px;}
+
+/* ── CHARACTER NOTES CARDS ── */
+.cn-card{background:var(–card-bg);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:18px 20px;margin-bottom:12px;backdrop-filter:blur(8px);animation:fadeIn .3s ease both;position:relative;}
+.cn-card::before{content:’’;position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.04) 0%,transparent 60%);pointer-events:none;border-radius:16px;}
+.cn-header{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
+.cn-avatar{width:42px;height:42px;border-radius:50%;background:rgba(245,200,66,.15);border:2px solid rgba(245,200,66,.3);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;}
+.cn-name{font-size:1.05rem;font-weight:700;color:#fff;}
+.cn-actions{margin-left:auto;display:flex;gap:8px;}
+.cn-btn{background:transparent;border:1px solid rgba(255,255,255,.12);border-radius:8px;color:rgba(255,255,255,.4);font-size:.72rem;padding:4px 9px;cursor:pointer;font-family:‘Nunito’,sans-serif;transition:all .2s;}
+.cn-btn:hover{border-color:rgba(245,200,66,.4);color:var(–gold);}
+.cn-btn.del:hover{border-color:rgba(255,80,80,.4);color:#ff6060;}
+.cn-pills{display:flex;flex-wrap:wrap;gap:6px;}
+.cn-pill{font-size:.72rem;padding:3px 10px;border-radius:50px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);color:rgba(255,255,255,.55);}
+.cn-pill.job{border-color:rgba(92,214,214,.3);color:var(–teal);background:rgba(92,214,214,.08);}
+.cn-pill.biome{border-color:rgba(240,168,208,.3);color:var(–soft-pink);background:rgba(240,168,208,.08);}
+.cn-notes-text{margin-top:10px;font-size:.8rem;color:rgba(255,255,255,.45);line-height:1.6;font-style:italic;border-top:1px solid rgba(255,255,255,.06);padding-top:10px;}
+
+/* ── CHECKLIST CARDS ── */
+.cl-card{background:var(–card-bg);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:18px 20px;margin-bottom:12px;backdrop-filter:blur(8px);animation:fadeIn .3s ease both;position:relative;}
+.cl-card::before{content:’’;position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.04) 0%,transparent 60%);pointer-events:none;border-radius:16px;}
+.cl-card.all-done{border-color:rgba(100,220,100,.3);box-shadow:0 0 16px rgba(100,220,100,.06);}
+.cl-header{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+.cl-name{font-size:1rem;font-weight:700;color:#fff;}
+.cl-done-badge{font-size:.65rem;padding:2px 8px;border-radius:50px;background:rgba(100,220,100,.15);color:#7ddf7d;border:1px solid rgba(100,220,100,.3);margin-left:4px;display:none;}
+.cl-card.all-done .cl-done-badge{display:inline-block;}
+.cl-section-label{font-size:.68rem;text-transform:uppercase;letter-spacing:1.2px;color:rgba(255,255,255,.3);margin:10px 0 6px;}
+.cl-item{display:flex;align-items:flex-start;gap:10px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.cl-item:last-child{border-bottom:none;}
+.cl-checkbox{width:18px;height:18px;border-radius:5px;border:1.5px solid rgba(255,255,255,.25);background:transparent;cursor:pointer;flex-shrink:0;appearance:none;-webkit-appearance:none;margin-top:1px;transition:all .2s;position:relative;}
+.cl-checkbox:checked{background:var(–gold);border-color:var(–gold);}
+.cl-checkbox:checked::after{content:‘✓’;position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:.65rem;color:var(–deep-purple);font-weight:900;}
+.cl-item-text{font-size:.83rem;color:rgba(255,255,255,.65);line-height:1.4;transition:opacity .2s;}
+.cl-item-text.checked{opacity:.35;text-decoration:line-through;}
+.cl-notes-box{margin-top:10px;padding:10px 12px;border-radius:10px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);font-size:.8rem;color:rgba(255,255,255,.45);line-height:1.6;font-style:italic;}
+.cl-progress{height:3px;border-radius:2px;background:rgba(255,255,255,.08);margin-bottom:12px;overflow:hidden;}
+.cl-progress-bar{height:100%;background:linear-gradient(90deg,var(–teal),var(–gold));border-radius:2px;transition:width .4s ease;}
+.cl-reset-btn{font-size:.7rem;color:rgba(255,255,255,.25);background:transparent;border:none;cursor:pointer;font-family:‘Nunito’,sans-serif;padding:2px 6px;margin-left:auto;transition:color .2s;}
+.cl-reset-btn:hover{color:rgba(255,255,255,.5);}
+.panel-empty{text-align:center;padding:50px 20px;color:rgba(255,255,255,.3);}
+.panel-empty .e-emoji{font-size:2.5rem;display:block;margin-bottom:10px;}
+</style>
+
+</head>
+<body>
+<div class="stars" id="stars"></div>
+<header>
+  <span class="crown">✨</span>
+  <h1>Dreamlight Valley<br>Guide</h1>
+  <p class="subtitle">Search quests, characters, recipes &amp; more</p>
+</header>
+<div class="search-wrap">
+  <span class="search-icon">🔍</span>
+  <input type="text" id="searchInput" placeholder="Search by name, ingredient, character..." oninput="filterCards()" />
+</div>
+<div class="filters" id="filters"></div>
+<div class="sub-filters" id="subFilters"></div>
+<p class="results-info" id="resultsInfo"></p>
+<div class="grid" id="grid"></div>
+<!-- CHARACTER NOTES PANEL -->
+<div class="panel-wrap" id="cnWrap">
+  <button class="panel-add-btn" onclick="openCnModal()"><span>＋</span> Add Character Notes</button>
+  <div id="cnList"></div>
+</div>
+
+<!-- CHECKLIST PANEL -->
+
+<div class="panel-wrap" id="clWrap">
+  <button class="panel-add-btn" onclick="openClModal()"><span>＋</span> Add Daily Checklist</button>
+  <div id="clList"></div>
+</div>
+
+<!-- CHARACTER NOTES MODAL -->
+
+<div class="modal-overlay hidden" id="cnModal">
+  <div class="modal">
+    <h2 id="cnModalTitle">Character Notes</h2>
+    <div class="modal-field">
+      <label>Character</label>
+      <select id="cnChar"></select>
+    </div>
+    <div class="modal-field">
+      <label>Assigned Job</label>
+      <select id="cnJob">
+        <option value="">— None —</option>
+        <option>Gardening</option><option>Mining</option><option>Fishing</option>
+        <option>Foraging</option><option>Digging</option><option>Cooking</option>
+        <option>None / Unassigned</option>
+      </select>
+    </div>
+    <div class="modal-field">
+      <label>Home Biome</label>
+      <select id="cnBiome">
+        <option value="">— None —</option>
+        <option>Peaceful Meadow</option><option>Plaza</option><option>Dazzle Beach</option>
+        <option>Forest of Valor</option><option>Glade of Trust</option><option>Sunlit Plateau</option>
+        <option>Frosted Heights</option><option>Forgotten Lands</option>
+        <option>Eternity Isle</option><option>Storybook Vale</option><option>Wishblossom Ranch</option>
+      </select>
+    </div>
+    <div class="modal-field">
+      <label>Notes (quests, pet assigned, reminders…)</label>
+      <textarea id="cnNotes" placeholder="e.g. Has active quest — need 5 iron ore. Assigned Squirrel companion."></textarea>
+    </div>
+    <div class="modal-btns">
+      <button class="btn-cancel" onclick="closeCnModal()">Cancel</button>
+      <button class="btn-save" onclick="saveCn()">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- CHECKLIST MODAL -->
+
+<div class="modal-overlay hidden" id="clModal">
+  <div class="modal">
+    <h2>Daily Checklist</h2>
+    <div class="modal-field">
+      <label>Character</label>
+      <select id="clChar"></select>
+    </div>
+    <div class="modal-field">
+      <label>Today's Gifts / Wants (up to 3)</label>
+      <div class="gift-row"><span class="gift-num">1</span><input type="text" id="gift1" placeholder="e.g. Pumpkin Soup" /></div>
+      <div class="gift-row"><span class="gift-num">2</span><input type="text" id="gift2" placeholder="e.g. Emerald" /></div>
+      <div class="gift-row"><span class="gift-num">3</span><input type="text" id="gift3" placeholder="e.g. Chat" /></div>
+    </div>
+    <div class="modal-field">
+      <label>Additional Tasks (one per line)</label>
+      <textarea id="clTasks" placeholder="e.g. Complete friendship quest&#10;Check if they need cooking ingredients&#10;Pet is assigned — say hi"></textarea>
+    </div>
+    <div class="modal-field">
+      <label>Notes</label>
+      <textarea id="clNotes" placeholder="e.g. Almost at friendship level 6! Don't forget to bring coal."></textarea>
+    </div>
+    <div class="modal-btns">
+      <button class="btn-cancel" onclick="closeClModal()">Cancel</button>
+      <button class="btn-save" onclick="saveCl()">Save</button>
+    </div>
+  </div>
+</div>
+
+<div class="icymi-wrap" id="icymiWrap" style="display:none;">
+  <p class="icymi-intro">You've been away since <strong>May 2025</strong>. Here's everything that dropped while you were gone — newest first.</p>
+
+  <div class="icymi-section-header">⬇ Most Recent</div>
+
+  <div class="update-card">
+    <div class="update-header"><span class="update-emoji">🐾</span><div class="update-meta"><div class="update-date">February 11, 2026</div><div class="update-name">Puppy Love <span class="update-badge badge-free">Free</span></div></div></div>
+    <ul class="update-bullets">
+      <li><strong>New dog-themed villagers</strong> join the valley.</li>
+      <li>New Star Path with seasonal cosmetics and rewards.</li>
+      <li>Additional QoL fixes and improvements.</li>
+    </ul>
+  </div>
+
+  <div class="update-card highlight">
+    <div class="update-header"><span class="update-emoji">❄️</span><div class="update-meta"><div class="update-date">December 10, 2025</div><div class="update-name">The Winter Ball <span class="update-badge badge-free">Free</span></div></div></div>
+    <ul class="update-bullets">
+      <li><strong>New character: Cinderella</strong> — one of the most requested characters since the game's launch, finally here. Her arrival was teased from the very first trailer.</li>
+      <li>New winter-themed Star Path with holiday seasonal rewards.</li>
+      <li>Limited-time holiday event content.</li>
+    </ul>
+  </div>
+
+  <div class="update-card">
+    <div class="update-header"><span class="update-emoji">🕯️</span><div class="update-meta"><div class="update-date">October 1, 2025</div><div class="update-name">Return to Beast's Castle <span class="update-badge badge-free">Free</span></div></div></div>
+    <ul class="update-bullets">
+      <li><strong>New characters: Lumière & Cogsworth</strong> from Beauty and the Beast.</li>
+      <li>Expands the existing Beast's Castle realm with new story content — same format as when Timon & Pumbaa expanded the Lion King realm.</li>
+      <li>Seasonal Halloween-themed Star Path.</li>
+    </ul>
+  </div>
+
+  <div class="update-card highlight">
+    <div class="update-header"><span class="update-emoji">🎭</span><div class="update-meta"><div class="update-date">August 20, 2025</div><div class="update-name">Emotional Rescue <span class="update-badge badge-free">Free</span></div></div></div>
+    <ul class="update-bullets">
+      <li><strong>New characters: Joy & Sadness</strong> from Inside Out arrive as villagers.</li>
+      <li>New Inside Out Headquarters realm at the Dream Castle (~15,000 Dreamlight to unlock).</li>
+      <li>Joy's questline: fix the Valley's mood swings. Sadness's questline: a "rainy day" memory trail.</li>
+      <li>Memory Mania mini-event returned with Inside Out 2 Nostalgia companion reward.</li>
+      <li>Retro Roadtrip Star Path — summery nostalgia fashions, Rock & Roll Fox companion.</li>
+      <li>Lucky from 101 Dalmatians added to Premium Shop as a companion.</li>
+    </ul>
+    <div class="qol-section">
+      <div class="qol-label">🔧 Big QoL Changes This Update</div>
+      <ul class="update-bullets">
+        <li>You can now equip <strong>TWO companions at once</strong> — bonuses stack, both level up simultaneously.</li>
+        <li>Assign companions to specific villagers.</li>
+        <li>Rift in Time owners: additional <strong>Floating Islands</strong> themed to each biome (buy with Mist).</li>
+        <li><strong>Customizable ceilings</strong> in your Player House.</li>
+        <li>Uncrafting Station now costs <strong>Star Coins instead of Dreamlight</strong>.</li>
+        <li>Premium Shop revamped — preview item grid sizes, check new arrivals from your Mailbox.</li>
+        <li>Photo Gallery now holds 6 snapshots (up from before).</li>
+        <li>Reworked quests: "The Haunting of Dreamlight Valley" and "Faith, Trust, and Pixel Dust."</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="update-card">
+    <div class="update-header"><span class="update-emoji">🌿</span><div class="update-meta"><div class="update-date">July 9, 2025</div><div class="update-name">The Unwritten Realms — Storybook Vale Pt. 2 <span class="update-badge badge-paid">Paid DLC</span></div></div></div>
+    <ul class="update-bullets">
+      <li><strong>New characters: Maleficent & Aurora</strong> from Sleeping Beauty — concludes the Storybook Vale story.</li>
+      <li>Requires owning the Storybook Vale expansion pass.</li>
+      <li>New Snippet colors and Puzzling Tales with rewards.</li>
+      <li>Teal Baby Dragon and Black Pegasus collectibles for expansion owners.</li>
+    </ul>
+  </div>
+
+  <div class="update-card highlight">
+    <div class="update-header"><span class="update-emoji">🏴‍☠️</span><div class="update-meta"><div class="update-date">June 18, 2025</div><div class="update-name">Mysteries of Skull Rock <span class="update-badge badge-free">Free</span></div></div></div>
+    <ul class="update-bullets">
+      <li><strong>New character: Peter Pan</strong> — the mystery of Skull Rock on Dazzle Beach is finally solved.</li>
+      <li><strong>The Forgotten is now a full villager</strong> with their own friendship quests, rewards, and you can rename them. You need The Forgotten's help to get inside Skull Rock (requires finishing the main story first).</li>
+      <li>Adventures in Neverland Star Path — pirate and mermaid-themed fashions and items.</li>
+      <li>Max (the dog from The Little Mermaid) added as a Premium Shop companion with treasure-hunting abilities.</li>
+      <li><strong>Cross-Save for PlayStation</strong> officially launched with this update — cross-progression and cross-play now available on all platforms.</li>
+    </ul>
+  </div>
+
+  <div class="icymi-section-header">⬆ Right Before You Left</div>
+
+  <div class="update-card">
+    <div class="update-header"><span class="update-emoji">🪄</span><div class="update-meta"><div class="update-date">April 23, 2025</div><div class="update-name">Wonderland Whimsy <span class="update-badge badge-free">Free</span></div></div></div>
+    <ul class="update-bullets">
+      <li><strong>New characters: Alice & the Cheshire Cat</strong> from Alice in Wonderland.</li>
+      <li>3 new recipes added: Tea Sandwiches, Garlic Chocolate Tart, and Cheshire Cat Tail.</li>
+      <li>New Wonderland-themed Star Path and seasonal cosmetics.</li>
+    </ul>
+  </div>
+
+  <div class="icymi-section-header">📦 Expansion Recap</div>
+
+  <div class="update-card highlight">
+    <div class="update-header"><span class="update-emoji">🐴</span><div class="update-meta"><div class="update-date">November 19, 2025</div><div class="update-name">Wishblossom Ranch <span class="update-badge badge-paid">Paid Expansion</span></div></div></div>
+    <ul class="update-bullets">
+      <li>The game's <strong>third expansion</strong> — a ranch overtaken by runaway wish magic that you restore.</li>
+      <li><strong>Rideable horses</strong> — befriend, tame, and care for them.</li>
+      <li>Iconic Disney steeds: <strong>Maximus</strong> (Tangled), <strong>Khan</strong> (Mulan), <strong>Pegasus</strong> (Hercules).</li>
+      <li>New ingredients, recipes, and villagers tied to the ranch story.</li>
+    </ul>
+  </div>
+
+  <div class="update-card">
+    <div class="update-header"><span class="update-emoji">📖</span><div class="update-meta"><div class="update-date">November 20, 2024</div><div class="update-name">The Storybook Vale <span class="update-badge badge-paid">Paid Expansion</span></div></div></div>
+    <ul class="update-bullets">
+      <li>The game's <strong>second expansion</strong> — a mythic island of legends and fairytales fallen to villains.</li>
+      <li>New characters: <strong>Merida</strong> (Brave) and <strong>Flynn Rider/Eugene</strong> (Tangled).</li>
+      <li>Massive new ingredient and recipe list — check the Recipes tab and filter by Storybook Vale.</li>
+      <li>New Snippets critters, enchanted artifacts, and Lorekeeper puzzles.</li>
+      <li>Available on Apple Arcade at no extra cost.</li>
+    </ul>
+  </div>
+
+</div>
+
+<script>
+const guideData = [
+  {cat:"basics",emoji:"🌟",title:"Beginner Tips & Tricks",desc:"Essential tips to get you started in Dreamlight Valley.",url:"https://www.thegamer.com/disney-dreamlight-valley-beginner-tips-tricks-guide/"},
+  {cat:"basics",emoji:"😴",title:"Character Sleep Schedule",desc:"Learn when each character sleeps so you can find them.",url:"https://www.thegamer.com/disney-dreamlight-valley-character-sleeping-eating-schedule-guide/"},
+  {cat:"basics",emoji:"🐾",title:"Critter Schedule Guide",desc:"When and where to find every critter in the valley.",url:"https://www.thegamer.com/disney-dreamlight-valley-ddv-critter-schedule-guide/"},
+  {cat:"basics",emoji:"🏠",title:"House Upgrade Guide",desc:"How to upgrade your house and what each upgrade unlocks.",url:"https://www.thegamer.com/disney-dreamlight-valley-house-upgrade-walkthrough-guide/"},
+  {cat:"basics",emoji:"🛠️",title:"How to Get All Royal Tools",desc:"Locations and unlock steps for every Royal Tool.",url:"https://www.thegamer.com/disney-dreamlight-valley-royal-tools-locations-guide/"},
+  {cat:"basics",emoji:"👗",title:"How to Change Your Appearance",desc:"Guide to changing your clothes and accessories.",url:"https://www.thegamer.com/disney-dreamlight-valley-how-to-change-appearance-clothes-accessories/"},
+  {cat:"basics",emoji:"📛",title:"How to Change Your Name",desc:"Step-by-step guide to renaming your character.",url:"https://www.thegamer.com/disney-dreamlight-valley-how-to-change-your-name/"},
+  {cat:"basics",emoji:"🐦",title:"Feed & Recruit Animals",desc:"How to befriend critters and make them companions.",url:"https://www.thegamer.com/disney-dreamlight-valley-animals-feed-recruitment-companions-guide/"},
+  {cat:"basics",emoji:"🌙",title:"How to Get Moonstones",desc:"All moonstone locations and how to farm them.",url:"https://www.thegamer.com/disney-dreamlight-valley-moonstone-locations-guide-walkthrough/"},
+  {cat:"basics",emoji:"⭐",title:"How to Get Star Coins",desc:"The best ways to earn Star Coins quickly.",url:"https://www.thegamer.com/disney-dreamlight-valley-how-to-get-star-coins/"},
+  {cat:"basics",emoji:"🔓",title:"How to Unlock Characters",desc:"Full guide to unlocking every character in the valley.",url:"https://www.thegamer.com/disney-dreamlight-valley-unlock-characters-guide/"},
+  {cat:"basics",emoji:"🚀",title:"How to Unlock Fast Travel",desc:"Unlock and repair wishing wells for fast travel.",url:"https://www.thegamer.com/disney-dreamlight-valley-fast-travel-unlock-repair-wells/"},
+  {cat:"basics",emoji:"🗺️",title:"How to Unlock New Biomes",desc:"Which biomes are available and how to unlock each one.",url:"https://www.thegamer.com/disney-dreamlight-valley-new-biomes-unlock-guide/"},
+  {cat:"basics",emoji:"🚪",title:"How to Remove Villagers",desc:"How to send characters away if you need space.",url:"https://www.thegamer.com/disney-dreamlight-valley-remove-villagers-guide/"},
+  {cat:"basics",emoji:"👥",title:"Multiplayer Guide",desc:"How multiplayer works and how to play with friends.",url:"https://www.thegamer.com/disney-dreamlight-valley-multiplayer-guide/"},
+  {cat:"basics",emoji:"🛍️",title:"Premium Shop Guide",desc:"All premium shop items and moonstone costs.",url:"https://www.thegamer.com/disney-dreamlight-valley-all-premium-shop-items-moonstone-guide/"},
+  {cat:"basics",emoji:"🎣",title:"Fishing Bubble Colors",desc:"What each bubble color means and how to fish better.",url:"https://www.thegamer.com/disney-dreamlight-valley-every-bubble-color-fishing/"},
+  {cat:"basics",emoji:"✨",title:"Touch of Magic System",desc:"How the Touch of Magic furniture system works.",url:"https://www.thegamer.com/disney-dreamlight-valley-touch-of-magic-system-guide/"},
+  {cat:"repeatable",emoji:"🍷",title:"Chez Remy Mobile Orders",desc:"How to complete daily mobile order deliveries for Remy's restaurant.",url:"https://www.thegamer.com/disney-dreamlight-valley-bon-appetit-quest-walkthrough-daily-mobile-order-delivery/"},
+  {cat:"repeatable",emoji:"👘",title:"Boutique Challenges",desc:"How to complete Daisy Duck's daily boutique fashion challenges.",url:"https://www.thegamer.com/disney-dreamlight-valley-ddv-how-to-complete-daily-boutique-challenges/"},
+  {cat:"character",emoji:"🧜",title:"Ariel",desc:"Unlock guide and friendship rewards for Ariel.",url:"https://www.thegamer.com/disney-dreamlight-valley-ariel-character-unlock-guide/"},
+  {cat:"character",emoji:"❄️",title:"Anna",desc:"How to unlock Anna from Frozen and her friendship quests.",url:"https://www.thegamer.com/disney-dreamlight-valley-anna-frozen-unlock-character-guide/"},
+  {cat:"character",emoji:"📚",title:"Belle",desc:"Complete unlock and character guide for Belle.",url:"https://www.thegamer.com/disney-dreamlight-valley-belle-complete-character-unlock-guide/"},
+  {cat:"character",emoji:"🌹",title:"Beast",desc:"How to unlock Beast and build your friendship.",url:"https://www.thegamer.com/disney-dreamlight-valley-beast-character-unlock-friendship-guide/"},
+  {cat:"character",emoji:"🚀",title:"Buzz Lightyear",desc:"Unlock and friendship rewards for Buzz Lightyear.",url:"https://www.thegamer.com/disney-dreamlight-valley-buzz-character-unlock-friendship-rewards-guide/"},
+  {cat:"character",emoji:"🌼",title:"Daisy Duck",desc:"Daisy Duck's unlock guide and boutique features.",url:"https://www.thegamer.com/disney-dreamlight-valley-daisy-duck-character-unlock-guide-boutique/"},
+  {cat:"character",emoji:"🦆",title:"Donald Duck",desc:"Donald Duck character guide and friendship rewards.",url:"https://www.thegamer.com/disney-dreamlight-valley-donald-duck-character-guide-friendship-rewards/"},
+  {cat:"character",emoji:"🧊",title:"Elsa",desc:"Complete character and friendship guide for Elsa.",url:"https://www.thegamer.com/disney-dreamlight-valley-elsa-character-guide/"},
+  {cat:"character",emoji:"🪄",title:"Fairy Godmother",desc:"Unlock guide and friendship rewards for Fairy Godmother.",url:"https://www.thegamer.com/disney-dreamlight-valley-fairy-godmother-character-guide-rewards/"},
+  {cat:"character",emoji:"😁",title:"Goofy",desc:"Goofy character guide and how to maximize friendship.",url:"https://www.thegamer.com/disney-dreamlight-valley-goofy-character-guide/"},
+  {cat:"character",emoji:"🎃",title:"Jack Skellington",desc:"Friendship and unlock guide for Jack Skellington.",url:"https://www.thegamer.com/disney-dreamlight-valley-jack-skellington-friendship-character-guide/"},
+  {cat:"character",emoji:"🏔️",title:"Kristoff",desc:"Complete guide for unlocking Kristoff from Frozen.",url:"https://www.thegamer.com/disney-dreamlight-valley-kristoff-character-guide/"},
+  {cat:"character",emoji:"🌊",title:"Maui",desc:"Unlock and friendship rewards guide for Maui.",url:"https://www.thegamer.com/disney-dreamlight-valley-maui-unlock-friendship-rewards-guide/"},
+  {cat:"character",emoji:"🟢",title:"Mike Wazowski",desc:"Monsters Inc. character guide for Mike Wazowski.",url:"https://www.thegamer.com/disney-dreamlight-valley-mike-wazowski-monsters-inc-character-guide/"},
+  {cat:"character",emoji:"🧙",title:"Merlin",desc:"Guide to unlocking Merlin and friendship rewards.",url:"https://www.thegamer.com/disney-dreamlight-valley-merlin-unlock-friendship-rewards-guide/"},
+  {cat:"character",emoji:"🐭",title:"Mickey Mouse",desc:"Mickey Mouse full character guide.",url:"https://www.thegamer.com/disney-dreamlight-valley-mickey-mouse-character-guide/"},
+  {cat:"character",emoji:"🎀",title:"Minnie Mouse",desc:"How to unlock Minnie Mouse and earn friendship rewards.",url:"https://www.thegamer.com/disney-dreamlight-valley-minnie-mouse-character-unlock-guide/"},
+  {cat:"character",emoji:"🦋",title:"Mirabel",desc:"Mirabel from Encanto — unlock and friendship guide.",url:"https://www.thegamer.com/mirabel-guide-disney-dreamlight-valley/"},
+  {cat:"character",emoji:"🐚",title:"Moana",desc:"Complete Moana character and friendship guide.",url:"https://www.thegamer.com/disney-dreamlight-valley-moana-character-guide/"},
+  {cat:"character",emoji:"🌿",title:"Mother Gothel",desc:"How to unlock Mother Gothel from Tangled.",url:"https://www.thegamer.com/disney-dreamlight-valley-unlock-mother-gothel-tangled-character-guide/"},
+  {cat:"character",emoji:"🏹",title:"Mulan",desc:"Mulan character unlock and friendship guide.",url:"https://www.thegamer.com/disney-dreamlight-valley-mulan-character-unlock-guide/"},
+  {cat:"character",emoji:"🐉",title:"Mushu",desc:"How to unlock the little dragon Mushu.",url:"https://www.thegamer.com/disney-dreamlight-valley-mushu-character-unlock-guide/"},
+  {cat:"character",emoji:"🦁",title:"Nala",desc:"Nala from The Lion King — unlock and friendship rewards.",url:"https://www.thegamer.com/disney-dreamlight-valley-nala-unlock-character-guide/"},
+  {cat:"character",emoji:"⛄",title:"Olaf",desc:"How to find and befriend Olaf the snowman.",url:"https://www.thegamer.com/disney-dreamlight-vallery-olaf-unlock-character-guide/"},
+  {cat:"character",emoji:"⚓",title:"Prince Eric",desc:"Prince Eric character unlock and friendship guide.",url:"https://www.thegamer.com/disney-dreamlight-valley-prince-eric-character-unlock-guide/"},
+  {cat:"character",emoji:"🐗",title:"Pumbaa",desc:"How to unlock Pumbaa from The Lion King.",url:"https://www.thegamer.com/disney-dreamlight-valley-pumbaa-character-unlock-guide/"},
+  {cat:"character",emoji:"👨‍🍳",title:"Remy",desc:"Remy from Ratatouille — character and restaurant guide.",url:"https://www.thegamer.com/disney-dreamlight-valley-remy-character-guide/"},
+  {cat:"character",emoji:"😈",title:"Scar",desc:"Villain guide — how to unlock Scar from The Lion King.",url:"https://www.thegamer.com/disney-dreamlight-valley-scar-character-walkthrough-guide/"},
+  {cat:"character",emoji:"💰",title:"Scrooge McDuck",desc:"Scrooge McDuck character guide and shop upgrades.",url:"https://www.thegamer.com/disney-dreamlight-valley-scrooge-mcduck-character-guide/"},
+  {cat:"character",emoji:"🦁",title:"Simba",desc:"Simba from The Lion King — unlock and friendship.",url:"https://www.thegamer.com/disney-dreamlight-valley-simba-character-unlock-guide/"},
+  {cat:"character",emoji:"💙",title:"Stitch",desc:"How to unlock everyone's favorite alien, Stitch.",url:"https://www.thegamer.com/disney-dreamlight-valley-stich-character-guide/"},
+  {cat:"character",emoji:"🟣",title:"Sulley",desc:"Monsters Inc. guide for unlocking Sulley.",url:"https://www.thegamer.com/disney-dreamlight-valley-sulley-character-guide/"},
+  {cat:"character",emoji:"🐛",title:"Timon",desc:"Timon from The Lion King — unlock and friendship guide.",url:"https://www.thegamer.com/disney-dreamlight-valley-timon-character-unlock-guide/"},
+  {cat:"character",emoji:"🔱",title:"Ursula",desc:"Villain guide — how to unlock and befriend Ursula.",url:"https://www.thegamer.com/disney-dreamlight-valley-ursula-character-guide/"},
+  {cat:"character",emoji:"🎮",title:"Vanellope",desc:"Wreck-It Ralph's Vanellope — unlock and friendship guide.",url:"https://www.thegamer.com/disney-dreamlight-valley-vanellope-character-guide/"},
+  {cat:"character",emoji:"🤖",title:"Wall-E",desc:"How to unlock the lovable robot Wall-E.",url:"https://www.thegamer.com/disney-dreamlight-valley-wall-e-character-guide/"},
+  {cat:"character",emoji:"🤠",title:"Woody",desc:"Woody from Toy Story — unlock and friendship rewards.",url:"https://www.thegamer.com/disney-dreamlight-valley-woody-character-unlock-friendship-rewards-guide/"},
+  {cat:"expansion",emoji:"🤍",title:"EVE (A Rift in Time)",desc:"EVE character friendship guide — expansion content.",url:"https://www.thegamer.com/disney-dreamlight-valley-eve-character-friendship-guide/"},
+  {cat:"expansion",emoji:"🥐",title:"Gaston (A Rift in Time)",desc:"How to unlock Gaston in the A Rift in Time expansion.",url:"https://www.thegamer.com/disney-dreamlight-valley-gaston-rift-in-time-character-guide/"},
+  {cat:"expansion",emoji:"⏳",title:"A Rift in Time — Overview",desc:"Complete guide for the A Rift in Time expansion pass.",url:"https://www.thegamer.com/disney-dreamlight-valley-complete-guide-and-walkthrough/#a-rift-in-time"},
+  {cat:"expansion",emoji:"📖",title:"Storybook Vale — Overview",desc:"Complete guide for the Storybook Vale expansion.",url:"https://www.thegamer.com/disney-dreamlight-valley-complete-guide-and-walkthrough/#storybook-vale"},
+  {cat:"quest",emoji:"🏰",title:"Main Story Quests",desc:"Full walkthrough of the main questline in Dreamlight Valley.",url:"https://www.thegamer.com/disney-dreamlight-valley-complete-guide-and-walkthrough/#main-quest-guides"},
+];
+
+// cat: appetizer | entree | dessert   sub: base | rift | storybook
+const recipeData = [
+  // ── APPETIZERS BASE ──
+  {cat:"appetizer",sub:"base",emoji:"🥒",title:"Arendellian Pickled Herring",ingredients:"Herring, Lemon, Onion, Garlic, Spice"},
+  {cat:"appetizer",sub:"base",emoji:"🫑",title:"Bell Pepper Puffs",ingredients:"Bell Pepper, Egg, Cheese"},
+  {cat:"appetizer",sub:"base",emoji:"🧇",title:"Bunuelos",ingredients:"Wheat, Cheese, Milk, Egg"},
+  {cat:"appetizer",sub:"base",emoji:"🧀",title:"Cheese Platter",ingredients:"Cheese"},
+  {cat:"appetizer",sub:"base",emoji:"🌶️",title:"Chili Pepper Puffs",ingredients:"Chili Pepper, Egg, Cheese"},
+  {cat:"appetizer",sub:"base",emoji:"☕",title:"Coffee",ingredients:"Coffee Bean"},
+  {cat:"appetizer",sub:"base",emoji:"🫙",title:"Crackers",ingredients:"Any Grain"},
+  {cat:"appetizer",sub:"base",emoji:"🍲",title:"Creamy Soup",ingredients:"Spice, Milk, Potato, Any Vegetable"},
+  {cat:"appetizer",sub:"base",emoji:"🥕",title:"Crudités",ingredients:"Any Vegetable"},
+  {cat:"appetizer",sub:"base",emoji:"✨",title:"Dream Fizz",ingredients:"Dreamlight Fruit, Sugarcane, Slush Ice, Wheat"},
+  {cat:"appetizer",sub:"base",emoji:"🍆",title:"Eggplant Puffs",ingredients:"Eggplant, Egg, Cheese"},
+  {cat:"appetizer",sub:"base",emoji:"🍟",title:"French Fries",ingredients:"Canola, Potato"},
+  {cat:"appetizer",sub:"base",emoji:"🥣",title:"Gazpacho",ingredients:"Cucumber, Tomato, Onion, Spice"},
+  {cat:"appetizer",sub:"base",emoji:"🥗",title:"Green Salad",ingredients:"Any Vegetable, Lettuce"},
+  {cat:"appetizer",sub:"base",emoji:"🥦",title:"Grilled Vegetables",ingredients:"Any Vegetable"},
+  {cat:"appetizer",sub:"base",emoji:"🥦",title:"Grilled Veggie Platter",ingredients:"Any Vegetable ×3"},
+  {cat:"appetizer",sub:"base",emoji:"🥚",title:"Hard-Boiled Eggs",ingredients:"Egg"},
+  {cat:"appetizer",sub:"base",emoji:"🦞",title:"Large Seafood Platter",ingredients:"Lemon, Any Seafood ×4"},
+  {cat:"appetizer",sub:"base",emoji:"☕",title:"Latte",ingredients:"Coffee Bean, Milk"},
+  {cat:"appetizer",sub:"base",emoji:"☕",title:"Mocha",ingredients:"Coffee Bean, Milk, Cocoa Bean"},
+  {cat:"appetizer",sub:"base",emoji:"🍵",title:"Okra Soup",ingredients:"Okra"},
+  {cat:"appetizer",sub:"base",emoji:"🧅",title:"Onion Puffs",ingredients:"Onion, Egg, Cheese"},
+  {cat:"appetizer",sub:"base",emoji:"🦪",title:"Oyster Platter",ingredients:"Oyster, Lemon"},
+  {cat:"appetizer",sub:"base",emoji:"🍵",title:"Peppermint Tea",ingredients:"Lemon, Mint"},
+  {cat:"appetizer",sub:"base",emoji:"🐟",title:"Pickled Herring",ingredients:"Herring, Lemon, Onion, Spice"},
+  {cat:"appetizer",sub:"base",emoji:"🧅",title:"Potato Leek Soup",ingredients:"Leek, Potato, Milk, Onion, Garlic"},
+  {cat:"appetizer",sub:"base",emoji:"🥔",title:"Potato Puffs",ingredients:"Potato, Egg, Cheese"},
+  {cat:"appetizer",sub:"base",emoji:"🥔",title:"Pottage",ingredients:"Potato, Spice, Any Vegetable"},
+  {cat:"appetizer",sub:"base",emoji:"🎃",title:"Pumpkin Puffs",ingredients:"Pumpkin, Egg, Cheese"},
+  {cat:"appetizer",sub:"base",emoji:"🎃",title:"Pumpkin Soup",ingredients:"Pumpkin, Milk, Ginger, Any Vegetable"},
+  {cat:"appetizer",sub:"base",emoji:"🥔",title:"Purée",ingredients:"Potato"},
+  {cat:"appetizer",sub:"base",emoji:"🫙",title:"Roasted Asparagus",ingredients:"Asparagus, Canola"},
+  {cat:"appetizer",sub:"base",emoji:"🥗",title:"Salad",ingredients:"Lettuce"},
+  {cat:"appetizer",sub:"base",emoji:"🍄",title:"Sautéed Mushrooms",ingredients:"Mushroom, Butter"},
+  {cat:"appetizer",sub:"base",emoji:"🦐",title:"Seafood Appetizer",ingredients:"Any Seafood"},
+  {cat:"appetizer",sub:"base",emoji:"🦐",title:"Seafood Platter",ingredients:"Any Seafood ×2"},
+  {cat:"appetizer",sub:"base",emoji:"🧀",title:"Soufflé",ingredients:"Cheese, Egg, Milk, Butter"},
+  {cat:"appetizer",sub:"base",emoji:"🐟",title:"Sweet Herring",ingredients:"Herring, Onion"},
+  {cat:"appetizer",sub:"base",emoji:"🥪",title:"Tea Sandwiches",ingredients:"Cherry, Wheat, Corn, Any Fish"},
+  {cat:"appetizer",sub:"base",emoji:"🍅",title:"Tomato Soup",ingredients:"Tomato"},
+  {cat:"appetizer",sub:"base",emoji:"🥣",title:"Vegetable Soup",ingredients:"Any Vegetable ×2"},
+  {cat:"appetizer",sub:"base",emoji:"🥒",title:"Zucchini Puffs",ingredients:"Zucchini, Egg, Cheese"},
+  // ── APPETIZERS RIFT IN TIME ──
+  {cat:"appetizer",sub:"rift",emoji:"🧀",title:"Arepas Con Queso",ingredients:"Cheese, Agave, Corn"},
+  {cat:"appetizer",sub:"rift",emoji:"🥟",title:"Baozi",ingredients:"Wheat, Soya, Pork, Spice"},
+  {cat:"appetizer",sub:"rift",emoji:"⭐",title:"Barbecued Brilliant Blue Starfish",ingredients:"Brilliant Blue Starfish, Mint"},
+  {cat:"appetizer",sub:"rift",emoji:"💗",title:"Barbecued Pretty Pink Starfish",ingredients:"Pretty Pink Starfish, Paprika"},
+  {cat:"appetizer",sub:"rift",emoji:"🥗",title:"Bulgur Salad",ingredients:"Wheat, Tomato, Mint, Spice, Cucumber"},
+  {cat:"appetizer",sub:"rift",emoji:"🍅",title:"Clam Juice",ingredients:"Tomato, Clam"},
+  {cat:"appetizer",sub:"rift",emoji:"🥗",title:"Coleslaw",ingredients:"Carrot, Cabbage"},
+  {cat:"appetizer",sub:"rift",emoji:"🐚",title:"Conch Ceviche",ingredients:"Onion, Tomato, Lemon, Sea Snail"},
+  {cat:"appetizer",sub:"rift",emoji:"🦀",title:"Crab Melts",ingredients:"Crab, Cheese"},
+  {cat:"appetizer",sub:"rift",emoji:"🥟",title:"Dumplings",ingredients:"Wheat, Any Vegetable, Meat, Soya"},
+  {cat:"appetizer",sub:"rift",emoji:"🧆",title:"Falafel",ingredients:"Beans, Garlic, Cumin"},
+  {cat:"appetizer",sub:"rift",emoji:"🤖",title:"Nuts & Bolts",ingredients:"Almonds, Robot Fish"},
+  {cat:"appetizer",sub:"rift",emoji:"🌰",title:"Roasted Almonds",ingredients:"Agave, Almonds"},
+  {cat:"appetizer",sub:"rift",emoji:"🧊",title:"Royal Ice Tea",ingredients:"Majestea, Slush Ice"},
+  {cat:"appetizer",sub:"rift",emoji:"☕",title:"Royal Latte",ingredients:"Majestea, Milk"},
+  {cat:"appetizer",sub:"rift",emoji:"🍵",title:"Royal Tea",ingredients:"Majestea"},
+  {cat:"appetizer",sub:"rift",emoji:"🐛",title:"Sand Worm Carpaccio Plate",ingredients:"Melon, Sand Worm"},
+  {cat:"appetizer",sub:"rift",emoji:"🐟",title:"Shad Ceviche",ingredients:"Shad, Tomato, Onion, Lemon"},
+  {cat:"appetizer",sub:"rift",emoji:"🦂",title:"Spicy Scorpion Skewer",ingredients:"Scorpion, Paprika"},
+  {cat:"appetizer",sub:"rift",emoji:"🐙",title:"Takoyaki Stick",ingredients:"Seaweed, Octopus, Egg, Soya"},
+  {cat:"appetizer",sub:"rift",emoji:"⭐",title:"Thousand Needles",ingredients:"Brilliant Blue Starfish, Pretty Pink Starfish, Cactoberries"},
+  {cat:"appetizer",sub:"rift",emoji:"🍅",title:"Tomato Basil Soup",ingredients:"Tomato, Basil"},
+  {cat:"appetizer",sub:"rift",emoji:"🥟",title:"Vegetarian Dumplings",ingredients:"Soya, Wheat, Any Vegetable"},
+  // ── APPETIZERS STORYBOOK VALE ──
+  {cat:"appetizer",sub:"storybook",emoji:"🥛",title:"Ambrosia Smoothie",ingredients:"Ambrosia, Plain Yogurt"},
+  {cat:"appetizer",sub:"storybook",emoji:"🫙",title:"Baked Feta & Olives",ingredients:"Flyleaf Feta, Olives"},
+  {cat:"appetizer",sub:"storybook",emoji:"🥛",title:"Cape Gooseberry Smoothie",ingredients:"Cape Gooseberry, Plain Yogurt"},
+  {cat:"appetizer",sub:"storybook",emoji:"🫙",title:"Faerie Rye Crackers",ingredients:"Faerie Rye"},
+  {cat:"appetizer",sub:"storybook",emoji:"🍏",title:"Golden Apple Smoothie",ingredients:"Golden Apple, Plain Yogurt"},
+  {cat:"appetizer",sub:"storybook",emoji:"🥔",title:"Greek Potatoes",ingredients:"Potato, Garlic, Salt Crystal, Any Fruit, Spice"},
+  {cat:"appetizer",sub:"storybook",emoji:"🍈",title:"Honeydew Smoothie",ingredients:"Honeydew Melon, Plain Yogurt"},
+  {cat:"appetizer",sub:"storybook",emoji:"⚡",title:"Lightning Bolt",ingredients:"Lightning Spice ×2, Lamprey, Stygian Mudskipper, Any Sweet"},
+  {cat:"appetizer",sub:"storybook",emoji:"🫒",title:"Olympian Tapenade",ingredients:"Elysian Grain, Honeydew Melon, Olives, Spice"},
+  {cat:"appetizer",sub:"storybook",emoji:"🍊",title:"Persimmon Smoothie",ingredients:"Persimmon, Plain Yogurt"},
+  {cat:"appetizer",sub:"storybook",emoji:"🥗",title:"Radicchio Slaw",ingredients:"Radicchio, Cauliflower, Radish, Green Beans"},
+  {cat:"appetizer",sub:"storybook",emoji:"🍄",title:"Sautéed Porcini",ingredients:"Porcini Mushrooms, Garlic"},
+  {cat:"appetizer",sub:"storybook",emoji:"🥛",title:"Simple Chia Pudding",ingredients:"Chia Seeds"},
+  {cat:"appetizer",sub:"storybook",emoji:"⚡",title:"Sparkling Ambrosia",ingredients:"Ambrosia, Lightning Spice"},
+  {cat:"appetizer",sub:"storybook",emoji:"🍓",title:"Spiral Strawberry Smoothie",ingredients:"Spiral Strawberries, Yogurt"},
+  {cat:"appetizer",sub:"storybook",emoji:"🥛",title:"Tzatziki",ingredients:"Cucumber, Garlic, Plain Yogurt"},
+  // ── ENTREES BASE ──
+  {cat:"entree",sub:"base",emoji:"🍎",title:"Apple Cider Glazed Salmon",ingredients:"Apple, Salmon, Sugarcane"},
+  {cat:"entree",sub:"base",emoji:"🐟",title:"Baked Carp",ingredients:"Carp, Butter"},
+  {cat:"entree",sub:"base",emoji:"🌿",title:"Basil Omelet",ingredients:"Basil, Egg, Cheese, Milk"},
+  {cat:"entree",sub:"base",emoji:"🥘",title:"Bouillabaisse",ingredients:"Any Seafood ×2, Any Vegetable, Shrimp, Tomato"},
+  {cat:"entree",sub:"base",emoji:"🥗",title:"Carp Salad",ingredients:"Carp, Lettuce, Lemon"},
+  {cat:"entree",sub:"base",emoji:"🐟",title:"Cheesy Crispy Baked Cod",ingredients:"Cod, Cheese, Wheat"},
+  {cat:"entree",sub:"base",emoji:"🥣",title:"Chowder",ingredients:"Potato, Milk, Any Vegetable, Any Seafood"},
+  {cat:"entree",sub:"base",emoji:"🦪",title:"Creamy Garlic Scallops",ingredients:"Scallops, Lemon, Butter, Garlic"},
+  {cat:"entree",sub:"base",emoji:"🐟",title:"Crispy Baked Cod",ingredients:"Cod, Wheat"},
+  {cat:"entree",sub:"base",emoji:"🍅",title:"Fish Creole",ingredients:"Any Fish, Any Vegetable, Tomato, Rice, Garlic"},
+  {cat:"entree",sub:"base",emoji:"🍟",title:"Fish 'n' Chips",ingredients:"Any Fish, Potato, Wheat, Canola"},
+  {cat:"entree",sub:"base",emoji:"🍝",title:"Fish Pasta",ingredients:"Any Fish, Wheat, Milk, Garlic"},
+  {cat:"entree",sub:"base",emoji:"🥧",title:"Fish Pie",ingredients:"Any Fish, Wheat, Butter"},
+  {cat:"entree",sub:"base",emoji:"🍚",title:"Fish Risotto",ingredients:"Any Fish, Rice, Butter"},
+  {cat:"entree",sub:"base",emoji:"🥗",title:"Fish Salad",ingredients:"Any Fish, Lettuce, Lemon"},
+  {cat:"entree",sub:"base",emoji:"🥪",title:"Fish Sandwiches",ingredients:"Any Fish, Wheat"},
+  {cat:"entree",sub:"base",emoji:"🍲",title:"Fish Soup",ingredients:"Any Fish, Any Vegetable, Milk"},
+  {cat:"entree",sub:"base",emoji:"🍽️",title:"Fish Steak",ingredients:"Any Fish, Tomato, Basil"},
+  {cat:"entree",sub:"base",emoji:"🌮",title:"Fish Tacos",ingredients:"Any Fish, Cheese, Corn, Chili Pepper"},
+  {cat:"entree",sub:"base",emoji:"🍣",title:"Fugu Sushi",ingredients:"Fugu, Rice, Seaweed"},
+  {cat:"entree",sub:"base",emoji:"👻",title:"Ghostly Fish Steak",ingredients:"Asparagus, Lemon, Oregano, Bell Pepper, Here and There Fish"},
+  {cat:"entree",sub:"base",emoji:"🍕",title:"Greek Pizza",ingredients:"Wheat, Cheese, Tomato, Onion, Spice"},
+  {cat:"entree",sub:"base",emoji:"🐟",title:"Grilled Fish",ingredients:"Any Fish"},
+  {cat:"entree",sub:"base",emoji:"🐟",title:"Grilled Fish Entrée",ingredients:"Any Fish, Any Vegetable"},
+  {cat:"entree",sub:"base",emoji:"🍤",title:"Gumbo",ingredients:"Shrimp, Tomato, Onion, Chili Pepper, Okra"},
+  {cat:"entree",sub:"base",emoji:"🥗",title:"Hearty Salad",ingredients:"Any Vegetable ×2, Lettuce"},
+  {cat:"entree",sub:"base",emoji:"🌶️",title:"Hors d'Oeuvres",ingredients:"Any Spice"},
+  {cat:"entree",sub:"base",emoji:"🍣",title:"Kappa Maki",ingredients:"Rice, Cucumber, Seaweed"},
+  {cat:"entree",sub:"base",emoji:"🥬",title:"Kronk's Spinach Puffs",ingredients:"Spinach, Cheese, Canola"},
+  {cat:"entree",sub:"base",emoji:"🥘",title:"Lancetfish Paella",ingredients:"Lancetfish, Tomato, Rice, Shrimp, Any Seafood"},
+  {cat:"entree",sub:"base",emoji:"🥣",title:"Leek Soup",ingredients:"Leek"},
+  {cat:"entree",sub:"base",emoji:"🍋",title:"Lemon Garlic Swordfish",ingredients:"Lemon, Garlic, Swordfish"},
+  {cat:"entree",sub:"base",emoji:"🦁",title:"Lioness Feast",ingredients:"Mushroom, Oregano, Tomato, Here and There Fish"},
+  {cat:"entree",sub:"base",emoji:"🦞",title:"Lobster Roll",ingredients:"Lobster, Wheat, Lemon, Butter, Garlic"},
+  {cat:"entree",sub:"base",emoji:"🍣",title:"Maguro Sushi",ingredients:"Tuna, Seaweed, Rice, Ginger"},
+  {cat:"entree",sub:"base",emoji:"🍣",title:"Maki",ingredients:"Any Fish, Seaweed, Rice"},
+  {cat:"entree",sub:"base",emoji:"🍕",title:"Margherita Pizza",ingredients:"Spice, Wheat, Tomato, Cheese"},
+  {cat:"entree",sub:"base",emoji:"✨",title:"Marvelous Jam",ingredients:"Dreamlight Fruit, Wheat"},
+  {cat:"entree",sub:"base",emoji:"🥗",title:"Mediterranean Salad",ingredients:"Cucumber, Tomato, Onion, Lettuce, Spice"},
+  {cat:"entree",sub:"base",emoji:"🍕",title:"Mushroom Pizza",ingredients:"Mushroom, Wheat, Tomato, Cheese"},
+  {cat:"entree",sub:"base",emoji:"🍚",title:"Mushu's Congee",ingredients:"Rice, Egg, Mushroom, Garlic, Ginger"},
+  {cat:"entree",sub:"base",emoji:"🍳",title:"Omelet",ingredients:"Egg, Milk, Cheese"},
+  {cat:"entree",sub:"base",emoji:"🐟",title:"Pan-Fried Angler Fish",ingredients:"Anglerfish, Zucchini, Potato, Tomato"},
+  {cat:"entree",sub:"base",emoji:"🐟",title:"Pan-Seared Bass & Vegetables",ingredients:"Bass, Any Vegetable ×2"},
+  {cat:"entree",sub:"base",emoji:"🐟",title:"Pan-Seared Tilapia & Vegetables",ingredients:"Tilapia, Any Vegetable ×2"},
+  {cat:"entree",sub:"base",emoji:"🍝",title:"Pasta",ingredients:"Wheat, Tomato"},
+  {cat:"entree",sub:"base",emoji:"🥜",title:"Peanut Butter Sandwich",ingredients:"Peanut, Wheat"},
+  {cat:"entree",sub:"base",emoji:"🍕",title:"Pizza",ingredients:"Wheat, Tomato, Cheese"},
+  {cat:"entree",sub:"base",emoji:"🐟",title:"Poached Basil-Butter Sturgeon",ingredients:"Sturgeon, Basil, Butter, Lemon"},
+  {cat:"entree",sub:"base",emoji:"🥣",title:"Porridge",ingredients:"Wheat, Milk"},
+  {cat:"entree",sub:"base",emoji:"🍓",title:"Porridge with Fruits",ingredients:"Wheat, Milk, Any Fruit"},
+  {cat:"entree",sub:"base",emoji:"🥗",title:"Ranch Salad",ingredients:"Lettuce, Corn, Tomato, Bell Pepper, Onion"},
+  {cat:"entree",sub:"base",emoji:"🍆",title:"Ratatouille",ingredients:"Tomato, Onion, Eggplant, Zucchini, Spice"},
+  {cat:"entree",sub:"base",emoji:"🍣",title:"Sake Maki",ingredients:"Salmon, Seaweed, Rice"},
+  {cat:"entree",sub:"base",emoji:"🍣",title:"Sake Sushi",ingredients:"Salmon, Rice"},
+  {cat:"entree",sub:"base",emoji:"🐟",title:"Savory Fish",ingredients:"Any Fish, Lemon"},
+  {cat:"entree",sub:"base",emoji:"🍳",title:"Scrambled Egg",ingredients:"Egg, Cheese"},
+  {cat:"entree",sub:"base",emoji:"🍝",title:"Seafood Pasta",ingredients:"Any Seafood, Wheat, Milk"},
+  {cat:"entree",sub:"base",emoji:"🥧",title:"Seafood Pie",ingredients:"Any Seafood, Wheat, Butter"},
+  {cat:"entree",sub:"base",emoji:"🥗",title:"Seafood Salad",ingredients:"Any Seafood, Lettuce"},
+  {cat:"entree",sub:"base",emoji:"🍲",title:"Seafood Soup",ingredients:"Any Seafood, Any Vegetable ×2"},
+  {cat:"entree",sub:"base",emoji:"🐟",title:"Seared Rainbow Trout",ingredients:"Rainbow Trout, Onion, Tomato"},
+  {cat:"entree",sub:"base",emoji:"🐟",title:"Simple Fried Perch",ingredients:"Perch, Butter, Wheat"},
+  {cat:"entree",sub:"base",emoji:"🥜",title:"Smoked Peanuts and Anglerfish",ingredients:"Peanut, Anglerfish"},
+  {cat:"entree",sub:"base",emoji:"🐟",title:"Sole Meunière",ingredients:"Sole, Wheat, Butter, Lemon"},
+  {cat:"entree",sub:"base",emoji:"🍝",title:"Spaghetti Arrabbiata",ingredients:"Wheat, Tomato, Chili Pepper"},
+  {cat:"entree",sub:"base",emoji:"🐟",title:"Spicy Baked Bream",ingredients:"Bream, Butter, Chili Pepper"},
+  {cat:"entree",sub:"base",emoji:"🐟",title:"Steamed Fugu",ingredients:"Fugu, Garlic, Ginger"},
+  {cat:"entree",sub:"base",emoji:"🍣",title:"Sushi",ingredients:"Any Fish, Rice"},
+  {cat:"entree",sub:"base",emoji:"🐟",title:"Sweet & Sour Kingfish Steak",ingredients:"Kingfish, Lemon, Sugarcane"},
+  {cat:"entree",sub:"base",emoji:"🍜",title:"Sweet Udon",ingredients:"Dreamlight Fruit, Rice, Any Seafood, Any Sweet"},
+  {cat:"entree",sub:"base",emoji:"🍳",title:"Tamagoyaki",ingredients:"Egg, Sugarcane"},
+  {cat:"entree",sub:"base",emoji:"🥗",title:"Tasty Salad",ingredients:"Lettuce, Cucumber, Any Vegetable, Spice"},
+  {cat:"entree",sub:"base",emoji:"🥦",title:"Tasty Veggies",ingredients:"Any Vegetable, Spice"},
+  {cat:"entree",sub:"base",emoji:"🍣",title:"Tekka Maki",ingredients:"Tuna, Seaweed, Rice, Soya"},
+  {cat:"entree",sub:"base",emoji:"🍣",title:"Teriyaki Salmon",ingredients:"Salmon, Rice, Ginger, Soya, Sugarcane"},
+  {cat:"entree",sub:"base",emoji:"🍔",title:"Tuna Burger",ingredients:"Tuna, Wheat, Onion, Lemon, Any Vegetable"},
+  {cat:"entree",sub:"base",emoji:"🍕",title:"Vegetarian Pizza",ingredients:"Any Vegetable ×2, Wheat, Cheese, Tomato"},
+  {cat:"entree",sub:"base",emoji:"🥘",title:"Vegetarian Stew",ingredients:"Potato, Onion, Carrot"},
+  {cat:"entree",sub:"base",emoji:"🌮",title:"Vegetarian Taco",ingredients:"Corn, Cheese, Chili Pepper, Any Vegetable"},
+  {cat:"entree",sub:"base",emoji:"🧀",title:"Veggie Casserole",ingredients:"Cheese, Spice, Any Vegetable ×2"},
+  {cat:"entree",sub:"base",emoji:"🍝",title:"Veggie Pasta",ingredients:"Any Vegetable, Wheat, Tomato"},
+  {cat:"entree",sub:"base",emoji:"🥧",title:"Veggie Pie",ingredients:"Any Vegetable, Wheat, Butter"},
+  {cat:"entree",sub:"base",emoji:"🍢",title:"Veggie Skewers",ingredients:"Mushroom, Bell Pepper, Zucchini, Onion"},
+  {cat:"entree",sub:"base",emoji:"🐟",title:"Walleye en Papillote",ingredients:"Walleye, Basil, Oregano, Any Vegetable"},
+  // ── ENTREES RIFT IN TIME ──
+  {cat:"entree",sub:"rift",emoji:"🍲",title:"Ajiaco",ingredients:"Potato, Corn, Poultry"},
+  {cat:"entree",sub:"rift",emoji:"🫘",title:"Baked Beans",ingredients:"Beans, Pork"},
+  {cat:"entree",sub:"rift",emoji:"🤖",title:"Best Fish Forever",ingredients:"Robot Fish, Celery, Cumin, Sea Snail"},
+  {cat:"entree",sub:"rift",emoji:"🍚",title:"Biryani",ingredients:"Poultry, Rice, Cumin, Mint, Cinnamon"},
+  {cat:"entree",sub:"rift",emoji:"🍚",title:"Blend of the Bayou",ingredients:"Rice, Celery, Prisma Shrimp, Butter, Spice"},
+  {cat:"entree",sub:"rift",emoji:"🐟",title:"Bony Osso Buco",ingredients:"Skeleton Fish, Celery, Grapes, Any Vegetable"},
+  {cat:"entree",sub:"rift",emoji:"🦪",title:"Braised Abalone",ingredients:"Oyster, Sea Snail, Garlic, Mushroom"},
+  {cat:"entree",sub:"rift",emoji:"🎋",title:"Braised Bamboo Shoots",ingredients:"Bamboo, Soya, Ginger, Canola"},
+  {cat:"entree",sub:"rift",emoji:"🥛",title:"Brandade de Morue",ingredients:"Milk, Potato, Lemon, Garlic, Cod"},
+  {cat:"entree",sub:"rift",emoji:"🌯",title:"Burrito",ingredients:"Wheat, Beans, Cumin, Any Meat"},
+  {cat:"entree",sub:"rift",emoji:"🍗",title:"Butter Chicken",ingredients:"Poultry, Butter, Tomato, Lemon, Cumin"},
+  {cat:"entree",sub:"rift",emoji:"🍔",title:"Cheeseburger",ingredients:"Venison, Wheat, Cheese, Any Vegetable"},
+  {cat:"entree",sub:"rift",emoji:"🍗",title:"Chicken Souvlaki",ingredients:"Poultry, Lemon, Paprika, Mint"},
+  {cat:"entree",sub:"rift",emoji:"🧀",title:"Classic Mac & Cheese",ingredients:"Cheese, Wheat"},
+  {cat:"entree",sub:"rift",emoji:"🥪",title:"Club Sandwich",ingredients:"Pork, Wheat, Tomato, Poultry"},
+  {cat:"entree",sub:"rift",emoji:"🍗",title:"Coq en Barbouille",ingredients:"Poultry, Onion, Grapes, Any Vegetable"},
+  {cat:"entree",sub:"rift",emoji:"🥯",title:"Cream Cheese Bagel",ingredients:"Wheat, Cheese, Any Sweet"},
+  {cat:"entree",sub:"rift",emoji:"🍔",title:"Crimson Burger",ingredients:"Wheat, Any Vegetable, Ruby Lentils"},
+  {cat:"entree",sub:"rift",emoji:"🍣",title:"Dragon Roll Maki",ingredients:"Electric Eel, Rice, Seaweed, Any Vegetable"},
+  {cat:"entree",sub:"rift",emoji:"🌮",title:"Fabulous Fajitas",ingredients:"Poultry, Any Vegetable ×2, Wheat, Cumin"},
+  {cat:"entree",sub:"rift",emoji:"🍔",title:"Good Ol' Fashioned Burger",ingredients:"Venison, Wheat, Lettuce"},
+  {cat:"entree",sub:"rift",emoji:"🍔",title:"Hamburger Steak",ingredients:"Venison, Any Vegetable, Potato, Beans"},
+  {cat:"entree",sub:"rift",emoji:"🍕",title:"Hawaiian Pizza",ingredients:"Pork, Wheat, Tomato, Pineapple, Cheese"},
+  {cat:"entree",sub:"rift",emoji:"🍗",title:"Jerk Chicken",ingredients:"Poultry, Onion, Spice, Garlic"},
+  {cat:"entree",sub:"rift",emoji:"🥞",title:"Latkes",ingredients:"Onion, Potato, Canola, Egg"},
+  {cat:"entree",sub:"rift",emoji:"🍟",title:"Lo-Fries",ingredients:"Flute Root, Canola, Yam"},
+  {cat:"entree",sub:"rift",emoji:"🥧",title:"Meat Pie",ingredients:"Any Meat, Butter, Wheat"},
+  {cat:"entree",sub:"rift",emoji:"🌮",title:"Meaty Taco",ingredients:"Venison, Corn, Any Vegetable, Cumin, Chili Pepper"},
+  {cat:"entree",sub:"rift",emoji:"🍲",title:"Milky Way Stew",ingredients:"Rainbow Trout, Turnip, Milk, Cosmic Figs"},
+  {cat:"entree",sub:"rift",emoji:"🍲",title:"Moqueca de Pirarucu",ingredients:"Pirarucu, Coconut, Any Vegetable ×2"},
+  {cat:"entree",sub:"rift",emoji:"🌽",title:"Nachos",ingredients:"Chili Pepper, Cheese, Corn"},
+  {cat:"entree",sub:"rift",emoji:"🍝",title:"Pasta with Herbs",ingredients:"Wheat, Butter, Spice"},
+  {cat:"entree",sub:"rift",emoji:"🍝",title:"Pesto with Linguine",ingredients:"Wheat, Butter, Oregano, Garlic"},
+  {cat:"entree",sub:"rift",emoji:"🐟",title:"Piquant Piranha Soup",ingredients:"Piranha, Chili Pepper, Bamboo"},
+  {cat:"entree",sub:"rift",emoji:"🍟",title:"Poutine",ingredients:"Potato, Cheese, Canola"},
+  {cat:"entree",sub:"rift",emoji:"🥩",title:"Pulled Pork",ingredients:"Pork, Onion, Oregano, Tomato"},
+  {cat:"entree",sub:"rift",emoji:"🌽",title:"Pupusas Revueltas",ingredients:"Poultry, Corn, Beans"},
+  {cat:"entree",sub:"rift",emoji:"🥘",title:"Rainbouillabaisse",ingredients:"Prisma Shrimp, Rainbow Trout, Any Seafood, Any Vegetable, Tomato"},
+  {cat:"entree",sub:"rift",emoji:"🍜",title:"Ramen",ingredients:"Wheat, Pork, Egg"},
+  {cat:"entree",sub:"rift",emoji:"🍣",title:"Rhapsody Roll",ingredients:"Rice, Flute Root, Seaweed, Any Vegetable"},
+  {cat:"entree",sub:"rift",emoji:"🥩",title:"Roast",ingredients:"Any Meat"},
+  {cat:"entree",sub:"rift",emoji:"🍔",title:"Royal Burger",ingredients:"Pork, Venison, Any Vegetable, Wheat, Cheese"},
+  {cat:"entree",sub:"rift",emoji:"🫘",title:"Ruby Masoor Dal",ingredients:"Tomato, Chili Pepper, Ruby Lentils"},
+  {cat:"entree",sub:"rift",emoji:"🏜️",title:"Sand Stew",ingredients:"Dunebopper, Sand Fish, Any Vegetable, Sand Worm, Spice"},
+  {cat:"entree",sub:"rift",emoji:"🥩",title:"Sausage and Sauerkraut Platter",ingredients:"Pork, Cabbage, Potato"},
+  {cat:"entree",sub:"rift",emoji:"🍗",title:"Schnitzel",ingredients:"Poultry, Wheat, Canola"},
+  {cat:"entree",sub:"rift",emoji:"🥯",title:"Sesame Seed Bagel",ingredients:"Wheat, Any Sweet"},
+  {cat:"entree",sub:"rift",emoji:"🥙",title:"Shawarma",ingredients:"Venison, Cinnamon, Garlic, Rice, Lemon"},
+  {cat:"entree",sub:"rift",emoji:"🍗",title:"Shish Taouk",ingredients:"Poultry, Rice, Lemon, Oregano, Garlic"},
+  {cat:"entree",sub:"rift",emoji:"🍍",title:"Sweet and Sour Stir-Fry",ingredients:"Poultry, Dreamango, Pineapple, Canola, Broccoli"},
+  {cat:"entree",sub:"rift",emoji:"🍗",title:"Tandoori Chicken",ingredients:"Poultry, Chili Pepper, Cumin, Paprika"},
+  {cat:"entree",sub:"rift",emoji:"🫘",title:"Tofu",ingredients:"Soya"},
+  {cat:"entree",sub:"rift",emoji:"🥧",title:"Tourtiére",ingredients:"Venison, Wheat, Potato, Any Vegetable"},
+  {cat:"entree",sub:"rift",emoji:"🍗",title:"Turkey Leg",ingredients:"Poultry, Cumin, Agave, Paprika"},
+  {cat:"entree",sub:"rift",emoji:"🥔",title:"Turnip Tartiflette",ingredients:"Pork, Cheese, Turnip"},
+  {cat:"entree",sub:"rift",emoji:"🍄",title:"Vegetarian Turnip Tartiflette",ingredients:"Mushroom, Turnip, Soya"},
+  {cat:"entree",sub:"rift",emoji:"🍜",title:"Yakisoba",ingredients:"Pork, Wheat, Cabbage"},
+  // ── ENTREES STORYBOOK VALE ──
+  {cat:"entree",sub:"storybook",emoji:"🍓",title:"A Very Unusual Tea Time",ingredients:"Spiral Strawberries, Sour Berries, Plain Yogurt, Salt Crystal"},
+  {cat:"entree",sub:"storybook",emoji:"🐌",title:"Aquatic Escargot",ingredients:"Trumpet Snail, Garlic, Salt Crystal"},
+  {cat:"entree",sub:"storybook",emoji:"🦀",title:"Arcane Garlic Crab",ingredients:"Garlic, Sorcerer Hat Hermit Crab, Salt Crystal, Spice"},
+  {cat:"entree",sub:"storybook",emoji:"🍕",title:"Argossian Pizza",ingredients:"Flyleaf Feta, Elysian Grain, Onion, Olives, Any Vegetable"},
+  {cat:"entree",sub:"storybook",emoji:"🥗",title:"Barley Salad",ingredients:"Barley, Cauliflower, Radish, Spice"},
+  {cat:"entree",sub:"storybook",emoji:"🍝",title:"Cacio e Pepe",ingredients:"Flyleaf Feta, Elysian Grain, Black Pepper"},
+  {cat:"entree",sub:"storybook",emoji:"🥞",title:"Cape Gooseberry Chia Pancakes",ingredients:"Cape Gooseberry, Chia Weeds, Wheat, Shovel Bird Eggs"},
+  {cat:"entree",sub:"storybook",emoji:"🥗",title:"Caprese Salad",ingredients:"Flyleaf Feta, Olives, Salt Crystal, Any Vegetable, Spice"},
+  {cat:"entree",sub:"storybook",emoji:"🥦",title:"Cauliflower Steak",ingredients:"Cauliflower"},
+  {cat:"entree",sub:"storybook",emoji:"🥛",title:"Chia Pudding",ingredients:"Chia Seeds, Cinnamon, Rhubarb, Any Sweet"},
+  {cat:"entree",sub:"storybook",emoji:"🍞",title:"Chia Seed Bread",ingredients:"Chia Seeds, Wheat, Shovel Bird Eggs"},
+  {cat:"entree",sub:"storybook",emoji:"🍢",title:"Chimera Skewer",ingredients:"Trumpet Snail, Hippocampus, Flying Fish, Brussels Sprout, Any Fish"},
+  {cat:"entree",sub:"storybook",emoji:"🥗",title:"Electric Radicchio & Persimmon Salad",ingredients:"Lightning Spice, Radicchio, Persimmon"},
+  {cat:"entree",sub:"storybook",emoji:"🐟",title:"Flying Fish Quenelles",ingredients:"Flying Fish, Flyleaf Feta, Porcini Mushrooms, Any Vegetable, Any Dairy"},
+  {cat:"entree",sub:"storybook",emoji:"🐚",title:"Garlic Steam Mussels",ingredients:"Mussel, Garlic, Onion"},
+  {cat:"entree",sub:"storybook",emoji:"🐟",title:"Grecian Baked Fish",ingredients:"Stygian Mudskipper, Olives, Ambrosia, Salt Crystal, Elysian Grain"},
+  {cat:"entree",sub:"storybook",emoji:"🥗",title:"Greek Salad",ingredients:"Flyleaf Feta, Olives, Radish, Cucumber, Any Vegetable"},
+  {cat:"entree",sub:"storybook",emoji:"🟢",title:"Green Bean Casserole",ingredients:"Green Beans, Onion, Porcini Mushrooms"},
+  {cat:"entree",sub:"storybook",emoji:"🐟",title:"Grilled Koi Gyro",ingredients:"Koi, Wheat, Olives, Cucumber, Spice"},
+  {cat:"entree",sub:"storybook",emoji:"🦀",title:"Hermit Crab Pasta",ingredients:"Sorcerer Hat Hermit Crab, Wheat, Spice"},
+  {cat:"entree",sub:"storybook",emoji:"🥟",title:"Hippocampus Cepelinai Dumplings",ingredients:"Hippocampus, Potato, Spiral Strawberries, Onion, Black Pepper"},
+  {cat:"entree",sub:"storybook",emoji:"🐟",title:"Koi Sashimi",ingredients:"Koi"},
+  {cat:"entree",sub:"storybook",emoji:"🐟",title:"Lamprey Sashimi",ingredients:"Lamprey"},
+  {cat:"entree",sub:"storybook",emoji:"🥣",title:"Loaded Breakfast Yogurt",ingredients:"Plain Yogurt, Spiral Strawberries, Ambrosia, Oats"},
+  {cat:"entree",sub:"storybook",emoji:"🥣",title:"Loaded Golden Apple Porridge",ingredients:"Oats ×2, Ambrosia, Golden Apple"},
+  {cat:"entree",sub:"storybook",emoji:"🥣",title:"Loaded Honeydew Porridge",ingredients:"Oats ×2, Ambrosia, Honeydew Melon"},
+  {cat:"entree",sub:"storybook",emoji:"🥣",title:"Loaded Persimmon Porridge",ingredients:"Oats ×2, Ambrosia, Persimmon"},
+  {cat:"entree",sub:"storybook",emoji:"🥣",title:"Loaded Rhubarb Porridge",ingredients:"Oats ×2, Ambrosia, Rhubarb"},
+  {cat:"entree",sub:"storybook",emoji:"🥣",title:"Loaded Sea Grape Porridge",ingredients:"Oats ×2, Ambrosia, Sea Grapes"},
+  {cat:"entree",sub:"storybook",emoji:"🐟",title:"Lupine Cullen Skink",ingredients:"Sea Wolf, Potato, Onion, Plain Yogurt"},
+  {cat:"entree",sub:"storybook",emoji:"🍚",title:"Mussel Risotto",ingredients:"Mussel, Rice, Garlic, Olives, Spice"},
+  {cat:"entree",sub:"storybook",emoji:"🥣",title:"Oatmeal",ingredients:"Oats"},
+  {cat:"entree",sub:"storybook",emoji:"🫒",title:"Olive Plate",ingredients:"Olives"},
+  {cat:"entree",sub:"storybook",emoji:"🥞",title:"Persimmon Chia Pancakes",ingredients:"Persimmon, Chia Seeds, Wheat, Shovel Bird Eggs"},
+  {cat:"entree",sub:"storybook",emoji:"🍄",title:"Radicchio-Stuffed Porcini",ingredients:"Radicchio, Porcini Mushrooms, Black Pepper"},
+  {cat:"entree",sub:"storybook",emoji:"🥗",title:"Roasted Barley & Veggies",ingredients:"Barley, Onion, Flyleaf Feta, Brussels Sprout, Any Vegetable"},
+  {cat:"entree",sub:"storybook",emoji:"🟢",title:"Roasted Brussels Sprouts",ingredients:"Brussels Sprout, Garlic"},
+  {cat:"entree",sub:"storybook",emoji:"🟢",title:"Roasted Green Beans",ingredients:"Green Beans, Garlic"},
+  {cat:"entree",sub:"storybook",emoji:"🐟",title:"Salt-Baked Sea Wolf",ingredients:"Salt Crystal, Sea Wolf"},
+  {cat:"entree",sub:"storybook",emoji:"🥦",title:"Salt-Pickled Cauliflower",ingredients:"Salt Crystal, Cauliflower, Spice"},
+  {cat:"entree",sub:"storybook",emoji:"🧄",title:"Salt-Pickled Garlic",ingredients:"Salt Crystal, Garlic, Spice"},
+  {cat:"entree",sub:"storybook",emoji:"🟢",title:"Salt-Pickled Green Beans",ingredients:"Salt Crystal, Green Beans, Spice"},
+  {cat:"entree",sub:"storybook",emoji:"🥗",title:"Salt-Pickled Radicchio",ingredients:"Salt Crystal, Radicchio, Spice"},
+  {cat:"entree",sub:"storybook",emoji:"🔴",title:"Salt-Pickled Radish",ingredients:"Salt Crystal, Radish, Spice"},
+  {cat:"entree",sub:"storybook",emoji:"🌿",title:"Salt-Pickled Sea Grapes",ingredients:"Salt Crystal, Sea Grapes, Spice"},
+  {cat:"entree",sub:"storybook",emoji:"🥣",title:"Scottish Porridge",ingredients:"Oats, Any Fruit"},
+  {cat:"entree",sub:"storybook",emoji:"🥞",title:"Sea Grape Chia Pancakes",ingredients:"Sea Grapes, Chia Seeds, Wheat, Shovel Bird Eggs"},
+  {cat:"entree",sub:"storybook",emoji:"🥗",title:"Seaweed Salad",ingredients:"Sea Grapes, Radish, Black Pepper, Any Vegetable"},
+  {cat:"entree",sub:"storybook",emoji:"🥚",title:"Shovel Bird Eggs Benedict",ingredients:"Shovel Bird Eggs, Spiral Strawberries, Elysian Grain, Salt Crystal"},
+  {cat:"entree",sub:"storybook",emoji:"🍞",title:"Soda Bread & Feta",ingredients:"Flyleaf Feta, Wheat, Salt Crystal"},
+  {cat:"entree",sub:"storybook",emoji:"🥬",title:"Spanakopita",ingredients:"Spinach, Flyleaf Feta, Onion, Garlic, Spice"},
+  {cat:"entree",sub:"storybook",emoji:"🍓",title:"Spiral Strawberry Chia Pancakes",ingredients:"Spiral Strawberries, Chia Seeds, Wheat, Shovel Bird Eggs"},
+  {cat:"entree",sub:"storybook",emoji:"🍄",title:"Sprout-Stuffed Porcini",ingredients:"Porcini Mushrooms, Brussels Sprout, Black Pepper"},
+  {cat:"entree",sub:"storybook",emoji:"🍄",title:"Squash Stuffed Porcini",ingredients:"Porcini Mushrooms, Ring Squash, Black Pepper"},
+  {cat:"entree",sub:"storybook",emoji:"🦑",title:"Squid Sashimi",ingredients:"Squid"},
+  {cat:"entree",sub:"storybook",emoji:"🐚",title:"Steamed Mussels",ingredients:"Mussel"},
+  {cat:"entree",sub:"storybook",emoji:"🎃",title:"Stuffed Ring Squash",ingredients:"Ring Squash, Ambrosia, Garlic"},
+  {cat:"entree",sub:"storybook",emoji:"🐟",title:"Tuna Sashimi",ingredients:"Tuna"},
+  // ── DESSERTS BASE ──
+  {cat:"dessert",sub:"base",emoji:"🍎",title:"Apple Pie",ingredients:"Apple, Wheat, Butter"},
+  {cat:"dessert",sub:"base",emoji:"🍧",title:"Apple Sorbet",ingredients:"Apple, Sugarcane, Slush Ice"},
+  {cat:"dessert",sub:"base",emoji:"🎂",title:"Aurora's Cake",ingredients:"Wheat, Egg, Sugarcane, Milk, Raspberry"},
+  {cat:"dessert",sub:"base",emoji:"🍦",title:"Banana Ice Cream",ingredients:"Banana, Milk, Sugarcane, Slush Ice"},
+  {cat:"dessert",sub:"base",emoji:"🥧",title:"Banana Pie",ingredients:"Banana, Wheat, Butter"},
+  {cat:"dessert",sub:"base",emoji:"🍌",title:"Banana Split",ingredients:"Banana, Milk, Sugarcane, Slush Ice, Any Sweet"},
+  {cat:"dessert",sub:"base",emoji:"🍩",title:"Beignets",ingredients:"Egg, Wheat, Canola, Sugarcane"},
+  {cat:"dessert",sub:"base",emoji:"🍓",title:"Berry Salad",ingredients:"Raspberry, Blueberry, Gooseberry"},
+  {cat:"dessert",sub:"base",emoji:"🎂",title:"Birthday Cake",ingredients:"Egg, Butter, Sugarcane, Wheat, Cocoa Bean"},
+  {cat:"dessert",sub:"base",emoji:"🫐",title:"Blueberry Pie",ingredients:"Blueberry, Wheat, Butter"},
+  {cat:"dessert",sub:"base",emoji:"🍰",title:"Cake",ingredients:"Wheat, Egg, Sugarcane, Milk, Butter"},
+  {cat:"dessert",sub:"base",emoji:"🍬",title:"Candy",ingredients:"Sugarcane"},
+  {cat:"dessert",sub:"base",emoji:"🍮",title:"Caramel Apples",ingredients:"Apple, Sugarcane"},
+  {cat:"dessert",sub:"base",emoji:"🍰",title:"Carrot Cake",ingredients:"Carrot, Wheat, Egg, Sugarcane"},
+  {cat:"dessert",sub:"base",emoji:"🍫",title:"Chocolate Cake",ingredients:"Cocoa Bean, Wheat, Egg, Sugarcane, Milk"},
+  {cat:"dessert",sub:"base",emoji:"🍪",title:"Chocolate Chip Cookie",ingredients:"Wheat, Butter, Sugarcane, Cocoa Bean"},
+  {cat:"dessert",sub:"base",emoji:"🍦",title:"Chocolate Ice Cream",ingredients:"Cocoa Bean, Milk, Sugarcane, Slush Ice"},
+  {cat:"dessert",sub:"base",emoji:"🍫",title:"Chocolate Mousse",ingredients:"Cocoa Bean, Egg, Milk, Sugarcane, Butter"},
+  {cat:"dessert",sub:"base",emoji:"🫐",title:"Cobbler",ingredients:"Blueberry, Wheat, Butter, Sugarcane"},
+  {cat:"dessert",sub:"base",emoji:"🍪",title:"Cookie",ingredients:"Wheat, Butter, Sugarcane, Egg"},
+  {cat:"dessert",sub:"base",emoji:"🍮",title:"Crème Brûlée",ingredients:"Egg, Milk, Sugarcane, Vanilla"},
+  {cat:"dessert",sub:"base",emoji:"🥐",title:"Croissant",ingredients:"Wheat, Butter, Egg"},
+  {cat:"dessert",sub:"base",emoji:"🍩",title:"Doughnut",ingredients:"Wheat, Canola, Sugarcane, Egg"},
+  {cat:"dessert",sub:"base",emoji:"✨",title:"Dreamlight Pie",ingredients:"Dreamlight Fruit, Wheat, Butter"},
+  {cat:"dessert",sub:"base",emoji:"🍧",title:"Dreamlight Sorbet",ingredients:"Dreamlight Fruit, Slush Ice"},
+  {cat:"dessert",sub:"base",emoji:"🍧",title:"Fruit Sorbet",ingredients:"Any Fruit, Slush Ice"},
+  {cat:"dessert",sub:"base",emoji:"🍇",title:"Grapes with Cheese",ingredients:"Gooseberry, Cheese"},
+  {cat:"dessert",sub:"base",emoji:"🍦",title:"Ice Cream",ingredients:"Milk, Sugarcane, Slush Ice, Any Sweet"},
+  {cat:"dessert",sub:"base",emoji:"🍦",title:"Ice Cream Sandwich",ingredients:"Milk, Sugarcane, Slush Ice, Wheat, Butter"},
+  {cat:"dessert",sub:"base",emoji:"🧁",title:"Jam Waffles",ingredients:"Wheat, Egg, Milk, Any Fruit"},
+  {cat:"dessert",sub:"base",emoji:"🥞",title:"Large Pancake",ingredients:"Wheat, Egg, Milk, Butter, Sugarcane"},
+  {cat:"dessert",sub:"base",emoji:"🍋",title:"Lemon Pie",ingredients:"Lemon, Wheat, Butter, Sugarcane, Egg"},
+  {cat:"dessert",sub:"base",emoji:"🍧",title:"Lemon Sorbet",ingredients:"Lemon, Sugarcane, Slush Ice"},
+  {cat:"dessert",sub:"base",emoji:"🍦",title:"Mint Chocolate Chip Ice Cream",ingredients:"Mint, Cocoa Bean, Milk, Sugarcane, Slush Ice"},
+  {cat:"dessert",sub:"base",emoji:"🍪",title:"Peanut Butter Cookies",ingredients:"Peanut, Wheat, Butter, Sugarcane"},
+  {cat:"dessert",sub:"base",emoji:"🍮",title:"Pots de Crème",ingredients:"Egg, Milk, Sugarcane, Cocoa Bean, Vanilla"},
+  {cat:"dessert",sub:"base",emoji:"🎃",title:"Pumpkin Pie",ingredients:"Pumpkin, Wheat, Butter, Sugarcane, Egg"},
+  {cat:"dessert",sub:"base",emoji:"🍬",title:"Raspberry Candy",ingredients:"Raspberry, Sugarcane"},
+  {cat:"dessert",sub:"base",emoji:"🍦",title:"Raspberry Ice Cream",ingredients:"Raspberry, Milk, Sugarcane, Slush Ice"},
+  {cat:"dessert",sub:"base",emoji:"🥞",title:"Simple Crepe",ingredients:"Wheat, Egg, Milk, Butter"},
+  {cat:"dessert",sub:"base",emoji:"🍰",title:"Sponge Cake",ingredients:"Wheat, Egg, Sugarcane, Butter"},
+  {cat:"dessert",sub:"base",emoji:"🍦",title:"Vanilla Ice Cream",ingredients:"Vanilla, Milk, Sugarcane, Slush Ice"},
+  {cat:"dessert",sub:"base",emoji:"🧇",title:"Waffles",ingredients:"Wheat, Egg, Milk, Butter"},
+  {cat:"dessert",sub:"base",emoji:"🍰",title:"White Cake",ingredients:"Wheat, Egg, Sugarcane, Milk, Vanilla"},
+  // ── DESSERTS RIFT IN TIME ──
+  {cat:"dessert",sub:"rift",emoji:"🍧",title:"Cactus Sorbet",ingredients:"Cactoberries, Slush Ice, Sugarcane"},
+  {cat:"dessert",sub:"rift",emoji:"🥭",title:"Dreamango Sorbet",ingredients:"Dreamango, Slush Ice"},
+  {cat:"dessert",sub:"rift",emoji:"🍮",title:"Flan",ingredients:"Egg, Milk, Sugarcane, Vanilla, Agave"},
+  {cat:"dessert",sub:"rift",emoji:"🍇",title:"Grape Jam",ingredients:"Grapes, Sugarcane"},
+  {cat:"dessert",sub:"rift",emoji:"🍧",title:"Grape Sorbet",ingredients:"Grapes, Slush Ice, Sugarcane"},
+  {cat:"dessert",sub:"rift",emoji:"🍰",title:"Pear Tart",ingredients:"Nestling Pear, Wheat, Butter, Sugarcane"},
+  {cat:"dessert",sub:"rift",emoji:"🍍",title:"Pineapple Float",ingredients:"Pineapple, Slush Ice, Sugarcane, Milk"},
+  {cat:"dessert",sub:"rift",emoji:"🍹",title:"Pineapple Juice",ingredients:"Pineapple, Sugarcane"},
+  {cat:"dessert",sub:"rift",emoji:"🍦",title:"Strawberry Ice Cream",ingredients:"Strawberry, Milk, Sugarcane, Slush Ice"},
+  // ── DESSERTS STORYBOOK VALE ──
+  {cat:"dessert",sub:"storybook",emoji:"🐱",title:"Cheshire Cat Tail",ingredients:"Rhubarb, Faerie Rye, Butter, Sugarcane"},
+  {cat:"dessert",sub:"storybook",emoji:"🍫",title:"Garlic Chocolate Tart",ingredients:"Garlic, Cocoa Bean, Wheat, Butter, Sugarcane"},
+  {cat:"dessert",sub:"storybook",emoji:"🍏",title:"Golden Apple Crumble",ingredients:"Golden Apple, Oats, Butter, Sugarcane"},
+  {cat:"dessert",sub:"storybook",emoji:"🍈",title:"Honeydew Granita",ingredients:"Honeydew Melon, Slush Ice, Sugarcane"},
+  {cat:"dessert",sub:"storybook",emoji:"🍊",title:"Persimmon Pudding",ingredients:"Persimmon, Egg, Milk, Sugarcane"},
+  {cat:"dessert",sub:"storybook",emoji:"🌿",title:"Rhubarb Crumble",ingredients:"Rhubarb, Oats, Butter, Sugarcane"},
+  {cat:"dessert",sub:"storybook",emoji:"🍓",title:"Sour Berry Jam",ingredients:"Sour Berries, Sugarcane"},
+  {cat:"dessert",sub:"storybook",emoji:"🍓",title:"Spiral Strawberry Shortcake",ingredients:"Spiral Strawberries, Wheat, Butter, Sugarcane, Milk"},
+];
+
+const allData = [...guideData, ...recipeData];
+
+const catMeta = {
+  basics:     {label:"The Basics",        cls:"cat-basics"},
+  character:  {label:"Character",         cls:"cat-character"},
+  quest:      {label:"Main Quest",        cls:"cat-quest"},
+  expansion:  {label:"Expansion",         cls:"cat-expansion"},
+  repeatable: {label:"Repeatable",        cls:"cat-repeatable"},
+  appetizer:  {label:"Appetizer",         cls:"cat-appetizer"},
+  entree:     {label:"Entrée",            cls:"cat-entree"},
+  dessert:    {label:"Dessert",           cls:"cat-dessert"},
+};
+
+const subLabels = {base:"Base Game", rift:"A Rift in Time", storybook:"Storybook Vale"};
+
+let activeFilter = "all";
+let activeSubFilter = "all-recipes";
+
+// Starfield
+const starsEl = document.getElementById("stars");
+for(let i=0;i<120;i++){
+  const s=document.createElement("div");
+  s.className="star-dot";
+  const sz=Math.random()*2.5+0.5;
+  s.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}%;top:${Math.random()*100}%;--dur:${2+Math.random()*4}s;--delay:-${Math.random()*6}s;`;
+  starsEl.appendChild(s);
+}
+
+// Main filter buttons
+const filterDefs = [
+  {key:"all",       label:"✨ All"},
+  {key:"basics",    label:"The Basics"},
+  {key:"character", label:"Characters"},
+  {key:"quest",     label:"Main Quests"},
+  {key:"expansion", label:"Expansion"},
+  {key:"repeatable",label:"Repeatable"},
+  {key:"recipes",   label:"🍳 Recipes"},
+  {key:"icymi",     label:"📰 ICYMI"},
+  {key:"cn",        label:"📋 My Characters"},
+  {key:"cl",        label:"✅ Daily Checklist"},
+];
+const filtersEl = document.getElementById("filters");
+filterDefs.forEach(f=>{
+  const btn=document.createElement("button");
+  btn.className="filter-btn"+(f.key==="all"?" active":"");
+  btn.textContent=f.label;
+  btn.dataset.key=f.key;
+  btn.onclick=()=>{
+    activeFilter=f.key;
+    document.querySelectorAll(".filter-btn").forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    if(f.key==="icymi"){ setView("icymi"); return; }
+    if(f.key==="cn")   { setView("cn"); loadCn(); return; }
+    if(f.key==="cl")   { setView("cl"); loadCl(); return; }
+    setView("main");
+    document.getElementById("subFilters").classList.toggle("visible", f.key==="recipes");
+    filterCards();
+  };
+  filtersEl.appendChild(btn);
+});
+
+// Sub-filter buttons
+const subDefs = [
+  {key:"all-recipes",label:"All"},
+  {key:"appetizer", label:"🥗 Appetizers"},
+  {key:"entree",    label:"🍽️ Entrées"},
+  {key:"dessert",   label:"🍰 Desserts"},
+  {key:"base",      label:"Base Game"},
+  {key:"rift",      label:"A Rift in Time"},
+  {key:"storybook", label:"Storybook Vale"},
+];
+const subEl=document.getElementById("subFilters");
+subDefs.forEach(sf=>{
+  const btn=document.createElement("button");
+  btn.className="sub-btn"+(sf.key==="all-recipes"?" active":"");
+  btn.textContent=sf.label;
+  btn.onclick=()=>{
+    activeSubFilter=sf.key;
+    document.querySelectorAll(".sub-btn").forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    filterCards();
+  };
+  subEl.appendChild(btn);
+});
+
+const isRecipe = item => ["appetizer","entree","dessert"].includes(item.cat);
+
+function filterCards(){
+  const query=document.getElementById("searchInput").value.toLowerCase().trim();
+  const grid=document.getElementById("grid");
+  const info=document.getElementById("resultsInfo");
+  grid.innerHTML="";
+
+  const filtered=allData.filter(item=>{
+    let matchCat=false;
+    if(activeFilter==="all") matchCat=true;
+    else if(activeFilter==="recipes"){
+      if(!isRecipe(item)) return false;
+      if(activeSubFilter==="all-recipes") matchCat=true;
+      else if(["appetizer","entree","dessert"].includes(activeSubFilter)) matchCat=item.cat===activeSubFilter;
+      else matchCat=item.sub===activeSubFilter;
+    } else {
+      matchCat=item.cat===activeFilter;
+    }
+    if(!matchCat) return false;
+    if(!query) return true;
+    return (item.title+" "+(item.desc||"")+" "+(item.ingredients||"")).toLowerCase().includes(query);
+  });
+
+  info.textContent=`${filtered.length} result${filtered.length!==1?"s":""}`;
+  if(!filtered.length){
+    grid.innerHTML=`<div class="empty"><span class="emoji">🌑</span><p>No results found. Try a different search!</p></div>`;
+    return;
+  }
+  filtered.forEach((item,i)=>{
+    const meta=catMeta[item.cat]||{label:item.cat,cls:"cat-basics"};
+    const isLink=!!item.url;
+    const el=document.createElement(isLink?"a":"div");
+    el.className="card"+(isLink?"":" no-link");
+    if(isLink){el.href=item.url;el.target="_blank";el.rel="noopener";}
+    el.style.animationDelay=`${Math.min(i*.03,.6)}s`;
+    const subTag=item.sub?`<span class="tag">${subLabels[item.sub]||item.sub}</span>`:"";
+    el.innerHTML=`
+      <span class="card-emoji">${item.emoji}</span>
+      <span class="card-category ${meta.cls}">${meta.label}</span>
+      <div class="card-title">${item.title}</div>
+      ${item.desc?`<div class="card-desc">${item.desc}</div>`:""}
+      ${item.ingredients?`<div class="card-ingredients"><strong>Ingredients:</strong> ${item.ingredients}</div>`:""}
+      ${subTag}
+      ${isLink?`<div class="card-link-hint">Open guide →</div>`:""}
+    `;
+    grid.appendChild(el);
+  });
+}
+filterCards();
+
+// ── CHARACTER LIST ──────────────────────────────────────────
+const allChars = [
+  "Aladdin","Alice","Anna","Ariel","Aurora","Beast","Belle","Buzz Lightyear",
+  "Cheshire Cat","Cinderella","Cogsworth","Daisy Duck","Donald Duck","Elsa","EVE",
+  "Fairy Godmother","Flynn Rider / Eugene","Gaston","Goofy","Jack Skellington",
+  "Jasmine","Joy","Kristoff","Lumière","Maui","Merida","Merlin","Mickey Mouse",
+  "Mike Wazowski","Minnie Mouse","Mirabel","Moana","Mother Gothel","Mulan",
+  "Mushu","Nala","Olaf","Peter Pan","Prince Eric","Pumbaa","Remy","Sadness",
+  "Scar","Scrooge McDuck","Simba","Stitch","Sulley","The Forgotten","Timon",
+  "Ursula","Vanellope","WALL-E","Woody","Maleficent",
+].sort();
+
+const charEmojis = {
+  "Aladdin":"🧞","Alice":"🫖","Anna":"❄️","Ariel":"🧜","Aurora":"🌸","Beast":"🌹",
+  "Belle":"📚","Buzz Lightyear":"🚀","Cheshire Cat":"🐱","Cinderella":"👗",
+  "Cogsworth":"🕰️","Daisy Duck":"🌼","Donald Duck":"🦆","Elsa":"🧊","EVE":"🤍",
+  "Fairy Godmother":"🪄","Flynn Rider / Eugene":"👑","Gaston":"🥐","Goofy":"😁",
+  "Jack Skellington":"🎃","Jasmine":"✨","Joy":"😊","Kristoff":"🏔️","Lumière":"🕯️",
+  "Maui":"🌊","Merida":"🏹","Merlin":"🧙","Mickey Mouse":"🐭","Mike Wazowski":"🟢",
+  "Minnie Mouse":"🎀","Mirabel":"🦋","Moana":"🐚","Mother Gothel":"🌿","Mulan":"⚔️",
+  "Mushu":"🐉","Nala":"🦁","Olaf":"⛄","Peter Pan":"🪝","Prince Eric":"⚓",
+  "Pumbaa":"🐗","Remy":"👨‍🍳","Sadness":"💙","Scar":"😈","Scrooge McDuck":"💰",
+  "Simba":"🦁","Stitch":"💙","Sulley":"🟣","The Forgotten":"👻","Timon":"🐛",
+  "Ursula":"🔱","Vanellope":"🎮","WALL-E":"🤖","Woody":"🤠","Maleficent":"🖤",
+};
+function getEmoji(n){ return charEmojis[n] || "🌟"; }
+
+function populateSelect(selId, blankLabel="— Select Character —"){
+  const sel = document.getElementById(selId);
+  sel.innerHTML = `<option value="">${blankLabel}</option>`;
+  allChars.forEach(c => {
+    const o = document.createElement("option");
+    o.value = c; o.textContent = getEmoji(c) + "  " + c;
+    sel.appendChild(o);
+  });
+}
+
+// ── VIEW SWITCHER ──────────────────────────────────────────
+function setView(view){
+  document.getElementById("grid").style.display          = view==="main"  ? "grid"  : "none";
+  document.getElementById("resultsInfo").style.display   = view==="main"  ? "block" : "none";
+  document.getElementById("icymiWrap").style.display     = view==="icymi" ? "block" : "none";
+  document.getElementById("cnWrap").classList.toggle("visible", view==="cn");
+  document.getElementById("clWrap").classList.toggle("visible", view==="cl");
+  const sw = document.getElementById("searchInput").closest(".search-wrap");
+  sw.style.opacity = view==="main" ? "1" : "0.3";
+  document.getElementById("searchInput").disabled = view !== "main";
+  if(view !== "recipes") document.getElementById("subFilters").classList.remove("visible");
+}
+
+// ── CHARACTER NOTES ────────────────────────────────────────
+let cnData = [];
+let cnEditIdx = null;
+
+async function loadCn(){
+  try { const r = localStorage.getItem("ddv-cn"); cnData = r ? JSON.parse(r) : []; }
+  catch(e){ cnData = []; }
+  renderCn();
+}
+async function saveCnStore(){ try{ localStorage.setItem("ddv-cn", JSON.stringify(cnData)); }catch(e){} }
+
+function renderCn(){
+  const el = document.getElementById("cnList");
+  if(!cnData.length){
+    el.innerHTML=`<div class="panel-empty"><span class="e-emoji">📋</span>No character notes yet. Hit + to add one.</div>`;
+    return;
+  }
+  el.innerHTML="";
+  [...cnData].sort((a,b)=>a.char.localeCompare(b.char)).forEach((c,i)=>{
+    const realIdx = cnData.indexOf(c);
+    const d = document.createElement("div");
+    d.className="cn-card"; d.style.animationDelay=i*.05+"s";
+    d.innerHTML=`
+      <div class="cn-header">
+        <div class="cn-avatar">${getEmoji(c.char)}</div>
+        <div class="cn-name">${c.char}</div>
+        <div class="cn-actions">
+          <button class="cn-btn" onclick="editCn(${realIdx})">Edit</button>
+          <button class="cn-btn del" onclick="deleteCn(${realIdx})">✕</button>
+        </div>
+      </div>
+      <div class="cn-pills">
+        ${c.job   ? `<span class="cn-pill job">⚒ ${c.job}</span>`    : ""}
+        ${c.biome ? `<span class="cn-pill biome">🏡 ${c.biome}</span>` : ""}
+      </div>
+      ${c.notes ? `<div class="cn-notes-text">${c.notes.replace(/\n/g,"<br>")}</div>` : ""}
+    `;
+    el.appendChild(d);
+  });
+}
+
+function openCnModal(isEdit=false){
+  populateSelect("cnChar");
+  document.getElementById("cnModalTitle").textContent = isEdit ? "Edit Character Notes" : "Add Character Notes";
+  if(!isEdit){
+    ["cnChar","cnJob","cnBiome"].forEach(id=>document.getElementById(id).value="");
+    document.getElementById("cnNotes").value="";
+    cnEditIdx=null;
+  }
+  document.getElementById("cnModal").classList.remove("hidden");
+}
+function closeCnModal(){ document.getElementById("cnModal").classList.add("hidden"); cnEditIdx=null; }
+
+function editCn(i){
+  cnEditIdx=i; openCnModal(true);
+  const c=cnData[i];
+  setTimeout(()=>{
+    document.getElementById("cnChar").value=c.char;
+    document.getElementById("cnJob").value=c.job||"";
+    document.getElementById("cnBiome").value=c.biome||"";
+    document.getElementById("cnNotes").value=c.notes||"";
+  },20);
+}
+async function deleteCn(i){ cnData.splice(i,1); await saveCnStore(); renderCn(); }
+
+async function saveCn(){
+  const char=document.getElementById("cnChar").value;
+  if(!char){alert("Please select a character!"); return;}
+  const entry={char, job:document.getElementById("cnJob").value, biome:document.getElementById("cnBiome").value, notes:document.getElementById("cnNotes").value.trim()};
+  if(cnEditIdx!==null){
+    cnData[cnEditIdx]=entry;
+  } else {
+    const dup=cnData.findIndex(c=>c.char===char);
+    if(dup>=0) cnData[dup]=entry; else cnData.push(entry);
+  }
+  await saveCnStore(); renderCn(); closeCnModal();
+}
+
+// ── DAILY CHECKLIST ────────────────────────────────────────
+let clData = [];
+
+async function loadCl(){
+  try { const r = localStorage.getItem("ddv-cl"); clData = r ? JSON.parse(r) : []; }
+  catch(e){ clData=[]; }
+  renderCl();
+}
+async function saveClStore(){ try{ localStorage.setItem("ddv-cl", JSON.stringify(clData)); }catch(e){} }
+
+function renderCl(){
+  const el = document.getElementById("clList");
+  if(!clData.length){
+    el.innerHTML=`<div class="panel-empty"><span class="e-emoji">✅</span>No checklists yet. Hit + to set up daily tasks.</div>`;
+    return;
+  }
+  el.innerHTML="";
+  clData.forEach((entry,ei)=>{
+    const gifts=(entry.gifts||[]).filter(g=>g);
+    const tasks=(entry.tasks||[]).filter(t=>t);
+    const allItems=[...gifts,...tasks];
+    const checks=entry.checks||[];
+    const doneCount=allItems.filter((_,ii)=>checks[ii]).length;
+    const total=allItems.length;
+    const pct=total?Math.round(doneCount/total*100):0;
+    const allDone=total>0&&doneCount===total;
+
+    const card=document.createElement("div");
+    card.className="cl-card"+(allDone?" all-done":"");
+    card.style.animationDelay=ei*.05+"s";
+
+    let gHtml="", tHtml="";
+    gifts.forEach((g,gi)=>{
+      const chk=!!checks[gi];
+      gHtml+=`<div class="cl-item">
+        <input type="checkbox" class="cl-checkbox" ${chk?"checked":""} onchange="toggleCheck(${ei},${gi},this.checked)"/>
+        <span class="cl-item-text${chk?" checked":""}">🎁 ${g}</span>
+      </div>`;
+    });
+    tasks.forEach((t,ti)=>{
+      const idx=gifts.length+ti;
+      const chk=!!checks[idx];
+      tHtml+=`<div class="cl-item">
+        <input type="checkbox" class="cl-checkbox" ${chk?"checked":""} onchange="toggleCheck(${ei},${idx},this.checked)"/>
+        <span class="cl-item-text${chk?" checked":""}">• ${t}</span>
+      </div>`;
+    });
+
+    card.innerHTML=`
+      <div class="cl-header">
+        <div class="cn-avatar">${getEmoji(entry.char)}</div>
+        <div style="flex:1">
+          <div class="cl-name">${entry.char} <span class="cl-done-badge">✓ All done!</span></div>
+          <div style="font-size:.7rem;color:rgba(255,255,255,.3);margin-top:1px;">${doneCount}/${total} complete</div>
+        </div>
+        <button class="cl-reset-btn" onclick="resetCl(${ei})" title="Reset checkboxes">↺ Reset</button>
+        <button class="cn-btn del" style="margin-left:6px;" onclick="deleteCl(${ei})">✕</button>
+      </div>
+      <div class="cl-progress"><div class="cl-progress-bar" style="width:${pct}%"></div></div>
+      ${gHtml ? `<div class="cl-section-label">🎁 Gifts / Wants</div>${gHtml}` : ""}
+      ${tHtml ? `<div class="cl-section-label">📝 Tasks</div>${tHtml}` : ""}
+      ${entry.notes ? `<div class="cl-notes-box">📌 ${entry.notes.replace(/\n/g,"<br>")}</div>` : ""}
+    `;
+    el.appendChild(card);
+  });
+}
+
+async function toggleCheck(ei,idx,val){
+  if(!clData[ei].checks) clData[ei].checks=[];
+  clData[ei].checks[idx]=val;
+  await saveClStore(); renderCl();
+}
+async function resetCl(ei){ clData[ei].checks=[]; await saveClStore(); renderCl(); }
+async function deleteCl(ei){ clData.splice(ei,1); await saveClStore(); renderCl(); }
+
+function openClModal(){
+  populateSelect("clChar");
+  ["clChar"].forEach(id=>document.getElementById(id).value="");
+  ["gift1","gift2","gift3"].forEach(id=>document.getElementById(id).value="");
+  document.getElementById("clTasks").value="";
+  document.getElementById("clNotes").value="";
+  document.getElementById("clModal").classList.remove("hidden");
+}
+function closeClModal(){ document.getElementById("clModal").classList.add("hidden"); }
+
+async function saveCl(){
+  const char=document.getElementById("clChar").value;
+  if(!char){alert("Please select a character!"); return;}
+  const gifts=[
+    document.getElementById("gift1").value.trim(),
+    document.getElementById("gift2").value.trim(),
+    document.getElementById("gift3").value.trim(),
+  ];
+  const tasks=document.getElementById("clTasks").value.split("\n").map(t=>t.trim()).filter(Boolean);
+  const notes=document.getElementById("clNotes").value.trim();
+  clData.push({char,gifts,tasks,notes,checks:[]});
+  await saveClStore(); renderCl(); closeClModal();
+}
+
+// close modals on overlay click
+document.getElementById("cnModal").addEventListener("click", e=>{ if(e.target===document.getElementById("cnModal")) closeCnModal(); });
+document.getElementById("clModal").addEventListener("click", e=>{ if(e.target===document.getElementById("clModal")) closeClModal(); });
+</script>
+
+</body>
+</html>
