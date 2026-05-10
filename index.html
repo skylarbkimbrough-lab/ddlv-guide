@@ -152,8 +152,52 @@
 .cl-reset-btn:hover{color:rgba(255,255,255,.5);}
 .panel-empty{text-align:center;padding:50px 20px;color:rgba(255,255,255,.3);}
 .panel-empty .e-emoji{font-size:2.5rem;display:block;margin-bottom:10px;}
-</style>
 
+/* ── MY PROFILE ── */
+.profile-wrap{max-width:700px;margin:0 auto;padding:8px 18px 60px;display:none;}
+.profile-wrap.visible{display:block;}
+.profile-card{background:var(–card-bg);border:1px solid rgba(245,200,66,.25);border-radius:20px;padding:24px 20px;backdrop-filter:blur(8px);position:relative;overflow:hidden;}
+.profile-card::before{content:’’;position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.04) 0%,transparent 60%);pointer-events:none;}
+.profile-avatar-wrap{text-align:center;margin-bottom:20px;}
+.profile-avatar{width:100px;height:100px;border-radius:50%;border:3px solid rgba(245,200,66,.4);object-fit:cover;display:block;margin:0 auto 10px;background:rgba(255,255,255,.06);}
+.profile-avatar-placeholder{width:100px;height:100px;border-radius:50%;border:3px dashed rgba(245,200,66,.3);background:rgba(255,255,255,.04);display:flex;align-items:center;justify-content:center;margin:0 auto 10px;cursor:pointer;transition:all .2s;font-size:2rem;}
+.profile-avatar-placeholder:hover{border-color:var(–gold);background:rgba(245,200,66,.06);}
+.profile-avatar-label{font-size:.72rem;color:rgba(255,255,255,.35);cursor:pointer;}
+.profile-name{font-family:‘Cinzel Decorative’,serif;font-size:1.3rem;color:var(–gold);text-align:center;margin-bottom:4px;min-height:1.6rem;}
+.profile-name-input{font-family:‘Cinzel Decorative’,serif;font-size:1.1rem;color:var(–gold);background:transparent;border:none;border-bottom:1px solid rgba(245,200,66,.3);text-align:center;width:100%;outline:none;padding:4px 0;margin-bottom:4px;}
+.profile-name-input::placeholder{color:rgba(245,200,66,.3);font-size:.9rem;}
+.profile-section{margin-top:18px;padding-top:18px;border-top:1px solid rgba(255,255,255,.07);}
+.profile-section-title{font-size:.72rem;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,.35);margin-bottom:10px;font-weight:700;}
+.level-row{display:flex;align-items:center;gap:12px;}
+.level-display{font-size:2rem;font-weight:900;color:var(–gold);min-width:48px;text-align:center;}
+.level-slider{flex:1;-webkit-appearance:none;appearance:none;height:6px;border-radius:3px;background:rgba(255,255,255,.1);outline:none;cursor:pointer;}
+.level-slider::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(–gold);cursor:pointer;box-shadow:0 0 8px rgba(245,200,66,.4);}
+.level-max{font-size:.75rem;color:rgba(255,255,255,.3);}
+.level-bar-wrap{margin-top:8px;}
+.level-bar{height:8px;border-radius:4px;background:linear-gradient(90deg,var(–teal),var(–gold));transition:width .4s ease;}
+.level-bar-bg{height:8px;border-radius:4px;background:rgba(255,255,255,.08);}
+.pet-row{display:flex;gap:10px;flex-wrap:wrap;}
+.pet-card{flex:1;min-width:140px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:12px;}
+.pet-card input{width:100%;background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,.1);color:#fff;font-family:‘Nunito’,sans-serif;font-size:.85rem;outline:none;padding:2px 0;margin-bottom:6px;}
+.pet-card input::placeholder{color:rgba(255,255,255,.25);}
+.pet-card textarea{width:100%;background:transparent;border:none;color:rgba(255,255,255,.55);font-family:‘Nunito’,sans-serif;font-size:.75rem;outline:none;resize:none;line-height:1.5;}
+.pet-card textarea::placeholder{color:rgba(255,255,255,.2);}
+.pet-label{font-size:.65rem;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,.25);margin-bottom:4px;}
+.unlock-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;}
+.unlock-item{display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:8px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);cursor:pointer;transition:all .2s;}
+.unlock-item:hover{background:rgba(255,255,255,.07);}
+.unlock-item.done{background:rgba(100,220,100,.08);border-color:rgba(100,220,100,.2);}
+.unlock-cb{width:16px;height:16px;border-radius:4px;border:1.5px solid rgba(255,255,255,.2);background:transparent;cursor:pointer;flex-shrink:0;appearance:none;-webkit-appearance:none;position:relative;transition:all .2s;}
+.unlock-cb:checked{background:#7ddf7d;border-color:#7ddf7d;}
+.unlock-cb:checked::after{content:‘✓’;position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:.55rem;color:#0d0520;font-weight:900;}
+.unlock-label{font-size:.75rem;color:rgba(255,255,255,.6);line-height:1.3;}
+.unlock-item.done .unlock-label{color:rgba(255,255,255,.35);text-decoration:line-through;}
+.unlock-progress{font-size:.72rem;color:rgba(255,255,255,.3);margin-top:6px;}
+.profile-save-btn{margin-top:20px;width:100%;padding:12px;border-radius:50px;border:none;background:var(–gold);color:var(–deep-purple);font-family:‘Nunito’,sans-serif;font-weight:700;font-size:.9rem;cursor:pointer;transition:opacity .2s;}
+.profile-save-btn:hover{opacity:.85;}
+.profile-saved-flash{text-align:center;font-size:.75rem;color:#7ddf7d;margin-top:8px;height:16px;transition:opacity .5s;}
+
+</style>
 </head>
 <body>
 <div class="stars" id="stars"></div>
@@ -170,7 +214,66 @@
 <div class="sub-filters" id="subFilters"></div>
 <p class="results-info" id="resultsInfo"></p>
 <div class="grid" id="grid"></div>
+<!-- MY PROFILE PANEL -->
+<div class="profile-wrap" id="profileWrap">
+  <div class="profile-card">
+    <div class="profile-avatar-wrap">
+      <input type="file" id="avatarInput" accept="image/*" style="display:none" onchange="handleAvatar(event)" />
+      <div id="avatarPlaceholder" class="profile-avatar-placeholder" onclick="document.getElementById('avatarInput').click()">🌟</div>
+      <img id="avatarImg" class="profile-avatar" style="display:none" onclick="document.getElementById('avatarInput').click()" />
+      <div class="profile-avatar-label" onclick="document.getElementById('avatarInput').click()">Tap to set photo</div>
+    </div>
+
+```
+<input class="profile-name-input" id="profileName" placeholder="Your character's name..." maxlength="30" />
+
+<div class="profile-section">
+  <div class="profile-section-title">⭐ Player Level</div>
+  <div class="level-row">
+    <div class="level-display" id="levelDisplay">1</div>
+    <input type="range" class="level-slider" id="levelSlider" min="1" max="40" value="1" oninput="updateLevel(this.value)" />
+    <div class="level-max">/ 40</div>
+  </div>
+  <div class="level-bar-bg" style="margin-top:8px;"><div class="level-bar" id="levelBar" style="width:2.5%"></div></div>
+</div>
+
+<div class="profile-section">
+  <div class="profile-section-title">🐾 Equipped Companions</div>
+  <div class="pet-row">
+    <div class="pet-card">
+      <div class="pet-label">Companion 1</div>
+      <input id="pet1name" placeholder="Name (e.g. Squirrel)" />
+      <textarea id="pet1bonus" rows="2" placeholder="Bonus (e.g. +gardening speed)"></textarea>
+    </div>
+    <div class="pet-card">
+      <div class="pet-label">Companion 2</div>
+      <input id="pet2name" placeholder="Name (e.g. Fox)" />
+      <textarea id="pet2bonus" rows="2" placeholder="Bonus (e.g. +mining drops)"></textarea>
+    </div>
+  </div>
+</div>
+
+<div class="profile-section">
+  <div class="profile-section-title">🗺️ Biomes Unlocked</div>
+  <div class="unlock-grid" id="biomeGrid"></div>
+  <div class="unlock-progress" id="biomeProgress"></div>
+</div>
+
+<div class="profile-section">
+  <div class="profile-section-title">👥 Characters Unlocked</div>
+  <div class="unlock-grid" id="charGrid"></div>
+  <div class="unlock-progress" id="charProgress"></div>
+</div>
+
+<button class="profile-save-btn" onclick="saveProfile()">Save Profile</button>
+<div class="profile-saved-flash" id="savedFlash"></div>
+```
+
+  </div>
+</div>
+
 <!-- CHARACTER NOTES PANEL -->
+
 <div class="panel-wrap" id="cnWrap">
   <button class="panel-add-btn" onclick="openCnModal()"><span>＋</span> Add Character Notes</button>
   <div id="cnList"></div>
@@ -191,6 +294,15 @@
     <div class="modal-field">
       <label>Character</label>
       <select id="cnChar"></select>
+    </div>
+    <div class="modal-field">
+      <label>Friendship Level (1–10)</label>
+      <select id="cnLevel">
+        <option value="">— Not tracked —</option>
+        <option>1</option><option>2</option><option>3</option><option>4</option>
+        <option>5</option><option>6</option><option>7</option><option>8</option>
+        <option>9</option><option>10 ⭐ Max</option>
+      </select>
     </div>
     <div class="modal-field">
       <label>Assigned Job</label>
@@ -825,6 +937,7 @@ const filterDefs = [
   {key:"repeatable",label:"Repeatable"},
   {key:"recipes",   label:"🍳 Recipes"},
   {key:"icymi",     label:"📰 ICYMI"},
+  {key:"profile",   label:"🌟 My Profile"},
   {key:"cn",        label:"📋 My Characters"},
   {key:"cl",        label:"✅ Daily Checklist"},
 ];
@@ -838,9 +951,10 @@ filterDefs.forEach(f=>{
     activeFilter=f.key;
     document.querySelectorAll(".filter-btn").forEach(b=>b.classList.remove("active"));
     btn.classList.add("active");
-    if(f.key==="icymi"){ setView("icymi"); return; }
-    if(f.key==="cn")   { setView("cn"); loadCn(); return; }
-    if(f.key==="cl")   { setView("cl"); loadCl(); return; }
+    if(f.key==="icymi")  { setView("icymi");   return; }
+    if(f.key==="cn")     { setView("cn");     loadCn(); return; }
+    if(f.key==="cl")     { setView("cl");     loadCl(); return; }
+    if(f.key==="profile"){ setView("profile"); loadProfile(); return; }
     setView("main");
     document.getElementById("subFilters").classList.toggle("visible", f.key==="recipes");
     filterCards();
@@ -962,11 +1076,12 @@ function populateSelect(selId, blankLabel="— Select Character —"){
 
 // ── VIEW SWITCHER ──────────────────────────────────────────
 function setView(view){
-  document.getElementById("grid").style.display          = view==="main"  ? "grid"  : "none";
-  document.getElementById("resultsInfo").style.display   = view==="main"  ? "block" : "none";
-  document.getElementById("icymiWrap").style.display     = view==="icymi" ? "block" : "none";
-  document.getElementById("cnWrap").classList.toggle("visible", view==="cn");
-  document.getElementById("clWrap").classList.toggle("visible", view==="cl");
+  document.getElementById("grid").style.display          = view==="main"    ? "grid"  : "none";
+  document.getElementById("resultsInfo").style.display   = view==="main"    ? "block" : "none";
+  document.getElementById("icymiWrap").style.display     = view==="icymi"   ? "block" : "none";
+  document.getElementById("cnWrap").classList.toggle("visible",    view==="cn");
+  document.getElementById("clWrap").classList.toggle("visible",    view==="cl");
+  document.getElementById("profileWrap").classList.toggle("visible", view==="profile");
   const sw = document.getElementById("searchInput").closest(".search-wrap");
   sw.style.opacity = view==="main" ? "1" : "0.3";
   document.getElementById("searchInput").disabled = view !== "main";
@@ -1005,8 +1120,9 @@ function renderCn(){
         </div>
       </div>
       <div class="cn-pills">
-        ${c.job   ? `<span class="cn-pill job">⚒ ${c.job}</span>`    : ""}
-        ${c.biome ? `<span class="cn-pill biome">🏡 ${c.biome}</span>` : ""}
+        ${c.level  ? `<span class="cn-pill" style="border-color:rgba(245,200,66,.3);color:var(--gold);background:rgba(245,200,66,.08);">⭐ Lv ${c.level}</span>` : ""}
+        ${c.job    ? `<span class="cn-pill job">⚒ ${c.job}</span>`    : ""}
+        ${c.biome  ? `<span class="cn-pill biome">🏡 ${c.biome}</span>` : ""}
       </div>
       ${c.notes ? `<div class="cn-notes-text">${c.notes.replace(/\n/g,"<br>")}</div>` : ""}
     `;
@@ -1031,6 +1147,7 @@ function editCn(i){
   const c=cnData[i];
   setTimeout(()=>{
     document.getElementById("cnChar").value=c.char;
+    document.getElementById("cnLevel").value=c.level||"";
     document.getElementById("cnJob").value=c.job||"";
     document.getElementById("cnBiome").value=c.biome||"";
     document.getElementById("cnNotes").value=c.notes||"";
@@ -1041,7 +1158,13 @@ async function deleteCn(i){ cnData.splice(i,1); await saveCnStore(); renderCn();
 async function saveCn(){
   const char=document.getElementById("cnChar").value;
   if(!char){alert("Please select a character!"); return;}
-  const entry={char, job:document.getElementById("cnJob").value, biome:document.getElementById("cnBiome").value, notes:document.getElementById("cnNotes").value.trim()};
+  const entry={
+    char,
+    level: document.getElementById("cnLevel").value,
+    job: document.getElementById("cnJob").value,
+    biome: document.getElementById("cnBiome").value,
+    notes: document.getElementById("cnNotes").value.trim()
+  };
   if(cnEditIdx!==null){
     cnData[cnEditIdx]=entry;
   } else {
@@ -1148,6 +1271,114 @@ async function saveCl(){
   const notes=document.getElementById("clNotes").value.trim();
   clData.push({char,gifts,tasks,notes,checks:[]});
   await saveClStore(); renderCl(); closeClModal();
+}
+
+// ── MY PROFILE ────────────────────────────────────────────
+const biomeList = [
+  "Plaza","Peaceful Meadow","Dazzle Beach","Forest of Valor",
+  "Glade of Trust","Sunlit Plateau","Frosted Heights","Forgotten Lands",
+  "Eternity Isle","Storybook Vale","Wishblossom Ranch"
+];
+
+function buildUnlockGrid(containerId, progressId, items, checkedSet, storageKey){
+  const grid = document.getElementById(containerId);
+  const prog = document.getElementById(progressId);
+  grid.innerHTML="";
+  items.forEach(item=>{
+    const row = document.createElement("div");
+    const done = checkedSet.has(item);
+    row.className="unlock-item"+(done?" done":"");
+    row.innerHTML=`<input type="checkbox" class="unlock-cb" ${done?"checked":""} /><span class="unlock-label">${item}</span>`;
+    row.querySelector(".unlock-cb").addEventListener("change", async function(){
+      if(this.checked) checkedSet.add(item); else checkedSet.delete(item);
+      row.classList.toggle("done", this.checked);
+      row.querySelector(".unlock-label").style.textDecoration = this.checked ? "line-through" : "";
+      updateProgress(containerId, progressId, items, checkedSet);
+      await autoSaveProfile();
+    });
+    grid.appendChild(row);
+  });
+  updateProgress(containerId, progressId, items, checkedSet);
+}
+
+function updateProgress(containerId, progressId, items, checkedSet){
+  document.getElementById(progressId).textContent =
+    `${checkedSet.size} / ${items.length} unlocked`;
+}
+
+let unlockedBiomes = new Set();
+let unlockedChars  = new Set();
+
+function updateLevel(val){
+  document.getElementById("levelDisplay").textContent = val;
+  document.getElementById("levelBar").style.width = (val/40*100)+"%";
+}
+
+function handleAvatar(e){
+  const file = e.target.files[0]; if(!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    const src = ev.target.result;
+    document.getElementById("avatarImg").src = src;
+    document.getElementById("avatarImg").style.display = "block";
+    document.getElementById("avatarPlaceholder").style.display = "none";
+    localStorage.setItem("ddv-avatar", src);
+  };
+  reader.readAsDataURL(file);
+}
+
+async function autoSaveProfile(){
+  const data = {
+    name:   document.getElementById("profileName").value,
+    level:  document.getElementById("levelSlider").value,
+    pet1n:  document.getElementById("pet1name").value,
+    pet1b:  document.getElementById("pet1bonus").value,
+    pet2n:  document.getElementById("pet2name").value,
+    pet2b:  document.getElementById("pet2bonus").value,
+    biomes: [...unlockedBiomes],
+    chars:  [...unlockedChars],
+  };
+  localStorage.setItem("ddv-profile", JSON.stringify(data));
+}
+
+async function saveProfile(){
+  await autoSaveProfile();
+  const flash = document.getElementById("savedFlash");
+  flash.textContent = "✓ Saved!";
+  flash.style.opacity="1";
+  setTimeout(()=>{ flash.style.opacity="0"; }, 2000);
+}
+
+function loadProfile(){
+  const raw = localStorage.getItem("ddv-profile");
+  const data = raw ? JSON.parse(raw) : {};
+  document.getElementById("profileName").value = data.name||"";
+  const lv = data.level||1;
+  document.getElementById("levelSlider").value = lv;
+  updateLevel(lv);
+  document.getElementById("pet1name").value  = data.pet1n||"";
+  document.getElementById("pet1bonus").value = data.pet1b||"";
+  document.getElementById("pet2name").value  = data.pet2n||"";
+  document.getElementById("pet2bonus").value = data.pet2b||"";
+  unlockedBiomes = new Set(data.biomes||[]);
+  unlockedChars  = new Set(data.chars||[]);
+
+  // avatar
+  const savedAvatar = localStorage.getItem("ddv-avatar");
+  if(savedAvatar){
+    document.getElementById("avatarImg").src = savedAvatar;
+    document.getElementById("avatarImg").style.display="block";
+    document.getElementById("avatarPlaceholder").style.display="none";
+  }
+
+  buildUnlockGrid("biomeGrid","biomeProgress", biomeList, unlockedBiomes, "ddv-profile");
+  buildUnlockGrid("charGrid","charProgress", allChars, unlockedChars, "ddv-profile");
+
+  // autosave on text/slider changes
+  ["profileName","pet1name","pet1bonus","pet2name","pet2bonus"].forEach(id=>{
+    document.getElementById(id).oninput = autoSaveProfile;
+  });
+  document.getElementById("levelSlider").oninput = function(){ updateLevel(this.value); autoSaveProfile(); };
 }
 
 // close modals on overlay click
