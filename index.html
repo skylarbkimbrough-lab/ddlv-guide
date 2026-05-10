@@ -92,6 +92,54 @@
 .panel-add-btn:hover{background:rgba(245,200,66,.08);border-color:var(–gold);}
 .panel-add-btn span{font-size:1.3rem;}
 
+/* ── EMOJI PICKER ── */
+.emoji-picker-modal{position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(6px);z-index:200;display:flex;align-items:center;justify-content:center;padding:16px;}
+.emoji-picker-modal.hidden{display:none;}
+.emoji-picker-box{background:#1e1040;border:1px solid rgba(245,200,66,.3);border-radius:20px;padding:20px;width:100%;max-width:420px;max-height:80vh;display:flex;flex-direction:column;}
+.emoji-picker-box h3{font-family:‘Cinzel Decorative’,serif;font-size:.95rem;color:var(–gold);margin-bottom:12px;text-align:center;}
+.emoji-search{width:100%;padding:8px 14px;border-radius:50px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:#fff;font-family:‘Nunito’,sans-serif;font-size:.9rem;outline:none;margin-bottom:12px;}
+.emoji-search::placeholder{color:rgba(255,255,255,.3);}
+.emoji-categories{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;}
+.emoji-cat-btn{padding:3px 10px;border-radius:50px;border:1px solid rgba(255,255,255,.12);background:transparent;color:rgba(255,255,255,.5);font-size:.72rem;cursor:pointer;font-family:‘Nunito’,sans-serif;transition:all .2s;}
+.emoji-cat-btn.active{background:rgba(245,200,66,.15);border-color:var(–gold);color:var(–gold);}
+.emoji-grid{display:grid;grid-template-columns:repeat(8,1fr);gap:4px;overflow-y:auto;flex:1;}
+.emoji-btn{font-size:1.4rem;padding:6px;border-radius:8px;border:none;background:transparent;cursor:pointer;transition:background .15s;text-align:center;}
+.emoji-btn:hover{background:rgba(255,255,255,.1);}
+.emoji-picker-cancel{margin-top:12px;width:100%;padding:9px;border-radius:50px;border:1px solid rgba(255,255,255,.2);background:transparent;color:rgba(255,255,255,.5);font-family:‘Nunito’,sans-serif;font-size:.85rem;cursor:pointer;}
+.emoji-trigger{cursor:pointer;transition:transform .15s;display:inline-block;}
+.emoji-trigger:hover{transform:scale(1.2);}
+
+/* ── MATERIALS TAB ── */
+.mat-wrap{max-width:1100px;margin:0 auto;padding:8px 18px 60px;display:none;}
+.mat-wrap.visible{display:block;}
+.mat-search-row{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
+.mat-search{flex:1;min-width:180px;padding:10px 16px;border-radius:50px;border:1.5px solid rgba(245,200,66,.3);background:rgba(255,255,255,.06);color:#fff;font-family:‘Nunito’,sans-serif;font-size:.9rem;outline:none;}
+.mat-search:focus{border-color:var(–gold);}
+.mat-search::placeholder{color:rgba(255,255,255,.35);}
+.mat-filter-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;}
+.mat-filter-btn{padding:5px 13px;border-radius:50px;border:1px solid rgba(255,255,255,.15);background:transparent;color:rgba(255,255,255,.55);font-family:‘Nunito’,sans-serif;font-size:.78rem;cursor:pointer;transition:all .2s;}
+.mat-filter-btn:hover{border-color:var(–gold);color:var(–gold);}
+.mat-filter-btn.active{background:var(–gold);border-color:var(–gold);color:var(–deep-purple);font-weight:700;}
+.mat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px;}
+.mat-card{background:var(–card-bg);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:14px 16px;backdrop-filter:blur(8px);animation:fadeIn .25s ease both;display:flex;gap:12px;align-items:flex-start;}
+.mat-emoji{font-size:1.6rem;flex-shrink:0;margin-top:2px;}
+.mat-info{}
+.mat-name{font-size:.92rem;font-weight:700;color:#fff;margin-bottom:4px;}
+.mat-type{font-size:.65rem;text-transform:uppercase;letter-spacing:1.2px;font-weight:700;padding:2px 8px;border-radius:50px;display:inline-block;margin-bottom:6px;}
+.type-forage{background:rgba(100,220,100,.12);color:#7ddf7d;}
+.type-mine{background:rgba(180,140,255,.15);color:#c8a0ff;}
+.type-fish{background:rgba(92,214,214,.12);color:var(–teal);}
+.type-grow{background:rgba(245,200,66,.12);color:var(–gold);}
+.type-chop{background:rgba(255,160,80,.12);color:#ffb060;}
+.type-buy{background:rgba(240,168,208,.15);color:var(–soft-pink);}
+.type-cook{background:rgba(255,100,130,.12);color:#ff7a9a;}
+.type-dig{background:rgba(200,160,100,.15);color:#d4a96a;}
+.type-gift{background:rgba(255,255,255,.08);color:rgba(255,255,255,.5);}
+.mat-biome{font-size:.75rem;color:rgba(255,255,255,.45);line-height:1.5;}
+.mat-biome strong{color:rgba(255,255,255,.7);}
+.mat-note{font-size:.72rem;color:rgba(255,255,255,.3);margin-top:4px;font-style:italic;}
+.mat-empty{grid-column:1/-1;text-align:center;padding:50px 20px;color:rgba(255,255,255,.35);}
+
 /* ── MODAL ── */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(6px);z-index:100;display:flex;align-items:center;justify-content:center;padding:16px;}
 .modal-overlay.hidden{display:none;}
@@ -214,7 +262,29 @@
 <div class="sub-filters" id="subFilters"></div>
 <p class="results-info" id="resultsInfo"></p>
 <div class="grid" id="grid"></div>
+<!-- EMOJI PICKER MODAL -->
+<div class="emoji-picker-modal hidden" id="emojiPickerModal">
+  <div class="emoji-picker-box">
+    <h3>Pick an Emoji</h3>
+    <input class="emoji-search" id="emojiSearch" placeholder="Search emoji..." oninput="filterEmojis()" />
+    <div class="emoji-categories" id="emojiCats"></div>
+    <div class="emoji-grid" id="emojiGrid"></div>
+    <button class="emoji-picker-cancel" onclick="closeEmojiPicker()">Cancel</button>
+  </div>
+</div>
+
+<!-- MATERIALS PANEL -->
+
+<div class="mat-wrap" id="matWrap">
+  <div class="mat-search-row">
+    <input class="mat-search" id="matSearch" placeholder="Search by name or ingredient... (e.g. basil, softwood)" oninput="renderMats()" />
+  </div>
+  <div class="mat-filter-row" id="matFilters"></div>
+  <div class="mat-grid" id="matGrid"></div>
+</div>
+
 <!-- MY PROFILE PANEL -->
+
 <div class="profile-wrap" id="profileWrap">
   <div class="profile-card">
     <div class="profile-avatar-wrap">
@@ -292,8 +362,15 @@
   <div class="modal">
     <h2 id="cnModalTitle">Character Notes</h2>
     <div class="modal-field">
+      <label>Icon / Emoji</label>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span id="cnEmojiDisplay" style="font-size:1.8rem;cursor:pointer;" title="Tap to change"></span>
+        <button type="button" class="btn-cancel" style="padding:6px 14px;font-size:.8rem;" onclick="openEmojiPicker(e=>{ document.getElementById('cnEmojiDisplay').textContent=e; })">Change ✏️</button>
+      </div>
+    </div>
+    <div class="modal-field">
       <label>Character</label>
-      <select id="cnChar"></select>
+      <select id="cnChar" onchange="if(!document.getElementById('cnEmojiDisplay').dataset.custom){ document.getElementById('cnEmojiDisplay').textContent=getEmoji(this.value); }"></select>
     </div>
     <div class="modal-field">
       <label>Friendship Level (1–10)</label>
@@ -340,8 +417,15 @@
   <div class="modal">
     <h2>Daily Checklist</h2>
     <div class="modal-field">
+      <label>Icon / Emoji</label>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span id="clEmojiDisplay" style="font-size:1.8rem;cursor:pointer;" title="Tap to change"></span>
+        <button type="button" class="btn-cancel" style="padding:6px 14px;font-size:.8rem;" onclick="openEmojiPicker(e=>{ document.getElementById('clEmojiDisplay').textContent=e; document.getElementById('clEmojiDisplay').dataset.custom='1'; })">Change ✏️</button>
+      </div>
+    </div>
+    <div class="modal-field">
       <label>Character</label>
-      <select id="clChar"></select>
+      <select id="clChar" onchange="if(!document.getElementById('clEmojiDisplay').dataset.custom){ document.getElementById('clEmojiDisplay').textContent=getEmoji(this.value); }"></select>
     </div>
     <div class="modal-field">
       <label>Today's Gifts / Wants (up to 3)</label>
@@ -940,6 +1024,7 @@ const filterDefs = [
   {key:"profile",   label:"🌟 My Profile"},
   {key:"cn",        label:"📋 My Characters"},
   {key:"cl",        label:"✅ Daily Checklist"},
+  {key:"mat",       label:"📦 Materials"},
 ];
 const filtersEl = document.getElementById("filters");
 filterDefs.forEach(f=>{
@@ -955,6 +1040,7 @@ filterDefs.forEach(f=>{
     if(f.key==="cn")     { setView("cn");     loadCn(); return; }
     if(f.key==="cl")     { setView("cl");     loadCl(); return; }
     if(f.key==="profile"){ setView("profile"); loadProfile(); return; }
+    if(f.key==="mat")    { setView("mat");    initMats(); return; }
     setView("main");
     document.getElementById("subFilters").classList.toggle("visible", f.key==="recipes");
     filterCards();
@@ -1076,12 +1162,13 @@ function populateSelect(selId, blankLabel="— Select Character —"){
 
 // ── VIEW SWITCHER ──────────────────────────────────────────
 function setView(view){
-  document.getElementById("grid").style.display          = view==="main"    ? "grid"  : "none";
-  document.getElementById("resultsInfo").style.display   = view==="main"    ? "block" : "none";
-  document.getElementById("icymiWrap").style.display     = view==="icymi"   ? "block" : "none";
-  document.getElementById("cnWrap").classList.toggle("visible",    view==="cn");
-  document.getElementById("clWrap").classList.toggle("visible",    view==="cl");
+  document.getElementById("grid").style.display           = view==="main"    ? "grid"  : "none";
+  document.getElementById("resultsInfo").style.display    = view==="main"    ? "block" : "none";
+  document.getElementById("icymiWrap").style.display      = view==="icymi"   ? "block" : "none";
+  document.getElementById("cnWrap").classList.toggle("visible",      view==="cn");
+  document.getElementById("clWrap").classList.toggle("visible",      view==="cl");
   document.getElementById("profileWrap").classList.toggle("visible", view==="profile");
+  document.getElementById("matWrap").classList.toggle("visible",     view==="mat");
   const sw = document.getElementById("searchInput").closest(".search-wrap");
   sw.style.opacity = view==="main" ? "1" : "0.3";
   document.getElementById("searchInput").disabled = view !== "main";
@@ -1110,9 +1197,10 @@ function renderCn(){
     const realIdx = cnData.indexOf(c);
     const d = document.createElement("div");
     d.className="cn-card"; d.style.animationDelay=i*.05+"s";
+    const em = c.customEmoji || getEmoji(c.char);
     d.innerHTML=`
       <div class="cn-header">
-        <div class="cn-avatar">${getEmoji(c.char)}</div>
+        <div class="cn-avatar">${em}</div>
         <div class="cn-name">${c.char}</div>
         <div class="cn-actions">
           <button class="cn-btn" onclick="editCn(${realIdx})">Edit</button>
@@ -1136,6 +1224,8 @@ function openCnModal(isEdit=false){
   if(!isEdit){
     ["cnChar","cnJob","cnBiome"].forEach(id=>document.getElementById(id).value="");
     document.getElementById("cnNotes").value="";
+    document.getElementById("cnEmojiDisplay").textContent="🌟";
+    delete document.getElementById("cnEmojiDisplay").dataset.custom;
     cnEditIdx=null;
   }
   document.getElementById("cnModal").classList.remove("hidden");
@@ -1151,6 +1241,9 @@ function editCn(i){
     document.getElementById("cnJob").value=c.job||"";
     document.getElementById("cnBiome").value=c.biome||"";
     document.getElementById("cnNotes").value=c.notes||"";
+    const disp=document.getElementById("cnEmojiDisplay");
+    disp.textContent=c.customEmoji||getEmoji(c.char);
+    if(c.customEmoji) disp.dataset.custom="1"; else delete disp.dataset.custom;
   },20);
 }
 async function deleteCn(i){ cnData.splice(i,1); await saveCnStore(); renderCn(); }
@@ -1158,8 +1251,10 @@ async function deleteCn(i){ cnData.splice(i,1); await saveCnStore(); renderCn();
 async function saveCn(){
   const char=document.getElementById("cnChar").value;
   if(!char){alert("Please select a character!"); return;}
+  const disp=document.getElementById("cnEmojiDisplay");
   const entry={
     char,
+    customEmoji: disp.dataset.custom ? disp.textContent : null,
     level: document.getElementById("cnLevel").value,
     job: document.getElementById("cnJob").value,
     biome: document.getElementById("cnBiome").value,
@@ -1224,7 +1319,7 @@ function renderCl(){
 
     card.innerHTML=`
       <div class="cl-header">
-        <div class="cn-avatar">${getEmoji(entry.char)}</div>
+        <div class="cn-avatar">${entry.customEmoji||getEmoji(entry.char)}</div>
         <div style="flex:1">
           <div class="cl-name">${entry.char} <span class="cl-done-badge">✓ All done!</span></div>
           <div style="font-size:.7rem;color:rgba(255,255,255,.3);margin-top:1px;">${doneCount}/${total} complete</div>
@@ -1251,7 +1346,9 @@ async function deleteCl(ei){ clData.splice(ei,1); await saveClStore(); renderCl(
 
 function openClModal(){
   populateSelect("clChar");
-  ["clChar"].forEach(id=>document.getElementById(id).value="");
+  document.getElementById("clChar").value="";
+  document.getElementById("clEmojiDisplay").textContent="🌟";
+  delete document.getElementById("clEmojiDisplay").dataset.custom;
   ["gift1","gift2","gift3"].forEach(id=>document.getElementById(id).value="");
   document.getElementById("clTasks").value="";
   document.getElementById("clNotes").value="";
@@ -1262,6 +1359,7 @@ function closeClModal(){ document.getElementById("clModal").classList.add("hidde
 async function saveCl(){
   const char=document.getElementById("clChar").value;
   if(!char){alert("Please select a character!"); return;}
+  const disp=document.getElementById("clEmojiDisplay");
   const gifts=[
     document.getElementById("gift1").value.trim(),
     document.getElementById("gift2").value.trim(),
@@ -1269,7 +1367,8 @@ async function saveCl(){
   ];
   const tasks=document.getElementById("clTasks").value.split("\n").map(t=>t.trim()).filter(Boolean);
   const notes=document.getElementById("clNotes").value.trim();
-  clData.push({char,gifts,tasks,notes,checks:[]});
+  const customEmoji = disp.dataset.custom ? disp.textContent : null;
+  clData.push({char, customEmoji, gifts, tasks, notes, checks:[]});
   await saveClStore(); renderCl(); closeClModal();
 }
 
@@ -1379,6 +1478,299 @@ function loadProfile(){
     document.getElementById(id).oninput = autoSaveProfile;
   });
   document.getElementById("levelSlider").oninput = function(){ updateLevel(this.value); autoSaveProfile(); };
+}
+
+// ── EMOJI PICKER ──────────────────────────────────────────
+const emojiSets = {
+  "Nature":["🌸","🌺","🌻","🌹","🌷","🌼","🍀","🌿","🍃","🍂","🍁","🌱","🌾","🎋","🎍","🌵","🌴","🌳","🌲","🍄","🐚","🪸","🌊","💧","❄️","⛄","🌙","☀️","⭐","✨","💫","🌟","🌈","🌤️","⛅","🌧️","⚡","🔥","💨"],
+  "Animals":["🐱","🐶","🐭","🐹","🐰","🦊","🐻","🐼","🐨","🐯","🦁","🐮","🐷","🐸","🐵","🐔","🐧","🐦","🦆","🦅","🦋","🐛","🐝","🐞","🐢","🦎","🐍","🐉","🦄","🐴","🦌","🐑","🐐","🦙","🐇","🦔","🐿️","🦫","🦦","🦥","🐾"],
+  "Food":["🍎","🍊","🍋","🍇","🍓","🫐","🍈","🍑","🍒","🥭","🍍","🥥","🥝","🍅","🫒","🥑","🍆","🥦","🥕","🌽","🧅","🧄","🥔","🌶️","🫑","🍄","🥜","🫘","🌰","🍞","🧀","🥚","🍳","🥞","🧇","🍖","🍗","🥩","🥓","🌮","🍕","🍝","🍜","🍲","🍛","🍣","🍱","🥗","🧆","🍩","🍪","🎂","🍰","🧁","🍫","🍬","🍭","🍦","🍧","☕","🫖","🧃","🥤","🍵"],
+  "Magic":["✨","🌟","💫","⭐","🌙","🔮","🪄","🎩","🧙","🧝","🧚","🧜","🧞","👻","🎃","💀","🪦","🕯️","🔯","☯️","♾️","🌀","🌊","❄️","🔥","⚡","💎","🪩","🎆","🎇","🧨"],
+  "Hearts":["❤️","🧡","💛","💚","💙","💜","🖤","🤍","🤎","💗","💓","💞","💕","💝","💖","💘","💟","❣️","💔","🫀","♥️"],
+  "Objects":["⚔️","🛡️","🪝","🗝️","🔑","💰","💎","🏆","🎖️","🥇","🎯","🎪","🎨","🖼️","🎭","🎬","🎤","🎵","🎶","🎸","🎹","🎺","🎻","🪗","🪘","🥁","📚","📖","📝","✏️","🖊️","🪶","📌","📍","🧲","💡","🔦","🕯️","🪔","🧪","🔭","🪜","🧺","🪣","🧹","🧸","🪆","🎎","🎏","🎀","🎁","🪅"],
+  "Places":["🏰","🏯","⛩️","🏛️","🗼","🗽","🗺️","🧭","🏔️","⛰️","🌋","🏕️","🏖️","🏜️","🏝️","🌅","🌄","🌃","🌆","🌇","🌉","🎠","🎡","🎢","🛶","⛵","🚀","🛸","🪂"],
+  "Symbols":["💠","🔷","🔹","🔶","🔸","🟣","🟤","🟡","🟠","🔴","🟢","🔵","⚪","⚫","🟥","🟧","🟨","🟩","🟦","🟪","🔲","🔳","▪️","▫️","◾","◽","◼️","◻️","🔺","🔻","💯","🔅","🔆","♻️","⚜️","🏵️","🎗️"],
+};
+const allEmojiFlat = Object.values(emojiSets).flat();
+let emojiCallback = null;
+let emojiActiveCat = "Nature";
+
+function openEmojiPicker(callback){
+  emojiCallback = callback;
+  emojiActiveCat = "Nature";
+  document.getElementById("emojiSearch").value = "";
+  buildEmojiCats();
+  filterEmojis();
+  document.getElementById("emojiPickerModal").classList.remove("hidden");
+}
+function closeEmojiPicker(){ document.getElementById("emojiPickerModal").classList.add("hidden"); emojiCallback=null; }
+
+function buildEmojiCats(){
+  const el = document.getElementById("emojiCats");
+  el.innerHTML="";
+  Object.keys(emojiSets).forEach(cat=>{
+    const btn=document.createElement("button");
+    btn.className="emoji-cat-btn"+(cat===emojiActiveCat?" active":"");
+    btn.textContent=cat;
+    btn.onclick=()=>{
+      emojiActiveCat=cat;
+      document.getElementById("emojiSearch").value="";
+      document.querySelectorAll(".emoji-cat-btn").forEach(b=>b.classList.remove("active"));
+      btn.classList.add("active");
+      filterEmojis();
+    };
+    el.appendChild(btn);
+  });
+}
+
+function filterEmojis(){
+  const q = document.getElementById("emojiSearch").value.trim();
+  const list = q ? allEmojiFlat.filter(e=>e.includes(q)) : (emojiSets[emojiActiveCat]||allEmojiFlat);
+  const grid = document.getElementById("emojiGrid");
+  grid.innerHTML="";
+  list.forEach(em=>{
+    const btn=document.createElement("button");
+    btn.className="emoji-btn"; btn.textContent=em;
+    btn.onclick=()=>{ if(emojiCallback){ emojiCallback(em); } closeEmojiPicker(); };
+    grid.appendChild(btn);
+  });
+}
+document.getElementById("emojiPickerModal").addEventListener("click",e=>{
+  if(e.target===document.getElementById("emojiPickerModal")) closeEmojiPicker();
+});
+
+// ── MATERIALS DATABASE ────────────────────────────────────
+// type: forage | mine | fish | grow | chop | buy | cook | dig | gift
+const matsData = [
+  // ── FORAGEABLES ──
+  {emoji:"🍄",name:"Mushroom",type:"forage",biome:"Forgotten Lands, Glade of Trust",note:"Found on the ground"},
+  {emoji:"🌿",name:"Basil",type:"forage",biome:"Peaceful Meadow, Plaza",note:"Ground forage"},
+  {emoji:"🌿",name:"Oregano",type:"forage",biome:"Forest of Valor, Sunlit Plateau",note:"Ground forage"},
+  {emoji:"🌿",name:"Mint",type:"forage",biome:"Frosted Heights",note:"Ground forage"},
+  {emoji:"🌿",name:"Ginger",type:"forage",biome:"Glade of Trust",note:"Ground forage"},
+  {emoji:"🌿",name:"Vanilla",type:"forage",biome:"Sunlit Plateau",note:"Ground forage"},
+  {emoji:"🌿",name:"Seaweed",type:"forage",biome:"Dazzle Beach",note:"Found at water's edge"},
+  {emoji:"🌿",name:"Spinach",type:"forage",biome:"Dazzle Beach",note:"Ground forage"},
+  {emoji:"🌿",name:"Lettuce",type:"forage",biome:"Peaceful Meadow",note:"Ground forage"},
+  {emoji:"🍂",name:"Dry Wood",type:"forage",biome:"Sunlit Plateau, Forgotten Lands",note:"Ground forage"},
+  {emoji:"🌸",name:"Falling Penstemon",type:"forage",biome:"Peaceful Meadow",note:"Seasonal flower"},
+  {emoji:"🌸",name:"Pink Bromeliad",type:"forage",biome:"Sunlit Plateau",note:"Flower forage"},
+  {emoji:"🌸",name:"Red Bromeliad",type:"forage",biome:"Sunlit Plateau",note:"Flower forage"},
+  {emoji:"🌸",name:"Orange Bromeliad",type:"forage",biome:"Sunlit Plateau",note:"Flower forage"},
+  {emoji:"🌸",name:"Yellow Bromeliad",type:"forage",biome:"Sunlit Plateau",note:"Flower forage"},
+  {emoji:"🌸",name:"White Impatiens",type:"forage",biome:"Glade of Trust",note:"Flower forage"},
+  {emoji:"🌸",name:"Red Impatiens",type:"forage",biome:"Glade of Trust",note:"Flower forage"},
+  {emoji:"🌸",name:"Purple Impatiens",type:"forage",biome:"Glade of Trust",note:"Flower forage"},
+  {emoji:"🌸",name:"Orange Impatiens",type:"forage",biome:"Glade of Trust",note:"Flower forage"},
+  {emoji:"🌸",name:"White Hydrangea",type:"forage",biome:"Forest of Valor",note:"Flower forage"},
+  {emoji:"🌸",name:"Blue Hydrangea",type:"forage",biome:"Forest of Valor",note:"Flower forage"},
+  {emoji:"🌸",name:"Pink Hydrangea",type:"forage",biome:"Forest of Valor",note:"Flower forage"},
+  {emoji:"🌸",name:"Red Daisy",type:"forage",biome:"Peaceful Meadow",note:"Flower forage"},
+  {emoji:"🌸",name:"White Daisy",type:"forage",biome:"Peaceful Meadow",note:"Flower forage"},
+  {emoji:"🌸",name:"Yellow Daisy",type:"forage",biome:"Peaceful Meadow",note:"Flower forage"},
+  {emoji:"🌸",name:"Orange Daisy",type:"forage",biome:"Peaceful Meadow",note:"Flower forage"},
+  {emoji:"🌸",name:"Sunflower",type:"forage",biome:"Sunlit Plateau",note:"Flower forage"},
+  {emoji:"🌸",name:"Pink Sunflower",type:"forage",biome:"Sunlit Plateau",note:"Flower forage"},
+  {emoji:"🌸",name:"White Snowdrop",type:"forage",biome:"Frosted Heights",note:"Flower forage"},
+  {emoji:"🌸",name:"Pink Snowdrop",type:"forage",biome:"Frosted Heights",note:"Flower forage"},
+  {emoji:"🌸",name:"Purple Snowdrop",type:"forage",biome:"Frosted Heights",note:"Flower forage"},
+  {emoji:"🌸",name:"Red Passion Lily",type:"forage",biome:"Forgotten Lands",note:"Flower forage"},
+  {emoji:"🌸",name:"White Passion Lily",type:"forage",biome:"Forgotten Lands",note:"Flower forage"},
+  {emoji:"🌸",name:"Yellow Passion Lily",type:"forage",biome:"Forgotten Lands",note:"Flower forage"},
+  {emoji:"🌸",name:"Purple Passion Lily",type:"forage",biome:"Forgotten Lands",note:"Flower forage"},
+  {emoji:"🌸",name:"Pink Marsh Milkweed",type:"forage",biome:"Dazzle Beach",note:"Flower forage"},
+  {emoji:"🌸",name:"Red Marsh Milkweed",type:"forage",biome:"Dazzle Beach",note:"Flower forage"},
+  {emoji:"🌸",name:"Orange Marsh Milkweed",type:"forage",biome:"Dazzle Beach",note:"Flower forage"},
+  // ── FRUITS ──
+  {emoji:"🍎",name:"Apple",type:"forage",biome:"Forest of Valor, Frosted Heights",note:"Falls from trees"},
+  {emoji:"🍋",name:"Lemon",type:"forage",biome:"Dazzle Beach",note:"Falls from trees"},
+  {emoji:"🍌",name:"Banana",type:"forage",biome:"Sunlit Plateau",note:"Falls from trees"},
+  {emoji:"🍒",name:"Cherry",type:"forage",biome:"Peaceful Meadow, Plaza",note:"Falls from trees"},
+  {emoji:"🍓",name:"Raspberry",type:"forage",biome:"Peaceful Meadow",note:"Ground forage / bushes"},
+  {emoji:"🫐",name:"Blueberry",type:"forage",biome:"Forest of Valor",note:"Ground forage / bushes"},
+  {emoji:"🍇",name:"Gooseberry",type:"forage",biome:"Frosted Heights",note:"Ground forage / bushes"},
+  {emoji:"🍊",name:"Coconut",type:"forage",biome:"Dazzle Beach",note:"Falls from palm trees"},
+  {emoji:"✨",name:"Dreamlight Fruit",type:"forage",biome:"Any biome night chest / Dreamlight tasks",note:"Rare — from night chests & rewards"},
+  // ── MINING ──
+  {emoji:"💎",name:"Diamond",type:"mine",biome:"Forgotten Lands",note:"Rare — dark rock nodes"},
+  {emoji:"🟣",name:"Amethyst",type:"mine",biome:"Peaceful Meadow, Forgotten Lands",note:"Purple rock nodes"},
+  {emoji:"🔵",name:"Aquamarine",type:"mine",biome:"Forest of Valor, Glade of Trust",note:"Blue-green rock nodes"},
+  {emoji:"🟡",name:"Citrine",type:"mine",biome:"Sunlit Plateau",note:"Orange-yellow rock nodes"},
+  {emoji:"🟢",name:"Emerald",type:"mine",biome:"Forest of Valor",note:"Green rock nodes"},
+  {emoji:"🔴",name:"Garnet",type:"mine",biome:"Peaceful Meadow, Sunlit Plateau",note:"Red rock nodes"},
+  {emoji:"🟤",name:"Peridot",type:"mine",biome:"Sunlit Plateau, Glade of Trust",note:"Green rock nodes"},
+  {emoji:"🔴",name:"Ruby",type:"mine",biome:"Sunlit Plateau, Forgotten Lands",note:"Red rock nodes"},
+  {emoji:"🔵",name:"Sapphire",type:"mine",biome:"Frosted Heights",note:"Blue rock nodes"},
+  {emoji:"⬛",name:"Onyx",type:"mine",biome:"Forgotten Lands",note:"Black rock nodes"},
+  {emoji:"🪨",name:"Stone",type:"mine",biome:"Any biome",note:"Gray rock nodes everywhere"},
+  {emoji:"⬜",name:"Coal Ore",type:"mine",biome:"Peaceful Meadow, Forest of Valor",note:"Black rock nodes"},
+  {emoji:"🔩",name:"Iron Ore",type:"mine",biome:"Peaceful Meadow, Forest of Valor",note:"Gray rock nodes"},
+  {emoji:"🟡",name:"Gold Ore",type:"mine",biome:"Sunlit Plateau, Forgotten Lands",note:"Golden rock nodes"},
+  {emoji:"🌑",name:"Night Shard",type:"mine",biome:"Any biome",note:"From dark colored rock nodes"},
+  {emoji:"🌙",name:"Dream Shard",type:"mine",biome:"Any biome",note:"From sparkling nodes — common"},
+  // ── WOOD ──
+  {emoji:"🪵",name:"Softwood",type:"chop",biome:"Peaceful Meadow, Plaza",note:"Light-colored stumps"},
+  {emoji:"🪵",name:"Hardwood",type:"chop",biome:"Forest of Valor, Glade of Trust",note:"Dark-colored tree stumps"},
+  {emoji:"🪵",name:"Rich Soil",type:"dig",biome:"Any biome",note:"Glowing dig spots on ground"},
+  {emoji:"🪵",name:"Twig",type:"forage",biome:"Any biome",note:"Ground forage"},
+  // ── CROPS (SCROOGE'S SHOP / SEEDS) ──
+  {emoji:"🌽",name:"Corn",type:"grow",biome:"Any farming plot",note:"Buy seeds from Goofy's stall — Dazzle Beach"},
+  {emoji:"🎃",name:"Pumpkin",type:"grow",biome:"Any farming plot",note:"Buy seeds from Goofy's stall — Peaceful Meadow"},
+  {emoji:"🍅",name:"Tomato",type:"grow",biome:"Any farming plot",note:"Buy seeds from Goofy's stall — Dazzle Beach"},
+  {emoji:"🫑",name:"Bell Pepper",type:"grow",biome:"Any farming plot",note:"Buy seeds from Goofy's stall — Sunlit Plateau"},
+  {emoji:"🌶️",name:"Chili Pepper",type:"grow",biome:"Any farming plot",note:"Buy seeds from Goofy's stall — Sunlit Plateau"},
+  {emoji:"🥕",name:"Carrot",type:"grow",biome:"Any farming plot",note:"Buy seeds from Goofy's stall — Peaceful Meadow"},
+  {emoji:"🥦",name:"Broccoli",type:"grow",biome:"Any farming plot",note:"Buy seeds from Goofy's stall — Forest of Valor"},
+  {emoji:"🍆",name:"Eggplant",type:"grow",biome:"Any farming plot",note:"Buy seeds from Goofy's stall — Peaceful Meadow"},
+  {emoji:"🥒",name:"Zucchini",type:"grow",biome:"Any farming plot",note:"Buy seeds from Goofy's stall — Forest of Valor"},
+  {emoji:"🧅",name:"Onion",type:"grow",biome:"Any farming plot",note:"Buy seeds from Goofy's stall — Plaza"},
+  {emoji:"🧄",name:"Garlic",type:"grow",biome:"Any farming plot",note:"Buy seeds from Goofy's stall — Forgotten Lands"},
+  {emoji:"🥬",name:"Leek",type:"grow",biome:"Any farming plot",note:"Buy seeds from Goofy's stall — Frosted Heights"},
+  {emoji:"🌾",name:"Wheat",type:"grow",biome:"Any farming plot",note:"Buy seeds from Goofy's stall — Peaceful Meadow"},
+  {emoji:"🌾",name:"Rice",type:"grow",biome:"Any farming plot",note:"Buy seeds from Goofy's stall — Glade of Trust"},
+  {emoji:"🥜",name:"Peanut",type:"grow",biome:"Any farming plot",note:"Buy seeds from Goofy's stall — Sunlit Plateau"},
+  {emoji:"🌿",name:"Okra",type:"grow",biome:"Any farming plot",note:"Buy seeds from Goofy's stall — Sunlit Plateau"},
+  {emoji:"🫛",name:"Asparagus",type:"grow",biome:"Any farming plot",note:"Buy seeds from Goofy's stall — Dazzle Beach"},
+  {emoji:"🌿",name:"Sugarcane",type:"grow",biome:"Any farming plot",note:"Buy seeds from Goofy's stall — Dazzle Beach"},
+  // ── FISH ──
+  {emoji:"🐟",name:"Carp",type:"fish",biome:"Peaceful Meadow, Plaza",note:"Any bubble color"},
+  {emoji:"🐟",name:"Herring",type:"fish",biome:"Dazzle Beach",note:"Any bubble color"},
+  {emoji:"🐟",name:"Salmon",type:"fish",biome:"Forest of Valor, Frosted Heights",note:"Any bubble color"},
+  {emoji:"🐟",name:"Tuna",type:"fish",biome:"Dazzle Beach",note:"Blue/white bubbles"},
+  {emoji:"🐟",name:"Bass",type:"fish",biome:"Forest of Valor",note:"Any bubble color"},
+  {emoji:"🐟",name:"Cod",type:"fish",biome:"Dazzle Beach, Forest of Valor",note:"Any bubble color"},
+  {emoji:"🐡",name:"Pufferfish / Fugu",type:"fish",biome:"Dazzle Beach",note:"Blue bubbles"},
+  {emoji:"🐟",name:"Tilapia",type:"fish",biome:"Glade of Trust",note:"Any bubble color"},
+  {emoji:"🐟",name:"Perch",type:"fish",biome:"Peaceful Meadow",note:"Any bubble color"},
+  {emoji:"🐟",name:"Rainbow Trout",type:"fish",biome:"Peaceful Meadow, Glade of Trust",note:"Blue bubbles"},
+  {emoji:"🐟",name:"Squid",type:"fish",biome:"Dazzle Beach",note:"Blue bubbles"},
+  {emoji:"🐟",name:"Sole",type:"fish",biome:"Dazzle Beach",note:"Any bubble color"},
+  {emoji:"🐟",name:"Bream",type:"fish",biome:"Peaceful Meadow, Dazzle Beach",note:"Any bubble color"},
+  {emoji:"🐟",name:"Anglerfish",type:"fish",biome:"Forgotten Lands",note:"Blue bubbles — nighttime"},
+  {emoji:"🐟",name:"Swordfish",type:"fish",biome:"Dazzle Beach",note:"Blue bubbles"},
+  {emoji:"🐟",name:"Walleye",type:"fish",biome:"Sunlit Plateau",note:"Any bubble color"},
+  {emoji:"🐟",name:"Kingfish",type:"fish",biome:"Sunlit Plateau",note:"Blue bubbles"},
+  {emoji:"🐟",name:"Lancetfish",type:"fish",biome:"Forgotten Lands",note:"Blue bubbles"},
+  {emoji:"🐟",name:"Sturgeon",type:"fish",biome:"Frosted Heights",note:"Blue bubbles"},
+  {emoji:"🐡",name:"Here and There Fish",type:"fish",biome:"Any biome — rare",note:"Gold bubbles — very rare"},
+  {emoji:"🦞",name:"Lobster",type:"fish",biome:"Dazzle Beach",note:"Gold bubbles — rare"},
+  {emoji:"🦐",name:"Shrimp",type:"fish",biome:"Dazzle Beach, Glade of Trust",note:"White ripple bubbles"},
+  {emoji:"🦪",name:"Oyster",type:"fish",biome:"Dazzle Beach",note:"White ripple bubbles"},
+  {emoji:"🦪",name:"Scallops",type:"fish",biome:"Dazzle Beach",note:"Gold bubbles"},
+  // ── SHOP / BUY ──
+  {emoji:"🥛",name:"Milk",type:"buy",biome:"Remy's pantry / Chez Remy",note:"Unlocked after Remy quest"},
+  {emoji:"🧈",name:"Butter",type:"buy",biome:"Remy's pantry / Chez Remy",note:"Unlocked after Remy quest"},
+  {emoji:"🥚",name:"Egg",type:"buy",biome:"Remy's pantry / Chez Remy",note:"Unlocked after Remy quest"},
+  {emoji:"🧀",name:"Cheese",type:"buy",biome:"Remy's pantry / Chez Remy",note:"Unlocked after Remy quest"},
+  {emoji:"🫒",name:"Canola Oil",type:"buy",biome:"Remy's pantry / Chez Remy",note:"Listed as Canola in recipes"},
+  {emoji:"☕",name:"Coffee Bean",type:"buy",biome:"Remy's pantry / Chez Remy",note:"Unlocked after Remy quest"},
+  {emoji:"🍫",name:"Cocoa Bean",type:"buy",biome:"Remy's pantry / Chez Remy",note:"Unlocked after Remy quest"},
+  {emoji:"🍦",name:"Slush Ice",type:"buy",biome:"Remy's pantry / Chez Remy",note:"Needed for sorbets & ice cream"},
+  {emoji:"🌿",name:"Soya",type:"buy",biome:"Goofy's stall — Glade of Trust",note:"Also craftable"},
+  // ── CRAFTING MATERIALS ──
+  {emoji:"🧱",name:"Clay",type:"dig",biome:"Peaceful Meadow, Sunlit Plateau",note:"Glowing dig spots"},
+  {emoji:"🪨",name:"Pebble",type:"dig",biome:"Any biome",note:"Glowing dig spots"},
+  {emoji:"🌑",name:"Sand",type:"dig",biome:"Dazzle Beach, Sunlit Plateau",note:"Glowing dig spots"},
+  {emoji:"❄️",name:"Tundra Ice",type:"dig",biome:"Frosted Heights",note:"Dig spots under snow"},
+  {emoji:"🟤",name:"Soil",type:"dig",biome:"Any biome",note:"Standard dig spots"},
+  // ── EXPANSION: RIFT IN TIME ──
+  {emoji:"🌵",name:"Cactoberries",type:"forage",biome:"Eternity Isle — Sunlit Plateau area",note:"Cactus plants"},
+  {emoji:"🥭",name:"Dreamango",type:"forage",biome:"Eternity Isle",note:"Mango-like fruit — forage"},
+  {emoji:"🍇",name:"Grapes",type:"grow",biome:"Eternity Isle",note:"Buy seeds on Eternity Isle"},
+  {emoji:"🍍",name:"Pineapple",type:"grow",biome:"Eternity Isle",note:"Buy seeds on Eternity Isle"},
+  {emoji:"🌿",name:"Agave",type:"forage",biome:"Eternity Isle — desert area",note:"Ground forage"},
+  {emoji:"🌿",name:"Bamboo",type:"chop",biome:"Eternity Isle — rainforest area",note:"Chop bamboo stalks"},
+  {emoji:"🌿",name:"Basil (Rift)",type:"forage",biome:"Eternity Isle",note:"Ground forage"},
+  {emoji:"🌿",name:"Cumin",type:"forage",biome:"Eternity Isle",note:"Ground forage"},
+  {emoji:"🌿",name:"Cinnamon",type:"forage",biome:"Eternity Isle",note:"Ground forage"},
+  {emoji:"🌿",name:"Paprika",type:"forage",biome:"Eternity Isle",note:"Ground forage"},
+  {emoji:"🥩",name:"Venison",type:"forage",biome:"Eternity Isle",note:"Found from animals / foraging"},
+  {emoji:"🥩",name:"Pork",type:"forage",biome:"Eternity Isle",note:"Found from animals / foraging"},
+  {emoji:"🍗",name:"Poultry",type:"forage",biome:"Eternity Isle",note:"Found from animals / foraging"},
+  {emoji:"🫘",name:"Beans",type:"grow",biome:"Eternity Isle",note:"Buy seeds on Eternity Isle"},
+  {emoji:"🫘",name:"Ruby Lentils",type:"forage",biome:"Eternity Isle — desert",note:"Ground forage"},
+  {emoji:"🌿",name:"Majestea",type:"forage",biome:"Eternity Isle",note:"Tea plant — special forage"},
+  {emoji:"🥥",name:"Coconut (Rift)",type:"forage",biome:"Eternity Isle — rainforest",note:"Falls from trees"},
+  // ── EXPANSION: STORYBOOK VALE ──
+  {emoji:"🍓",name:"Spiral Strawberries",type:"forage",biome:"Storybook Vale",note:"Ground forage"},
+  {emoji:"🍏",name:"Golden Apple",type:"forage",biome:"Storybook Vale",note:"Falls from trees"},
+  {emoji:"🍊",name:"Persimmon",type:"forage",biome:"Storybook Vale",note:"Falls from trees"},
+  {emoji:"🍈",name:"Honeydew Melon",type:"forage",biome:"Storybook Vale",note:"Ground forage"},
+  {emoji:"🌿",name:"Ambrosia",type:"forage",biome:"Storybook Vale — Olympus area",note:"Rare forage"},
+  {emoji:"🌿",name:"Sea Grapes",type:"forage",biome:"Storybook Vale — coastal",note:"Water's edge forage"},
+  {emoji:"🌿",name:"Rhubarb",type:"forage",biome:"Storybook Vale",note:"Ground forage"},
+  {emoji:"🌿",name:"Radicchio",type:"forage",biome:"Storybook Vale",note:"Ground forage"},
+  {emoji:"🌿",name:"Olives",type:"forage",biome:"Storybook Vale",note:"From olive trees"},
+  {emoji:"🌿",name:"Oats",type:"grow",biome:"Storybook Vale",note:"Buy seeds in Storybook Vale"},
+  {emoji:"🌿",name:"Barley",type:"grow",biome:"Storybook Vale",note:"Buy seeds in Storybook Vale"},
+  {emoji:"🌿",name:"Elysian Grain",type:"grow",biome:"Storybook Vale — Olympus",note:"Special grain — grow"},
+  {emoji:"🧀",name:"Flyleaf Feta",type:"forage",biome:"Storybook Vale",note:"Found in forage spots"},
+  {emoji:"🧂",name:"Salt Crystal",type:"mine",biome:"Storybook Vale — coastal",note:"Mine from salt rock nodes"},
+  {emoji:"🌿",name:"Faerie Rye",type:"grow",biome:"Storybook Vale — Faerie area",note:"Buy seeds in area"},
+  {emoji:"🌿",name:"Chia Seeds",type:"grow",biome:"Storybook Vale",note:"Buy seeds in Storybook Vale"},
+  {emoji:"🫐",name:"Cape Gooseberry",type:"forage",biome:"Storybook Vale",note:"Ground forage"},
+  {emoji:"🍓",name:"Sour Berries",type:"forage",biome:"Storybook Vale",note:"Ground forage"},
+  {emoji:"🌿",name:"Lightning Spice",type:"forage",biome:"Storybook Vale — Olympus",note:"Rare — near lightning areas"},
+  {emoji:"🥬",name:"Brussels Sprout",type:"grow",biome:"Storybook Vale",note:"Buy seeds in Storybook Vale"},
+  {emoji:"🥦",name:"Cauliflower",type:"grow",biome:"Storybook Vale",note:"Buy seeds in Storybook Vale"},
+  {emoji:"🥬",name:"Green Beans",type:"grow",biome:"Storybook Vale",note:"Buy seeds in Storybook Vale"},
+  {emoji:"🔴",name:"Radish",type:"grow",biome:"Storybook Vale",note:"Buy seeds in Storybook Vale"},
+  {emoji:"🎃",name:"Ring Squash",type:"grow",biome:"Storybook Vale",note:"Buy seeds in Storybook Vale"},
+  {emoji:"🌿",name:"Plain Yogurt",type:"buy",biome:"Storybook Vale shop",note:"Dairy — buy from shop"},
+  {emoji:"🌿",name:"Black Pepper",type:"forage",biome:"Storybook Vale",note:"Ground forage"},
+];
+
+const matTypes = ["all","forage","mine","fish","grow","chop","dig","buy"];
+let matActiveType = "all";
+let matsInited = false;
+
+function initMats(){
+  if(matsInited) return;
+  matsInited = true;
+  const filterRow = document.getElementById("matFilters");
+  matTypes.forEach(t=>{
+    const btn=document.createElement("button");
+    btn.className="mat-filter-btn"+(t==="all"?" active":"");
+    btn.textContent = t==="all" ? "✨ All" : {forage:"🌿 Forage",mine:"⛏️ Mine",fish:"🎣 Fish",grow:"🌱 Grow",chop:"🪓 Chop",dig:"⚒️ Dig",buy:"🛍️ Buy"}[t]||t;
+    btn.onclick=()=>{
+      matActiveType=t;
+      document.querySelectorAll(".mat-filter-btn").forEach(b=>b.classList.remove("active"));
+      btn.classList.add("active");
+      renderMats();
+    };
+    filterRow.appendChild(btn);
+  });
+  renderMats();
+}
+
+function renderMats(){
+  const q = (document.getElementById("matSearch").value||"").toLowerCase().trim();
+  const grid = document.getElementById("matGrid");
+  grid.innerHTML="";
+  const filtered = matsData.filter(m=>{
+    const matchType = matActiveType==="all" || m.type===matActiveType;
+    const matchQ = !q || m.name.toLowerCase().includes(q) || m.biome.toLowerCase().includes(q) || (m.note||"").toLowerCase().includes(q);
+    return matchType && matchQ;
+  });
+  if(!filtered.length){
+    grid.innerHTML=`<div class="mat-empty">🌑 Nothing found. Try a different search!</div>`;
+    return;
+  }
+  filtered.forEach((m,i)=>{
+    const typeLabels={forage:"Forage",mine:"Mine",fish:"Fish",grow:"Grow",chop:"Chop",dig:"Dig",buy:"Buy",cook:"Cook",gift:"Gift"};
+    const card=document.createElement("div");
+    card.className="mat-card"; card.style.animationDelay=Math.min(i*.02,.5)+"s";
+    card.innerHTML=`
+      <div class="mat-emoji">${m.emoji}</div>
+      <div class="mat-info">
+        <div class="mat-name">${m.name}</div>
+        <span class="mat-type type-${m.type}">${typeLabels[m.type]||m.type}</span>
+        <div class="mat-biome"><strong>Where:</strong> ${m.biome}</div>
+        ${m.note?`<div class="mat-note">${m.note}</div>`:""}
+      </div>
+    `;
+    grid.appendChild(card);
+  });
 }
 
 // close modals on overlay click
