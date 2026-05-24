@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>FE3H Tactical Companion</title>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
 <style>
@@ -14,10 +14,8 @@
     --gold-light: #e8cc7a;
     --cream: #f5ead8;
     --cream-dim: #c8b89a;
-    --tea: #8b5e3c;
     --accent: #7a3b2e;
     --green: #4a7c59;
-    --blue: #2980b9;
     --border: rgba(201,168,76,0.25);
     --border-bright: rgba(201,168,76,0.6);
   }
@@ -32,17 +30,17 @@
     background-image:
       radial-gradient(ellipse at 20% 0%, rgba(139,94,60,0.15) 0%, transparent 50%),
       radial-gradient(ellipse at 80% 100%, rgba(122,59,46,0.1) 0%, transparent 50%);
-    padding-bottom: 3rem;
+    padding-bottom: 4rem;
   }
 
-  /* Navigation Bar */
+  /* NAV */
   nav {
     background: var(--surface2);
     border-bottom: 1px solid var(--border);
     display: flex;
     justify-content: center;
-    gap: 2rem;
-    padding: 1rem;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
     position: sticky;
     top: 0;
     z-index: 100;
@@ -51,68 +49,55 @@
 
   .nav-btn {
     background: transparent;
-    border: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
     color: var(--cream-dim);
     font-family: 'Cinzel', serif;
-    font-size: 1rem;
-    letter-spacing: 0.1em;
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
     cursor: pointer;
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 0.85rem;
     transition: all 0.2s;
-    position: relative;
+    white-space: nowrap;
   }
 
-  .nav-btn:hover, .nav-btn.active {
-    color: var(--gold-light);
-  }
-
-  .nav-btn.active::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 1rem;
-    right: 1rem;
-    height: 2px;
-    background: var(--gold);
-  }
+  .nav-btn:hover { color: var(--gold-light); border-color: var(--border); }
+  .nav-btn.active { color: var(--gold-light); border-color: var(--gold); background: rgba(201,168,76,0.08); }
 
   header {
     text-align: center;
-    padding: 2rem 1rem 1rem;
+    padding: 1.5rem 1rem 0.75rem;
   }
 
   h1 {
     font-family: 'Cinzel', serif;
-    font-size: clamp(1.4rem, 4vw, 2.2rem);
+    font-size: clamp(1.2rem, 5vw, 2rem);
     color: var(--gold-light);
     font-weight: 700;
     letter-spacing: 0.05em;
   }
 
-  .app-section {
-    display: none;
+  .subtitle {
+    color: var(--cream-dim);
+    font-style: italic;
+    font-size: 0.88rem;
+    margin-top: 0.2rem;
   }
 
-  .app-section.active {
-    display: block;
-  }
+  .app-section { display: none; }
+  .app-section.active { display: block; }
 
-  /* Controls */
+  /* CONTROLS */
   .controls {
-    max-width: 1000px;
+    max-width: 960px;
     margin: 1rem auto 0;
     padding: 0 1rem;
     display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-    align-items: center;
+    flex-direction: column;
+    gap: 0.6rem;
   }
 
-  .search-wrap {
-    flex: 1;
-    min-width: 250px;
-    position: relative;
-  }
+  .search-wrap { position: relative; }
 
   .search-wrap::before {
     content: '⚜';
@@ -130,51 +115,60 @@
     background: var(--surface2);
     border: 1px solid var(--border-bright);
     border-radius: 4px;
-    padding: 0.55rem 0.75rem;
+    padding: 0.6rem 0.75rem;
     color: var(--cream);
     font-family: 'Crimson Pro', serif;
     font-size: 1rem;
     outline: none;
+    -webkit-appearance: none;
   }
 
   input[type="text"] { padding-left: 2.2rem; }
+
+  .house-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
 
   .house-btn {
     background: transparent;
     border: 1px solid var(--border);
     border-radius: 3px;
-    padding: 0.45rem 0.8rem;
+    padding: 0.35rem 0.65rem;
     color: var(--cream-dim);
     font-family: 'Cinzel', serif;
-    font-size: 0.7rem;
+    font-size: 0.68rem;
     cursor: pointer;
     transition: all 0.2s;
+    white-space: nowrap;
   }
 
   .house-btn.active, .house-btn:hover {
-    background: rgba(201,168,76,0.15);
+    background: rgba(201,168,76,0.12);
     border-color: var(--gold);
     color: var(--gold-light);
   }
 
-  /* Grid Layouts */
+  /* GRID */
   .grid-container {
-    max-width: 1000px;
-    margin: 1.5rem auto;
+    max-width: 960px;
+    margin: 1.25rem auto;
     padding: 0 1rem;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
-    gap: 1.25rem;
+    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+    gap: 1rem;
   }
 
-  /* Unified Character Cards */
+  /* CHARACTER CARDS */
   .char-card {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 6px;
     overflow: hidden;
-    transition: all 0.2s;
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
     cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
   }
 
   .char-card:hover {
@@ -183,8 +177,10 @@
     box-shadow: 0 6px 20px rgba(0,0,0,0.5);
   }
 
+  .char-card:active { transform: scale(0.99); }
+
   .card-header {
-    padding: 0.85rem 1rem;
+    padding: 0.75rem 1rem;
     display: flex;
     align-items: center;
     gap: 0.6rem;
@@ -192,99 +188,258 @@
     border-bottom: 1px solid var(--border);
   }
 
-  .house-dot { width: 8px; height: 8px; border-radius: 50%; }
-  .char-name { font-family: 'Cinzel', serif; font-size: 1rem; font-weight: 600; color: var(--gold-light); flex: 1; }
-  .house-label { font-size: 0.75rem; color: var(--cream-dim); opacity: 0.6; font-style: italic; }
+  .house-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .char-name { font-family: 'Cinzel', serif; font-size: 0.95rem; font-weight: 600; color: var(--gold-light); flex: 1; }
+  .house-label { font-size: 0.72rem; color: var(--cream-dim); opacity: 0.6; font-style: italic; text-align: right; }
 
-  .card-body { padding: 1rem; }
-  .section-label { font-family: 'Cinzel', serif; font-size: 0.68rem; letter-spacing: 0.08em; color: var(--gold); text-transform: uppercase; margin: 0.6rem 0 0.3rem; }
+  .card-body { padding: 0.85rem; }
+
+  .section-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin: 0.55rem 0 0.3rem;
+  }
   .section-label:first-child { margin-top: 0; }
 
-  .tag-list { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-bottom: 0.5rem; }
-  .item-tag { background: rgba(139,94,60,0.15); border: 1px solid rgba(139,94,60,0.4); border-radius: 2px; padding: 0.15rem 0.45rem; font-size: 0.85rem; color: #d4a96a; }
-  .item-tag.tea { background: rgba(201,168,76,0.1); border-color: rgba(201,168,76,0.3); color: var(--gold-light); }
-  .item-tag.gift { background: rgba(74,124,89,0.1); border-color: rgba(74,124,89,0.3); color: #8bc39a; }
-  .item-tag.lost { background: rgba(122,59,46,0.1); border-color: rgba(122,59,46,0.3); color: #f29c9c; }
+  .tag-list { display: flex; flex-wrap: wrap; gap: 0.3rem; }
 
-  .topics-list { display: flex; flex-wrap: wrap; gap: 0.3rem; font-size: 0.82rem; color: var(--cream-dim); line-height: 1.4; margin-bottom: 0.6rem; }
-  .topic-tag { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 2px; padding: 0.1rem 0.4rem; }
+  .item-tag {
+    border-radius: 2px;
+    padding: 0.15rem 0.4rem;
+    font-size: 0.82rem;
+  }
+  .item-tag.tea    { background: rgba(201,168,76,0.1);  border: 1px solid rgba(201,168,76,0.3);  color: var(--gold-light); }
+  .item-tag.gift   { background: rgba(74,124,89,0.1);   border: 1px solid rgba(74,124,89,0.3);   color: #8bc39a; }
+  .item-tag.lost   { background: rgba(122,59,46,0.1);   border: 1px solid rgba(122,59,46,0.3);   color: #f29c9c; }
+  .item-tag.none   { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); color: var(--cream-dim); opacity: 0.5; }
 
-  .expand-pane { display: none; margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px dashed var(--border); }
+  .expand-hint {
+    text-align: center;
+    font-size: 0.72rem;
+    color: var(--gold);
+    opacity: 0.5;
+    font-style: italic;
+    margin-top: 0.6rem;
+  }
+
+  .expand-pane {
+    display: none;
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px dashed var(--border);
+  }
   .char-card.expanded .expand-pane { display: block; }
 
-  .convo-block { background: rgba(0,0,0,0.15); padding: 0.5rem; border-radius: 4px; margin-bottom: 0.4rem; border-left: 2px solid var(--accent); }
-  .convo-line { font-style: italic; font-size: 0.85rem; margin-bottom: 0.2rem; }
-  .convo-answer { font-family: 'Cinzel', serif; font-size: 0.72rem; color: var(--green); font-weight: 600; }
+  .topics-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    margin-bottom: 0.6rem;
+  }
 
-  .expand-hint { text-align: center; font-size: 0.75rem; color: var(--gold); opacity: 0.5; font-style: italic; margin-top: 0.5rem; }
+  .topic-tag {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 2px;
+    padding: 0.1rem 0.4rem;
+    font-size: 0.8rem;
+    color: var(--cream-dim);
+  }
 
-  /* Roster Planner Elements */
+  .convo-block {
+    background: rgba(0,0,0,0.2);
+    padding: 0.5rem;
+    border-radius: 4px;
+    margin-bottom: 0.4rem;
+    border-left: 2px solid var(--accent);
+  }
+
+  .convo-line { font-style: italic; font-size: 0.83rem; margin-bottom: 0.2rem; color: var(--cream); }
+  .convo-answer { font-family: 'Cinzel', serif; font-size: 0.68rem; color: var(--green); font-weight: 600; }
+
+  .no-results {
+    grid-column: 1/-1;
+    text-align: center;
+    padding: 3rem;
+    color: var(--cream-dim);
+    font-style: italic;
+    opacity: 0.6;
+  }
+
+  /* ROSTER PLANNER */
+  .roster-controls {
+    max-width: 960px;
+    margin: 1rem auto 0;
+    padding: 0 1rem;
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .add-slot-btn {
+    background: rgba(74,124,89,0.15);
+    border: 1px solid rgba(74,124,89,0.4);
+    border-radius: 4px;
+    color: #8bc39a;
+    font-family: 'Cinzel', serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    padding: 0.55rem 1.1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .add-slot-btn:hover {
+    background: rgba(74,124,89,0.25);
+    border-color: #629e73;
+    color: #a8d4b0;
+  }
+
+  .clear-roster-btn {
+    background: rgba(122,59,46,0.12);
+    border: 1px solid rgba(122,59,46,0.35);
+    border-radius: 4px;
+    color: #f29c9c;
+    font-family: 'Cinzel', serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    padding: 0.55rem 1.1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .clear-roster-btn:hover {
+    background: rgba(122,59,46,0.22);
+    border-color: #9e4636;
+  }
+
   .roster-slot {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 6px;
-    padding: 1rem;
+    padding: 0.9rem;
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 0.65rem;
+    position: relative;
   }
-  .slot-title { font-family: 'Cinzel', serif; font-size: 0.85rem; color: var(--gold); border-bottom: 1px solid var(--border); padding-bottom: 0.25rem; }
-  
-  .row-field { display: flex; flex-direction: column; gap: 0.25rem; }
-  .row-field label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--cream-dim); }
 
-  .toggle-group { display: flex; gap: 0.5rem; margin-top: 0.25rem; }
-  .toggle-btn { flex: 1; background: var(--surface2); border: 1px solid var(--border); padding: 0.35rem; font-family: 'Cinzel', serif; font-size: 0.7rem; color: var(--cream-dim); cursor: pointer; border-radius: 3px; }
+  .slot-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0.4rem;
+  }
+
+  .slot-title {
+    font-family: 'Cinzel', serif;
+    font-size: 0.82rem;
+    color: var(--gold);
+  }
+
+  .remove-slot-btn {
+    background: transparent;
+    border: none;
+    color: var(--cream-dim);
+    opacity: 0.4;
+    font-size: 1.1rem;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0 0.2rem;
+    transition: opacity 0.2s, color 0.2s;
+  }
+  .remove-slot-btn:hover { opacity: 1; color: #f29c9c; }
+
+  .row-field { display: flex; flex-direction: column; gap: 0.2rem; }
+  .row-field label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--cream-dim); }
+
+  .toggle-group { display: flex; gap: 0.4rem; margin-top: 0.2rem; }
+
+  .toggle-btn {
+    flex: 1;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    padding: 0.35rem;
+    font-family: 'Cinzel', serif;
+    font-size: 0.68rem;
+    color: var(--cream-dim);
+    cursor: pointer;
+    border-radius: 3px;
+    transition: all 0.15s;
+  }
   .toggle-btn.active { background: var(--green); border-color: #629e73; color: white; }
-  .toggle-btn.bench.active { background: var(--accent); border-color: #9e4636; }
+  .toggle-btn.bench.active { background: var(--accent); border-color: #9e4636; color: white; }
 
-  /* House Accent Colors */
+  /* House dot colors */
   .dot-black-eagles { background: #c0392b; }
-  .dot-blue-lions { background: #2980b9; }
-  .dot-golden-deer { background: #f39c12; }
+  .dot-blue-lions   { background: #2980b9; }
+  .dot-golden-deer  { background: #f39c12; }
   .dot-ashen-wolves { background: #8e44ad; }
-  .dot-church { background: #27ae60; }
-  .dot-knights { background: #16a085; }
-  .dot-other { background: #7f8c8d; }
+  .dot-church       { background: #27ae60; }
+  .dot-other        { background: #7f8c8d; }
 
-  .no-results { grid-column: 1/-1; text-align: center; padding: 3rem; color: var(--cream-dim); font-style: italic; opacity: 0.6; }
+  /* Mobile tweaks */
+  @media (max-width: 480px) {
+    .grid-container {
+      grid-template-columns: 1fr;
+    }
+    .char-name { font-size: 0.9rem; }
+    .house-label { display: none; }
+  }
 </style>
 </head>
 <body>
 
 <nav>
-  <button class="nav-btn active" onclick="switchTab('lookup')">Tea & Gifts Lookup</button>
+  <button class="nav-btn active" onclick="switchTab('lookup')">Tea &amp; Gifts</button>
   <button class="nav-btn" onclick="switchTab('roster')">Roster Planner</button>
 </nav>
 
+<!-- LOOKUP TAB -->
 <div id="lookupTab" class="app-section active">
   <header>
-    <h1>Tactical Companion Lookup</h1>
-    <p style="color: var(--cream-dim); font-style: italic; font-size: 0.9rem; margin-top: 0.25rem;">Teas, Gifts, Lost Items, and Final Conversations Consolidated</p>
+    <h1>Tactical Companion</h1>
+    <p class="subtitle">Teas · Gifts · Lost Items · Tea Conversations</p>
   </header>
 
   <div class="controls">
     <div class="search-wrap">
-      <input type="text" id="searchInput" placeholder="Search name, items, gifts, or topics...">
+      <input type="text" id="searchInput" placeholder="Search name, items, gifts, topics…" autocomplete="off" autocorrect="off" spellcheck="false">
     </div>
-    <div class="filter-wrap" id="houseFilters"></div>
+    <div class="house-filters" id="houseFilters"></div>
   </div>
 
   <div class="grid-container" id="lookupGrid"></div>
 </div>
 
+<!-- ROSTER TAB -->
 <div id="rosterTab" class="app-section">
   <header>
-    <h1>Deployment Roster Builder</h1>
-    <p style="color: var(--cream-dim); font-style: italic; font-size: 0.9rem; margin-top: 0.25rem;">Manage active strike teams and targeted progression targets</p>
+    <h1>Deployment Roster</h1>
+    <p class="subtitle">Build your strike team · Add slots as needed</p>
   </header>
+
+  <div class="roster-controls">
+    <button class="add-slot-btn" onclick="addRosterSlot()">+ Add Slot</button>
+    <button class="clear-roster-btn" onclick="clearRoster()">Clear All</button>
+  </div>
 
   <div class="grid-container" id="rosterGrid"></div>
 </div>
 
 <script>
-// MASTER CONSOLIDATED DATABASE WITH TEA TIME TOPICS ACCESSIBLE UNDER EXPAND PANE
 const CHARS = [
+  {
+    name: "Byleth", house: "Other",
+    teas: ["Angelica Tea", "Bergamot", "Chamomile", "Mint Leaves"],
+    gifts: [],
+    lost: [],
+    topics: [],
+    convos: []
+  },
   {
     name: "Edelgard", house: "Black Eagles",
     teas: ["Bergamot", "Hresvelg Blend"],
@@ -293,7 +448,7 @@ const CHARS = [
     topics: ["Capable comrades…","Evaluating allies…","Fodlan's future…","I'm counting on you…","Our first meeting…","Reliable allies…","School days…","The existence of Crests…","Your ambitions…","You seem different…"],
     convos: [
       { line: "If I hadn't been born to House Hresvelg, I imagine life would have been much simpler.", answer: "Praise / Laugh" },
-      { line: "It upsets Hubert when I spend time alone with you. I'll refrain from telling him...", answer: "Nod / Laugh" }
+      { line: "It upsets Hubert when I spend time alone with you. I'll refrain from telling him…", answer: "Nod / Laugh" }
     ]
   },
   {
@@ -325,8 +480,8 @@ const CHARS = [
     lost: ["Maintenance Oil", "Agricultural Survey", "Toothed Dagger"],
     topics: ["A dinner invitation…","Dining partners…","Evaluating allies…","Fashion…","Fodlan's future…","I'm counting on you…","School uniforms…","The existence of Crests…","The meaning of nobility…","Your ambitions…"],
     convos: [
-      { line: "Since I was a child, I have loved riding horses and fighting...", answer: "Commend / Laugh" },
-      { line: "You have a way of making people feel comfortable. I almost cannot help telling...", answer: "Blush / Disagree" }
+      { line: "Since I was a child, I have loved riding horses and fighting…", answer: "Commend / Laugh" },
+      { line: "You have a way of making people feel comfortable. I almost cannot help telling…", answer: "Blush / Disagree" }
     ]
   },
   {
@@ -347,7 +502,7 @@ const CHARS = [
     lost: ["Thunderbrand Replica", "Tattered Overcoat", "Grounding Shield"],
     topics: ["A strong battalion…","A new gambit…","Equipment upkeep…","Methods for growing taller…","Mighty weapons…","I'm counting on you…","Overcoming weaknesses…","Potential training partners…","Someone you look up to…","The last battle…"],
     convos: [
-      { line: "I just wanna go wild and let it all out! Come on, Professor, send me out front...", answer: "Admonish / Chat" },
+      { line: "I just wanna go wild and let it all out! Come on, Professor, send me out front…", answer: "Admonish / Chat" },
       { line: "Hey, are you getting hungry?", answer: "Laugh / Sigh" }
     ]
   },
@@ -369,8 +524,8 @@ const CHARS = [
     lost: ["The Lens of Saint Cethleann", "Feather Pillow", "Animated Bait"],
     topics: ["Books you've read recently…","Exploring the monastery…","Gardening mishaps…","I heard some gossip…","Overcoming weaknesses…","Plans for the future…","Strange fish in the pond…","The art of napping…","The existence of Crests…","The library's collection…"],
     convos: [
-      { line: "Being surrounded by all these Crest-bearers makes me want to better understand...", answer: "Nod / Praise" },
-      { line: "Crest versus nurture. Which causes a noble's personality disorder? Research project...", answer: "Chat" }
+      { line: "Being surrounded by all these Crest-bearers makes me want to better understand…", answer: "Nod / Praise" },
+      { line: "Crest versus nurture. Which causes a noble's personality disorder? Research project…", answer: "Chat" }
     ]
   },
   {
@@ -380,7 +535,7 @@ const CHARS = [
     lost: ["Dulled Longsword", "Black Leather Glove", "Training Log"],
     topics: ["A strong battalion…","Mighty weapons…","Overcoming weaknesses…","Our first meeting…","Potential training partners…","The last battle…","Things that bother you…","Working together…","The library's collection…","You're doing great work…"],
     convos: [
-      { line: "Please join me for training when you have the time. Much I could learn...", answer: "Nod / Blush / Disagree" },
+      { line: "Please join me for training when you have the time. Much I could learn…", answer: "Nod / Blush / Disagree" },
       { line: "I apologize for troubling you. I am grateful for your support.", answer: "Nod / Blush" }
     ]
   },
@@ -403,7 +558,7 @@ const CHARS = [
     topics: ["A new sword technique…","Capable comrades…","Children at the market…","Classes you might enjoy…","I'm counting on you…","Mighty weapons…","Monastery security…","Overcoming weaknesses…","Potential training partners…","Reliable allies…"],
     convos: [
       { line: "You intrigue me. What made you so strong?", answer: "Chat / Blush" },
-      { line: "Crests, lineage, knighthood… Trifles. Skill and survival are the only things...", answer: "Nod / Chat / Commend" }
+      { line: "Crests, lineage, knighthood… Trifles. Skill and survival are the only things…", answer: "Nod / Chat / Commend" }
     ]
   },
   {
@@ -458,7 +613,7 @@ const CHARS = [
     topics: ["A new gambit…","A word of advice…","Favorite sweets…","Fodlan's future…","Potential training partners…","Reliable allies…","Your ambitions…","Someone you look up to…","The ideal professor…","The view from the bridge…","Working together…"],
     convos: [
       { line: "As a child, my father and brother used to yell at me for spending time with my horse.", answer: "Laugh / Admonish" },
-      { line: "I'm already thinking of my next meal...", answer: "Laugh" }
+      { line: "I'm already thinking of my next meal…", answer: "Laugh" }
     ]
   },
   {
@@ -567,7 +722,7 @@ const CHARS = [
     lost: ["Sunshade Fragment", "Nuvelle Crest Chart", "Pegasus Flute"],
     topics: ["A dinner invitation…","Capable comrades…","Close calls…","Favorite sweets…","Food in the dining hall…","I heard some gossip…","Our first meeting…","Reliable allies…","The existence of Crests…","The opera…","Working together…"],
     convos: [
-      { line: "Should you decide to lend your aid to the restoration of House Nuvelle, seek me...", answer: "Nod / Sip Tea / Praise" },
+      { line: "Should you decide to lend your aid to the restoration of House Nuvelle, seek me…", answer: "Nod / Sip Tea / Praise" },
       { line: "Tea parties such as this were once so…commonplace for me. And they will be again!", answer: "Laugh / Praise" }
     ]
   },
@@ -633,188 +788,210 @@ const CHARS = [
     lost: ["Lens of Saint Cethleann", "Hammer and Chisel", "Sketch of a Crest"],
     topics: ["A dinner invitation…","A word of advice…","Cooking mishaps…","Exploring the monastery…","Fodlan's future…","Heart-racing memories…","I'm counting on you…","Monastery rules…","Overcoming weaknesses…","Relaxing at the sauna…"],
     convos: [
-      { line: "The Crest of Flames shares many traits with other Crests. Yet, it also has unique...", answer: "Nod / Chat" },
+      { line: "The Crest of Flames shares many traits with other Crests. Yet, it also has unique…", answer: "Nod / Chat" },
       { line: "Why don't you come by later? I'd very much like to dive into some research together.", answer: "Commend / Sip Tea" }
     ]
   }
 ];
 
 const HOUSES = ['All', 'Black Eagles', 'Blue Lions', 'Golden Deer', 'Ashen Wolves', 'Church'];
-const CLASSES = ['None', 'Noble/Commoner', 'Myrmidon/Soldier/Fighter/Monk', 'Mercenary/Thief/Cavalier/Mage', 'Swordmaster/Paladin/Assassin/Warlock', 'Falcon Knight/Wyvern Lord/Mortal Savant/Gremory'];
-const WEAPONS = ['Sword', 'Lance', 'Axe', 'Bow', 'Brawling', 'Reason (Black/Dark)', 'Faith (White)', 'Authority'];
 
-let currentTab = 'lookup';
+const CLASSES = [
+  'Noble / Commoner',
+  'Myrmidon / Soldier / Fighter / Monk',
+  'Mercenary / Thief / Cavalier / Mage',
+  'Swordmaster / Paladin / Assassin / Warlock',
+  'Falcon Knight / Wyvern Lord / Mortal Savant / Gremory'
+];
+
+const WEAPONS = ['Sword','Lance','Axe','Bow','Brawling','Reason','Faith','Authority'];
+
 let activeHouse = 'All';
 let searchStr = '';
+let slotCount = 0;
 
-function switchTab(tabId) {
-  currentTab = tabId;
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  document.querySelectorAll('.app-section').forEach(s => s.classList.remove('active'));
-  
-  if(tabId === 'lookup') {
-    document.querySelector("button[onclick=\"switchTab('lookup')\"]").classList.add('active');
-    document.getElementById('lookupTab').classList.add('active');
-  } else {
-    document.querySelector("button[onclick=\"switchTab('roster')\"]").classList.add('active');
-    document.getElementById('rosterTab').classList.add('active');
-  }
+function houseDotClass(house) {
+  return {
+    'Black Eagles': 'dot-black-eagles',
+    'Blue Lions': 'dot-blue-lions',
+    'Golden Deer': 'dot-golden-deer',
+    'Ashen Wolves': 'dot-ashen-wolves',
+    'Church': 'dot-church'
+  }[house] || 'dot-other';
 }
 
+/* ── TAB SWITCHING ── */
+function switchTab(tabId) {
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.app-section').forEach(s => s.classList.remove('active'));
+  document.getElementById(tabId + 'Tab').classList.add('active');
+  document.querySelector(`button[onclick="switchTab('${tabId}')"]`).classList.add('active');
+}
+
+/* ── HOUSE FILTERS ── */
 function renderFilters() {
   const container = document.getElementById('houseFilters');
   container.innerHTML = '';
   HOUSES.forEach(h => {
     const btn = document.createElement('button');
-    btn.className = `house-btn ${activeHouse === h ? 'active' : ''}`;
+    btn.className = 'house-btn' + (activeHouse === h ? ' active' : '');
     btn.textContent = h;
-    btn.onclick = () => { activeHouse = h; renderLookup(); };
+    btn.onclick = () => { activeHouse = h; renderFilters(); renderLookup(); };
     container.appendChild(btn);
   });
 }
 
+/* ── LOOKUP GRID ── */
 function renderLookup() {
   const grid = document.getElementById('lookupGrid');
   grid.innerHTML = '';
   const q = searchStr.toLowerCase();
 
   const filtered = CHARS.filter(c => {
-    const houseMatch = activeHouse === 'All' || c.house === activeHouse;
-    const txtMatch = !q || 
+    if (activeHouse !== 'All' && c.house !== activeHouse) return false;
+    if (!q) return true;
+    return (
       c.name.toLowerCase().includes(q) ||
       c.teas.some(t => t.toLowerCase().includes(q)) ||
       c.gifts.some(g => g.toLowerCase().includes(q)) ||
       c.topics.some(tp => tp.toLowerCase().includes(q)) ||
-      c.lost.some(l => l.toLowerCase().includes(q));
-    return houseMatch && txtMatch;
+      c.lost.some(l => l.toLowerCase().includes(q))
+    );
   });
 
-  if(filtered.length === 0) {
-    grid.innerHTML = `<div class="no-results">No units found matching criteria.</div>`;
+  if (!filtered.length) {
+    grid.innerHTML = '<div class="no-results">No units found matching criteria.</div>';
     return;
   }
 
   filtered.forEach(c => {
     const card = document.createElement('div');
     card.className = 'char-card';
-    
-    let houseDotClass = 'dot-other';
-    if(c.house === 'Black Eagles') houseDotClass = 'dot-black-eagles';
-    if(c.house === 'Blue Lions') houseDotClass = 'dot-blue-lions';
-    if(c.house === 'Golden Deer') houseDotClass = 'dot-golden-deer';
-    if(c.house === 'Ashen Wolves') houseDotClass = 'dot-ashen-wolves';
-    if(c.house === 'Church') houseDotClass = 'dot-church';
 
-    const teasHtml = c.teas.map(t => `<span class="item-tag tea">${t}</span>`).join('');
-    const giftsHtml = c.gifts.map(g => `<span class="item-tag gift">${g}</span>`).join('');
-    const lostHtml = c.lost.length ? c.lost.map(l => `<span class="item-tag lost">${l}</span>`).join('') : '<span class="item-tag" style="opacity:0.5">None</span>';
+    const teasHtml  = c.teas.map(t => `<span class="item-tag tea">${t}</span>`).join('');
+    const giftsHtml = c.gifts.length
+      ? c.gifts.map(g => `<span class="item-tag gift">${g}</span>`).join('')
+      : '<span class="item-tag none">—</span>';
+    const lostHtml  = c.lost.length
+      ? c.lost.map(l => `<span class="item-tag lost">${l}</span>`).join('')
+      : '<span class="item-tag none">—</span>';
     const topicsHtml = c.topics.map(tp => `<span class="topic-tag">${tp}</span>`).join('');
-    
     const convosHtml = c.convos.map(co => `
       <div class="convo-block">
         <div class="convo-line">"${co.line}"</div>
-        <div class="convo-answer">✓ Response: ${co.answer}</div>
-      </div>
-    `).join('');
+        <div class="convo-answer">✓ ${co.answer}</div>
+      </div>`).join('');
+
+    const expandSection = (c.topics.length || c.convos.length) ? `
+      <div class="expand-hint">Tap to see tea topics &amp; conversations ▾</div>
+      <div class="expand-pane">
+        ${c.topics.length ? `
+          <div class="section-label" style="color:var(--gold-light)">Tea Topics</div>
+          <div class="topics-list" style="margin-bottom:0.6rem">${topicsHtml}</div>` : ''}
+        ${c.convos.length ? `
+          <div class="section-label" style="color:var(--gold-light);margin-top:0.5rem">Final Conversations</div>
+          ${convosHtml}` : ''}
+      </div>` : '';
 
     card.innerHTML = `
       <div class="card-header">
-        <div class="house-dot ${houseDotClass}"></div>
+        <div class="house-dot ${houseDotClass(c.house)}"></div>
         <div class="char-name">${c.name}</div>
         <div class="house-label">${c.house}</div>
       </div>
       <div class="card-body">
         <div class="section-label">Favorite Teas</div>
-        <div class="tag-list">${teasHtml}</div>
-        
+        <div class="tag-list" style="margin-bottom:0.5rem">${teasHtml}</div>
         <div class="section-label">Gifts (+2 Support)</div>
-        <div class="tag-list">${giftsHtml}</div>
-
+        <div class="tag-list" style="margin-bottom:0.5rem">${giftsHtml}</div>
         <div class="section-label">Lost Items</div>
-        <div class="tag-list">${lostHtml}</div>
-        
-        <div class="expand-hint">Click card to toggle Tea Topics & Final Conversations</div>
-
-        <div class="expand-pane">
-          <div class="section-label" style="color: var(--gold-light);">Possible Tea Topics</div>
-          <div class="topics-list">${topicsHtml}</div>
-
-          <div class="section-label" style="color: var(--gold-light); margin-top:0.75rem;">Final Tea Conversations</div>
-          ${convosHtml}
-        </div>
-      </div>
-    `;
+        <div class="tag-list" style="margin-bottom:0.3rem">${lostHtml}</div>
+        ${expandSection}
+      </div>`;
 
     card.onclick = () => card.classList.toggle('expanded');
     grid.appendChild(card);
   });
 }
 
-function buildRosterPlanner() {
-  const grid = document.getElementById('rosterGrid');
-  grid.innerHTML = '';
-  
-  for (let i = 1; i <= 12; i++) {
-    const slot = document.createElement('div');
-    slot.className = 'roster-slot';
-    
-    const sortedChars = [...CHARS].sort((a,b) => a.name.localeCompare(b.name));
-    const charOptions = sortedChars.map(c => `<option value="${c.name}">${c.name} (${c.house})</option>`).join('');
-    const classOptions = CLASSES.map(cl => `<option value="${cl}">${cl}</option>`).join('');
-    const weaponOptions = WEAPONS.map(w => `<option value="${w}">${w}</option>`).join('');
+/* ── ROSTER PLANNER ── */
+const sortedChars = [...CHARS].sort((a, b) => a.name.localeCompare(b.name));
 
-    slot.innerHTML = `
-      <div class="slot-title">Deployment Slot #0${i}</div>
-      
-      <div class="row-field">
-        <label>Assigned Unit</label>
-        <select class="roster-char-select">
-          <option value="">-- Unassigned --</option>
-          ${charOptions}
-        </select>
-      </div>
-
-      <div class="row-field">
-        <label>Target Cert Class</label>
-        <select>
-          ${classOptions}
-        </select>
-      </div>
-
-      <div class="row-field">
-        <label>Primary Focus</label>
-        <select>
-          ${weaponOptions}
-        </select>
-      </div>
-
-      <div class="row-field">
-        <label>Status Allocation</label>
-        <div class="toggle-group">
-          <button class="toggle-btn active" onclick="setSlotStatus(this, 'active')">Deployed</button>
-          <button class="toggle-btn bench" onclick="setSlotStatus(this, 'bench')">Benched</button>
-        </div>
-      </div>
-    `;
-    grid.appendChild(slot);
-  }
+function charOptions() {
+  return sortedChars.map(c => `<option value="${c.name}">${c.name} (${c.house})</option>`).join('');
 }
 
-function setSlotStatus(btn, status) {
-  const group = btn.parentElement;
-  group.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+function classOptions() {
+  return CLASSES.map(cl => `<option>${cl}</option>`).join('');
+}
+
+function weaponOptions() {
+  return WEAPONS.map(w => `<option>${w}</option>`).join('');
+}
+
+function addRosterSlot() {
+  slotCount++;
+  const grid = document.getElementById('rosterGrid');
+  const slot = document.createElement('div');
+  slot.className = 'roster-slot';
+  slot.id = 'slot-' + slotCount;
+
+  slot.innerHTML = `
+    <div class="slot-header">
+      <div class="slot-title">Slot #${String(slotCount).padStart(2, '0')}</div>
+      <button class="remove-slot-btn" onclick="removeSlot('slot-${slotCount}')" title="Remove slot">✕</button>
+    </div>
+    <div class="row-field">
+      <label>Assigned Unit</label>
+      <select>
+        <option value="">— Unassigned —</option>
+        ${charOptions()}
+      </select>
+    </div>
+    <div class="row-field">
+      <label>Target Class</label>
+      <select>${classOptions()}</select>
+    </div>
+    <div class="row-field">
+      <label>Weapon Focus</label>
+      <select>${weaponOptions()}</select>
+    </div>
+    <div class="row-field">
+      <label>Status</label>
+      <div class="toggle-group">
+        <button class="toggle-btn active" onclick="setStatus(this, 'active')">Deployed</button>
+        <button class="toggle-btn bench" onclick="setStatus(this, 'bench')">Benched</button>
+      </div>
+    </div>`;
+
+  grid.appendChild(slot);
+}
+
+function removeSlot(id) {
+  const el = document.getElementById(id);
+  if (el) el.remove();
+}
+
+function clearRoster() {
+  document.getElementById('rosterGrid').innerHTML = '';
+  slotCount = 0;
+}
+
+function setStatus(btn, _status) {
+  btn.parentElement.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
 }
 
+/* ── INIT ── */
 document.getElementById('searchInput').addEventListener('input', e => {
   searchStr = e.target.value;
   renderLookup();
 });
 
-// App Startup Initializers
 renderFilters();
 renderLookup();
-buildRosterPlanner();
+// Start roster with one slot ready
+addRosterSlot();
 </script>
 </body>
 </html>
