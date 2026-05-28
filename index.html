@@ -2,996 +2,1168 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>FE3H Tactical Companion</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FE3H Monastery Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #1a1008;
-    --surface: #221508;
-    --surface2: #2d1d0d;
     --gold: #c9a84c;
-    --gold-light: #e8cc7a;
-    --cream: #f5ead8;
-    --cream-dim: #c8b89a;
-    --accent: #7a3b2e;
-    --green: #4a7c59;
-    --border: rgba(201,168,76,0.25);
-    --border-bright: rgba(201,168,76,0.6);
+    --gold-light: #e8c96a;
+    --gold-pale: #f5e8c0;
+    --parchment: #fdf6e3;
+    --ink: #1a1208;
+    --ink-soft: #3d2e10;
+    --ink-muted: #6b5533;
+    --red: #8b1a1a;
+    --red-soft: #c0392b;
+    --blue-crest: #1a3a5c;
+    --blue-light: #2e6da4;
+    --green-crest: #1a4a2e;
+    --border: #c9a84c44;
+    --shadow: rgba(26,18,8,0.18);
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
-    background: var(--bg);
-    color: var(--cream);
-    font-family: 'Crimson Pro', Georgia, serif;
+    background: #0e0b06;
+    background-image: 
+      radial-gradient(ellipse at 20% 50%, #1a1208 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 20%, #1a1208 0%, transparent 60%),
+      url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c9a84c' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
     min-height: 100vh;
-    background-image:
-      radial-gradient(ellipse at 20% 0%, rgba(139,94,60,0.15) 0%, transparent 50%),
-      radial-gradient(ellipse at 80% 100%, rgba(122,59,46,0.1) 0%, transparent 50%);
-    padding-bottom: 4rem;
+    font-family: 'Crimson Pro', serif;
+    color: var(--ink);
   }
 
-  /* NAV */
-  nav {
-    background: var(--surface2);
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    justify-content: center;
-    gap: 0.5rem;
-    padding: 0.75rem 1rem;
+  /* HEADER */
+  .site-header {
+    background: linear-gradient(180deg, #0e0b06 0%, #1a1208 40%, #231805 100%);
+    border-bottom: 1px solid var(--gold);
+    padding: 24px 20px 16px;
+    text-align: center;
     position: sticky;
     top: 0;
     z-index: 100;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    box-shadow: 0 4px 24px rgba(201,168,76,0.15);
   }
 
-  .nav-btn {
-    background: transparent;
-    border: 1px solid transparent;
-    border-radius: 4px;
-    color: var(--cream-dim);
+  .site-header h1 {
     font-family: 'Cinzel', serif;
-    font-size: 0.8rem;
-    letter-spacing: 0.08em;
-    cursor: pointer;
-    padding: 0.5rem 0.85rem;
-    transition: all 0.2s;
-    white-space: nowrap;
-  }
-
-  .nav-btn:hover { color: var(--gold-light); border-color: var(--border); }
-  .nav-btn.active { color: var(--gold-light); border-color: var(--gold); background: rgba(201,168,76,0.08); }
-
-  header {
-    text-align: center;
-    padding: 1.5rem 1rem 0.75rem;
-  }
-
-  h1 {
-    font-family: 'Cinzel', serif;
-    font-size: clamp(1.2rem, 5vw, 2rem);
-    color: var(--gold-light);
-    font-weight: 700;
-    letter-spacing: 0.05em;
-  }
-
-  .subtitle {
-    color: var(--cream-dim);
-    font-style: italic;
-    font-size: 0.88rem;
-    margin-top: 0.2rem;
-  }
-
-  .app-section { display: none; }
-  .app-section.active { display: block; }
-
-  /* CONTROLS */
-  .controls {
-    max-width: 960px;
-    margin: 1rem auto 0;
-    padding: 0 1rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.6rem;
-  }
-
-  .search-wrap { position: relative; }
-
-  .search-wrap::before {
-    content: '⚜';
-    position: absolute;
-    left: 0.75rem;
-    top: 50%;
-    transform: translateY(-50%);
     color: var(--gold);
-    font-size: 0.85rem;
-    pointer-events: none;
+    font-size: clamp(1.1rem, 4vw, 1.6rem);
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-shadow: 0 0 30px rgba(201,168,76,0.4);
   }
 
-  input[type="text"], select {
-    width: 100%;
-    background: var(--surface2);
-    border: 1px solid var(--border-bright);
-    border-radius: 4px;
-    padding: 0.6rem 0.75rem;
-    color: var(--cream);
-    font-family: 'Crimson Pro', serif;
-    font-size: 1rem;
-    outline: none;
-    -webkit-appearance: none;
+  .site-header p {
+    color: var(--gold-pale);
+    font-size: 0.82rem;
+    opacity: 0.7;
+    margin-top: 3px;
+    font-style: italic;
   }
 
-  input[type="text"] { padding-left: 2.2rem; }
-
-  .house-filters {
+  .crest-divider {
     display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
+    align-items: center;
+    gap: 12px;
+    margin: 8px auto 0;
+    max-width: 300px;
+    justify-content: center;
+  }
+  .crest-divider::before,
+  .crest-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold));
+  }
+  .crest-divider::after {
+    background: linear-gradient(to left, transparent, var(--gold));
+  }
+  .crest-icon { color: var(--gold); font-size: 0.8rem; }
+
+  /* TAB NAV */
+  .tab-nav {
+    display: flex;
+    gap: 0;
+    background: #14100a;
+    border-bottom: 1px solid var(--border);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .tab-nav::-webkit-scrollbar { display: none; }
+
+  .tab-btn {
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    color: var(--ink-muted);
+    background: none;
+    border: none;
+    padding: 12px 16px;
+    cursor: pointer;
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+  .tab-btn:hover { color: var(--gold-light); }
+  .tab-btn.active {
+    color: var(--gold);
+    border-bottom-color: var(--gold);
+    background: rgba(201,168,76,0.06);
   }
 
-  .house-btn {
-    background: transparent;
-    border: 1px solid var(--border);
-    border-radius: 3px;
-    padding: 0.35rem 0.65rem;
-    color: var(--cream-dim);
+  /* MAIN CONTENT */
+  .main-content {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 16px;
+  }
+
+  /* SECTION HEADERS */
+  .section-title {
     font-family: 'Cinzel', serif;
-    font-size: 0.68rem;
+    color: var(--gold);
+    font-size: 0.95rem;
+    letter-spacing: 0.15em;
+    margin: 20px 0 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, var(--gold), transparent);
+    opacity: 0.4;
+  }
+
+  /* MONTH SELECTOR */
+  .month-picker {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+  .month-btn {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.06em;
+    background: #1a1208;
+    border: 1px solid var(--border);
+    color: var(--ink-muted);
+    padding: 8px 4px;
+    border-radius: 4px;
     cursor: pointer;
     transition: all 0.2s;
-    white-space: nowrap;
+    text-align: center;
   }
-
-  .house-btn.active, .house-btn:hover {
-    background: rgba(201,168,76,0.12);
+  .month-btn:hover { border-color: var(--gold); color: var(--gold-pale); }
+  .month-btn.active {
+    background: rgba(201,168,76,0.15);
     border-color: var(--gold);
-    color: var(--gold-light);
+    color: var(--gold);
   }
 
-  /* GRID */
-  .grid-container {
-    max-width: 960px;
-    margin: 1.25rem auto;
-    padding: 0 1rem;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
-    gap: 1rem;
-  }
-
-  /* CHARACTER CARDS */
-  .char-card {
-    background: var(--surface);
+  /* LOST ITEMS TABLE */
+  .items-panel {
+    background: #1a1208;
     border: 1px solid var(--border);
     border-radius: 6px;
     overflow: hidden;
-    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
-    cursor: pointer;
-    -webkit-tap-highlight-color: transparent;
   }
 
-  .char-card:hover {
-    border-color: var(--gold);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.5);
-  }
-
-  .char-card:active { transform: scale(0.99); }
-
-  .card-header {
-    padding: 0.75rem 1rem;
-    display: flex;
+  .item-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0;
+    border-bottom: 1px solid rgba(201,168,76,0.1);
+    padding: 10px 12px;
     align-items: center;
-    gap: 0.6rem;
-    background: var(--surface2);
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .item-row:last-child { border-bottom: none; }
+  .item-row:hover { background: rgba(201,168,76,0.05); }
+  .item-row.collected { opacity: 0.4; }
+  .item-row.collected .item-name { text-decoration: line-through; }
+
+  .item-col-header {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+    opacity: 0.7;
+    padding: 8px 12px;
     border-bottom: 1px solid var(--border);
+    background: rgba(201,168,76,0.08);
+  }
+  .item-col-header-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
   }
 
-  .house-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-  .char-name { font-family: 'Cinzel', serif; font-size: 0.95rem; font-weight: 600; color: var(--gold-light); flex: 1; }
-  .house-label { font-size: 0.72rem; color: var(--cream-dim); opacity: 0.6; font-style: italic; text-align: right; }
-
-  .card-body { padding: 0.85rem; }
-
-  .section-label {
-    font-family: 'Cinzel', serif;
-    font-size: 0.65rem;
-    letter-spacing: 0.08em;
-    color: var(--gold);
-    text-transform: uppercase;
-    margin: 0.55rem 0 0.3rem;
-  }
-  .section-label:first-child { margin-top: 0; }
-
-  .tag-list { display: flex; flex-wrap: wrap; gap: 0.3rem; }
-
-  .item-tag {
-    border-radius: 2px;
-    padding: 0.15rem 0.4rem;
+  .item-name {
     font-size: 0.82rem;
+    color: var(--parchment);
+    line-height: 1.3;
   }
-  .item-tag.tea    { background: rgba(201,168,76,0.1);  border: 1px solid rgba(201,168,76,0.3);  color: var(--gold-light); }
-  .item-tag.gift   { background: rgba(74,124,89,0.1);   border: 1px solid rgba(74,124,89,0.3);   color: #8bc39a; }
-  .item-tag.lost   { background: rgba(122,59,46,0.1);   border: 1px solid rgba(122,59,46,0.3);   color: #f29c9c; }
-  .item-tag.none   { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); color: var(--cream-dim); opacity: 0.5; }
-
-  .expand-hint {
-    text-align: center;
-    font-size: 0.72rem;
-    color: var(--gold);
-    opacity: 0.5;
+  .item-location {
+    font-size: 0.75rem;
+    color: var(--ink-muted);
     font-style: italic;
-    margin-top: 0.6rem;
+    line-height: 1.3;
   }
-
-  .expand-pane {
-    display: none;
-    margin-top: 0.75rem;
-    padding-top: 0.75rem;
-    border-top: 1px dashed var(--border);
-  }
-  .char-card.expanded .expand-pane { display: block; }
-
-  .topics-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.3rem;
-    margin-bottom: 0.6rem;
-  }
-
-  .topic-tag {
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 2px;
-    padding: 0.1rem 0.4rem;
+  .item-owner {
     font-size: 0.8rem;
-    color: var(--cream-dim);
+    color: var(--gold-pale);
+    text-align: right;
   }
-
-  .convo-block {
-    background: rgba(0,0,0,0.2);
-    padding: 0.5rem;
-    border-radius: 4px;
-    margin-bottom: 0.4rem;
-    border-left: 2px solid var(--accent);
+  .check-icon {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border: 1px solid var(--gold);
+    border-radius: 2px;
+    margin-right: 6px;
+    vertical-align: middle;
+    flex-shrink: 0;
+    transition: all 0.2s;
   }
-
-  .convo-line { font-style: italic; font-size: 0.83rem; margin-bottom: 0.2rem; color: var(--cream); }
-  .convo-answer { font-family: 'Cinzel', serif; font-size: 0.68rem; color: var(--green); font-weight: 600; }
-
-  .no-results {
-    grid-column: 1/-1;
-    text-align: center;
-    padding: 3rem;
-    color: var(--cream-dim);
-    font-style: italic;
-    opacity: 0.6;
+  .item-row.collected .check-icon {
+    background: var(--gold);
+    border-color: var(--gold);
   }
-
-  /* ROSTER PLANNER */
-  .roster-controls {
-    max-width: 960px;
-    margin: 1rem auto 0;
-    padding: 0 1rem;
+  .item-row.collected .check-icon::after {
+    content: '✓';
+    color: var(--ink);
+    font-size: 10px;
     display: flex;
-    gap: 0.75rem;
     align-items: center;
+    justify-content: center;
+    height: 100%;
+    font-weight: bold;
+  }
+
+  /* TEA TIME */
+  .char-search {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .char-search input {
+    flex: 1;
+    background: #1a1208;
+    border: 1px solid var(--border);
+    color: var(--parchment);
+    font-family: 'Crimson Pro', serif;
+    font-size: 0.9rem;
+    padding: 8px 12px;
+    border-radius: 4px;
+    outline: none;
+  }
+  .char-search input:focus { border-color: var(--gold); }
+  .char-search input::placeholder { color: var(--ink-muted); font-style: italic; }
+
+  .house-filters {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 12px;
     flex-wrap: wrap;
   }
-
-  .add-slot-btn {
-    background: rgba(74,124,89,0.15);
-    border: 1px solid rgba(74,124,89,0.4);
-    border-radius: 4px;
-    color: #8bc39a;
+  .house-btn {
     font-family: 'Cinzel', serif;
-    font-size: 0.78rem;
+    font-size: 0.62rem;
     letter-spacing: 0.06em;
-    padding: 0.55rem 1.1rem;
+    padding: 5px 10px;
+    border-radius: 3px;
+    border: 1px solid var(--border);
+    background: #1a1208;
+    color: var(--ink-muted);
     cursor: pointer;
     transition: all 0.2s;
   }
-  .add-slot-btn:hover {
-    background: rgba(74,124,89,0.25);
-    border-color: #629e73;
-    color: #a8d4b0;
-  }
+  .house-btn[data-house="all"].active,
+  .house-btn[data-house="all"]:hover { border-color: var(--gold); color: var(--gold); background: rgba(201,168,76,0.08); }
+  .house-btn[data-house="blue"].active,
+  .house-btn[data-house="blue"]:hover { border-color: #4a90d9; color: #4a90d9; background: rgba(74,144,217,0.08); }
+  .house-btn[data-house="black"].active,
+  .house-btn[data-house="black"]:hover { border-color: #c0392b; color: #c0392b; background: rgba(192,57,43,0.08); }
+  .house-btn[data-house="golden"].active,
+  .house-btn[data-house="golden"]:hover { border-color: #d4a017; color: #d4a017; background: rgba(212,160,23,0.08); }
+  .house-btn[data-house="church"].active,
+  .house-btn[data-house="church"]:hover { border-color: #8b6fd4; color: #8b6fd4; background: rgba(139,111,212,0.08); }
+  .house-btn[data-house="wolves"].active,
+  .house-btn[data-house="wolves"]:hover { border-color: #5a9a6a; color: #5a9a6a; background: rgba(90,154,106,0.08); }
 
-  .clear-roster-btn {
-    background: rgba(122,59,46,0.12);
-    border: 1px solid rgba(122,59,46,0.35);
-    border-radius: 4px;
-    color: #f29c9c;
-    font-family: 'Cinzel', serif;
-    font-size: 0.78rem;
-    letter-spacing: 0.06em;
-    padding: 0.55rem 1.1rem;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  .clear-roster-btn:hover {
-    background: rgba(122,59,46,0.22);
-    border-color: #9e4636;
-  }
-
-  .roster-slot {
-    background: var(--surface);
+  .char-card {
+    background: #1a1208;
     border: 1px solid var(--border);
     border-radius: 6px;
-    padding: 0.9rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.65rem;
-    position: relative;
+    margin-bottom: 8px;
+    overflow: hidden;
   }
+  .char-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 14px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .char-card-header:hover { background: rgba(201,168,76,0.05); }
+  .char-name {
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    color: var(--gold-pale);
+    letter-spacing: 0.05em;
+  }
+  .char-house-badge {
+    font-size: 0.62rem;
+    font-family: 'Cinzel', serif;
+    padding: 2px 7px;
+    border-radius: 10px;
+    border: 1px solid;
+    margin-left: 8px;
+    letter-spacing: 0.05em;
+  }
+  .badge-blue { color: #4a90d9; border-color: #4a90d940; background: #4a90d910; }
+  .badge-black { color: #c0392b; border-color: #c0392b40; background: #c0392b10; }
+  .badge-golden { color: #d4a017; border-color: #d4a01740; background: #d4a01710; }
+  .badge-church { color: #8b6fd4; border-color: #8b6fd440; background: #8b6fd410; }
+  .badge-wolves { color: #5a9a6a; border-color: #5a9a6a40; background: #5a9a6a10; }
 
-  .slot-header {
+  .char-meta {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px solid var(--border);
-    padding-bottom: 0.4rem;
+    gap: 8px;
   }
+  .tea-fav {
+    font-size: 0.72rem;
+    color: var(--ink-muted);
+    font-style: italic;
+  }
+  .expand-arrow {
+    color: var(--gold);
+    font-size: 0.7rem;
+    transition: transform 0.2s;
+  }
+  .char-card.open .expand-arrow { transform: rotate(180deg); }
 
-  .slot-title {
+  .char-card-body {
+    display: none;
+    padding: 0 14px 14px;
+    border-top: 1px solid rgba(201,168,76,0.1);
+  }
+  .char-card.open .char-card-body { display: block; }
+
+  .tea-label {
     font-family: 'Cinzel', serif;
-    font-size: 0.82rem;
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    color: var(--gold);
+    opacity: 0.8;
+    margin: 10px 0 6px;
+  }
+  .tea-name {
+    display: inline-block;
+    background: rgba(201,168,76,0.12);
+    border: 1px solid rgba(201,168,76,0.3);
+    color: var(--gold-pale);
+    font-size: 0.78rem;
+    padding: 3px 9px;
+    border-radius: 3px;
+    margin: 2px 3px 2px 0;
+  }
+  .topics-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 4px;
+  }
+  .topic-chip {
+    font-size: 0.72rem;
+    color: var(--ink-muted);
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(201,168,76,0.12);
+    border-radius: 3px;
+    padding: 2px 7px;
+    cursor: pointer;
+    transition: all 0.15s;
+    user-select: none;
+  }
+  .topic-chip:hover { border-color: var(--gold); color: var(--gold-pale); }
+  .topic-chip.marked {
+    background: rgba(201,168,76,0.15);
+    border-color: var(--gold);
     color: var(--gold);
   }
 
-  .remove-slot-btn {
+  .reactions-grid {
+    margin-top: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .reaction-row {
+    font-size: 0.73rem;
+    color: var(--parchment);
+    background: rgba(201,168,76,0.04);
+    border: 1px solid rgba(201,168,76,0.1);
+    border-radius: 3px;
+    padding: 4px 8px;
+    line-height: 1.4;
+  }
+
+  .bond-tracker {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(201,168,76,0.1);
+  }
+  .bond-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.62rem;
+    color: var(--gold);
+    letter-spacing: 0.08em;
+  }
+  .bond-dots {
+    display: flex;
+    gap: 5px;
+  }
+  .bond-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 1px solid var(--gold);
+    cursor: pointer;
+    transition: all 0.15s;
+    background: transparent;
+  }
+  .bond-dot.filled { background: var(--gold); }
+
+  /* SUPPORT TRACKER */
+  .support-table {
+    background: #1a1208;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .support-row {
+    display: flex;
+    align-items: center;
+    padding: 9px 12px;
+    border-bottom: 1px solid rgba(201,168,76,0.08);
+    gap: 10px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .support-row:last-child { border-bottom: none; }
+  .support-row:hover { background: rgba(201,168,76,0.04); }
+  .support-char-name {
+    flex: 1;
+    font-size: 0.85rem;
+    color: var(--parchment);
+  }
+  .support-level-btns {
+    display: flex;
+    gap: 4px;
+  }
+  .support-lvl {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    width: 26px;
+    height: 26px;
+    border-radius: 3px;
+    border: 1px solid rgba(201,168,76,0.2);
+    background: transparent;
+    color: var(--ink-muted);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+    font-weight: 600;
+  }
+  .support-lvl:hover { border-color: var(--gold); color: var(--gold); }
+  .support-lvl.active-C { background: #2e3a20; border-color: #5a8a3a; color: #8abf5a; }
+  .support-lvl.active-B { background: #1e2e4a; border-color: #3a6aaa; color: #6aaadf; }
+  .support-lvl.active-A { background: #3a1e1e; border-color: #aa4a3a; color: #df8a7a; }
+  .support-lvl.active-S { background: #3a2e10; border-color: #aa8a3a; color: var(--gold); }
+
+  /* NOTES */
+  .notes-area {
+    background: #1a1208;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px;
+  }
+  .notes-area textarea {
+    width: 100%;
     background: transparent;
     border: none;
-    color: var(--cream-dim);
-    opacity: 0.4;
-    font-size: 1.1rem;
-    cursor: pointer;
-    line-height: 1;
-    padding: 0 0.2rem;
-    transition: opacity 0.2s, color 0.2s;
+    color: var(--parchment);
+    font-family: 'Crimson Pro', serif;
+    font-size: 0.9rem;
+    line-height: 1.7;
+    resize: none;
+    outline: none;
+    min-height: 160px;
   }
-  .remove-slot-btn:hover { opacity: 1; color: #f29c9c; }
+  .notes-area textarea::placeholder { color: var(--ink-muted); font-style: italic; }
 
-  .row-field { display: flex; flex-direction: column; gap: 0.2rem; }
-  .row-field label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--cream-dim); }
-
-  .toggle-group { display: flex; gap: 0.4rem; margin-top: 0.2rem; }
-
-  .toggle-btn {
-    flex: 1;
-    background: var(--surface2);
+  /* PROGRESS BAR */
+  .progress-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+    background: #1a1208;
     border: 1px solid var(--border);
-    padding: 0.35rem;
+    border-radius: 6px;
+    padding: 10px 14px;
+  }
+  .progress-label {
     font-family: 'Cinzel', serif;
-    font-size: 0.68rem;
-    color: var(--cream-dim);
-    cursor: pointer;
+    font-size: 0.65rem;
+    color: var(--gold);
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+  }
+  .progress-bar-wrap {
+    flex: 1;
+    height: 6px;
+    background: rgba(201,168,76,0.1);
     border-radius: 3px;
-    transition: all 0.15s;
+    overflow: hidden;
   }
-  .toggle-btn.active { background: var(--green); border-color: #629e73; color: white; }
-  .toggle-btn.bench.active { background: var(--accent); border-color: #9e4636; color: white; }
-
-  /* House dot colors */
-  .dot-black-eagles { background: #c0392b; }
-  .dot-blue-lions   { background: #2980b9; }
-  .dot-golden-deer  { background: #f39c12; }
-  .dot-ashen-wolves { background: #8e44ad; }
-  .dot-church       { background: #27ae60; }
-  .dot-other        { background: #7f8c8d; }
-
-  /* Mobile tweaks */
-  @media (max-width: 480px) {
-    .grid-container {
-      grid-template-columns: 1fr;
-    }
-    .char-name { font-size: 0.9rem; }
-    .house-label { display: none; }
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(to right, var(--gold), var(--gold-light));
+    border-radius: 3px;
+    transition: width 0.4s ease;
   }
+  .progress-pct {
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    color: var(--gold);
+    min-width: 32px;
+    text-align: right;
+  }
+
+  /* EMPTY STATE */
+  .empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--ink-muted);
+    font-style: italic;
+    font-size: 0.88rem;
+  }
+
+  /* TABS */
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* TOAST */
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    background: #2a1e0a;
+    border: 1px solid var(--gold);
+    color: var(--gold-pale);
+    font-family: 'Cinzel', serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    padding: 8px 20px;
+    border-radius: 4px;
+    transition: transform 0.3s ease;
+    z-index: 200;
+    pointer-events: none;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  .reset-btn {
+    font-family: 'Cinzel', serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+    color: var(--ink-muted);
+    background: none;
+    border: 1px solid rgba(201,168,76,0.15);
+    padding: 5px 12px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .reset-btn:hover { color: var(--red-soft); border-color: var(--red-soft); }
 </style>
 </head>
 <body>
 
-<nav>
-  <button class="nav-btn active" onclick="switchTab('lookup')">Tea &amp; Gifts</button>
-  <button class="nav-btn" onclick="switchTab('roster')">Roster Planner</button>
+<header class="site-header">
+  <h1>⚔ GARREG MACH TRACKER ⚔</h1>
+  <div class="crest-divider"><span class="crest-icon">✦</span></div>
+  <p>Fire Emblem: Three Houses — Monastery Companion</p>
+</header>
+
+<nav class="tab-nav">
+  <button class="tab-btn active" data-tab="lost-items">Lost Items</button>
+  <button class="tab-btn" data-tab="tea-time">Tea Time</button>
+  <button class="tab-btn" data-tab="supports">Supports</button>
+  <button class="tab-btn" data-tab="notes">Notes</button>
 </nav>
 
-<!-- LOOKUP TAB -->
-<div id="lookupTab" class="app-section active">
-  <header>
-    <h1>Tactical Companion</h1>
-    <p class="subtitle">Teas · Gifts · Lost Items · Tea Conversations</p>
-  </header>
+<main class="main-content">
 
-  <div class="controls">
-    <div class="search-wrap">
-      <input type="text" id="searchInput" placeholder="Search name, items, gifts, topics…" autocomplete="off" autocorrect="off" spellcheck="false">
+  <!-- LOST ITEMS TAB -->
+  <div class="tab-panel active" id="tab-lost-items">
+    <div class="section-title">Select Month</div>
+    <div class="month-picker" id="monthPicker"></div>
+
+    <div id="itemsProgressRow" class="progress-row">
+      <span class="progress-label">COLLECTED</span>
+      <div class="progress-bar-wrap"><div class="progress-bar-fill" id="itemsProgressBar" style="width:0%"></div></div>
+      <span class="progress-pct" id="itemsProgressPct">0%</span>
     </div>
-    <div class="house-filters" id="houseFilters"></div>
+
+    <div id="itemsContainer"></div>
   </div>
 
-  <div class="grid-container" id="lookupGrid"></div>
-</div>
-
-<!-- ROSTER TAB -->
-<div id="rosterTab" class="app-section">
-  <header>
-    <h1>Deployment Roster</h1>
-    <p class="subtitle">Build your strike team · Add slots as needed</p>
-  </header>
-
-  <div class="roster-controls">
-    <button class="add-slot-btn" onclick="addRosterSlot()">+ Add Slot</button>
-    <button class="clear-roster-btn" onclick="clearRoster()">Clear All</button>
+  <!-- TEA TIME TAB -->
+  <div class="tab-panel" id="tab-tea-time">
+    <div class="char-search">
+      <input type="text" id="teaSearch" placeholder="Search character…" oninput="filterTeaChars()">
+    </div>
+    <div class="house-filters">
+      <button class="house-btn active" data-house="all" onclick="filterHouse(this)">All</button>
+      <button class="house-btn" data-house="blue" onclick="filterHouse(this)">Blue Lions</button>
+      <button class="house-btn" data-house="black" onclick="filterHouse(this)">Black Eagles</button>
+      <button class="house-btn" data-house="golden" onclick="filterHouse(this)">Golden Deer</button>
+      <button class="house-btn" data-house="church" onclick="filterHouse(this)">Church</button>
+      <button class="house-btn" data-house="wolves" onclick="filterHouse(this)">Ashen Wolves</button>
+    </div>
+    <div id="teaContainer"></div>
   </div>
 
-  <div class="grid-container" id="rosterGrid"></div>
-</div>
+  <!-- SUPPORTS TAB -->
+  <div class="tab-panel" id="tab-supports">
+    <div class="section-title">Support Progress</div>
+    <div class="support-table" id="supportTable"></div>
+  </div>
+
+  <!-- NOTES TAB -->
+  <div class="tab-panel" id="tab-notes">
+    <div class="section-title">Playthrough Notes</div>
+    <div class="notes-area">
+      <textarea id="notesField" placeholder="Track your route, record quest progress, note things to remember…" oninput="saveNotes()"></textarea>
+    </div>
+    <div style="margin-top:12px; display:flex; justify-content:flex-end;">
+      <button class="reset-btn" onclick="clearAllData()">Reset All Progress</button>
+    </div>
+  </div>
+
+</main>
+
+<div class="toast" id="toast"></div>
 
 <script>
-const CHARS = [
-  {
-    name: "Byleth", house: "Other",
-    teas: ["Angelica Tea", "Bergamot", "Chamomile", "Mint Leaves"],
-    gifts: [],
-    lost: [],
-    topics: [],
-    convos: []
-  },
-  {
-    name: "Edelgard", house: "Black Eagles",
-    teas: ["Bergamot", "Hresvelg Blend"],
-    gifts: ["Carnation", "Armored Bear Stuffy", "Board Game"],
-    lost: ["White Glove", "Eastern Porcelain", "Time-worn Quill Pen"],
-    topics: ["Capable comrades…","Evaluating allies…","Fodlan's future…","I'm counting on you…","Our first meeting…","Reliable allies…","School days…","The existence of Crests…","Your ambitions…","You seem different…"],
-    convos: [
-      { line: "If I hadn't been born to House Hresvelg, I imagine life would have been much simpler.", answer: "Praise / Laugh" },
-      { line: "It upsets Hubert when I spend time alone with you. I'll refrain from telling him…", answer: "Nod / Laugh" }
-    ]
-  },
-  {
-    name: "Hubert", house: "Black Eagles",
-    teas: ["Cinnamon Blend", "Dagda Fruit Blend"],
-    gifts: ["Coffee Beans", "Board Game"],
-    lost: ["Hresvelg Treatise", "Noxious Handkerchief", "Folding Razor"],
-    topics: ["A strong battalion…","Capable comrades…","Equipment upkeep…","Fodlan's future…","I heard some gossip…","Mighty weapons…","Monastery security…","Reliable allies…","Successful plots…","Your ambitions…"],
-    convos: [
-      { line: "The head of House Vestra has always been a minister to the emperor.", answer: "Commend / Praise" },
-      { line: "Lady Edelgard has taken a liking to you. She will want to hear all about this.", answer: "Nod / Disagree" }
-    ]
-  },
-  {
-    name: "Dorothea", house: "Black Eagles",
-    teas: ["Albinean Berry Blend", "Sweet Apple Blend"],
-    gifts: ["Gemstone Beads", "Book of Sheet Music"],
-    lost: ["Silver Brooch", "Songbook", "Lovely Comb"],
-    topics: ["A dinner invitation…","Dreamy knights…","Dining partners…","Fashion…","Hopes for your future…","Gifts you'd like to receive…","The courtyard couple…","The opera…","The melody of words…","Things you find romantic…"],
-    convos: [
-      { line: "More nobles than you'd expect make a pilgrimage to Garreg Mach to pray.", answer: "Commend" },
-      { line: "I am not really a fan of hymns. I don't want to offer silly songs to my goddess.", answer: "Sigh / Chat" }
-    ]
-  },
-  {
-    name: "Ferdinand", house: "Black Eagles",
-    teas: ["Almyran Pine Needles", "Southern Fruit Blend", "Seiros Tea"],
-    gifts: ["Tea Leaves", "Riding Boots"],
-    lost: ["Maintenance Oil", "Agricultural Survey", "Toothed Dagger"],
-    topics: ["A dinner invitation…","Dining partners…","Evaluating allies…","Fashion…","Fodlan's future…","I'm counting on you…","School uniforms…","The existence of Crests…","The meaning of nobility…","Your ambitions…"],
-    convos: [
-      { line: "Since I was a child, I have loved riding horses and fighting…", answer: "Commend / Laugh" },
-      { line: "You have a way of making people feel comfortable. I almost cannot help telling…", answer: "Blush / Disagree" }
-    ]
-  },
-  {
-    name: "Bernadetta", house: "Black Eagles",
-    teas: ["Albinean Berry Blend", "Honeyed-Fruit Blend"],
-    gifts: ["Armored Bear Stuffy", "Book of Sheet Music", "Watering Can", "Pitcher Plant"],
-    lost: ["Needle and Thread", "Still-Life Picture", "Hedgehog Case"],
-    topics: ["A place you'd like to visit…","Books you've read recently…","Exploring the monastery…","Favorite sweets…","Food in the dining hall…","Overcoming weaknesses…","Likable allies…","Tell me about yourself…","Things that bother you…","You seem well…"],
-    convos: [
-      { line: "Please don't eavesdrop on my singing anymore, OK?", answer: "Nod / Praise" },
-      { line: "I was worried you called me here to punish me for something. I'm glad I was wrong.", answer: "Admonish" }
-    ]
-  },
-  {
-    name: "Caspar", house: "Black Eagles",
-    teas: ["Ginger Tea"],
-    gifts: ["Hunting Dagger", "Smoked Meat"],
-    lost: ["Thunderbrand Replica", "Tattered Overcoat", "Grounding Shield"],
-    topics: ["A strong battalion…","A new gambit…","Equipment upkeep…","Methods for growing taller…","Mighty weapons…","I'm counting on you…","Overcoming weaknesses…","Potential training partners…","Someone you look up to…","The last battle…"],
-    convos: [
-      { line: "I just wanna go wild and let it all out! Come on, Professor, send me out front…", answer: "Admonish / Chat" },
-      { line: "Hey, are you getting hungry?", answer: "Laugh / Sigh" }
-    ]
-  },
-  {
-    name: "Petra", house: "Black Eagles",
-    teas: ["Ginger Tea", "Four-Spice Blend"],
-    gifts: ["Hunting Dagger", "Smoked Meat", "Sunflower"],
-    lost: ["Exotic Feather", "Small Tanned Hide", "Annotated Dictionary"],
-    topics: ["A place you'd like to visit…","A word of advice…","Guessing someone's age…","Exploring the monastery…","Overcoming weaknesses…","Strange fish in the pond…","Swimming in the ocean…","The view from the bridge…","The last battle…","You're doing great work…"],
-    convos: [
-      { line: "The ocean is far from Garreg Mach… I am feeling a bit lonely at times.", answer: "Sigh / Praise" },
-      { line: "Next I will be studying, training, researching, sparring… I am having a lot to do!", answer: "Admonish / Praise" }
-    ]
-  },
-  {
-    name: "Linhardt", house: "Black Eagles",
-    teas: ["Almyran Pine Needles", "Angelica Tea"],
-    gifts: ["Book of Crest Designs", "Fishing Float"],
-    lost: ["The Lens of Saint Cethleann", "Feather Pillow", "Animated Bait"],
-    topics: ["Books you've read recently…","Exploring the monastery…","Gardening mishaps…","I heard some gossip…","Overcoming weaknesses…","Plans for the future…","Strange fish in the pond…","The art of napping…","The existence of Crests…","The library's collection…"],
-    convos: [
-      { line: "Being surrounded by all these Crest-bearers makes me want to better understand…", answer: "Nod / Praise" },
-      { line: "Crest versus nurture. Which causes a noble's personality disorder? Research project…", answer: "Chat" }
-    ]
-  },
-  {
-    name: "Dimitri", house: "Blue Lions",
-    teas: ["Chamomile"],
-    gifts: ["Whetstone", "Hunting Dagger", "Riding Boots"],
-    lost: ["Dulled Longsword", "Black Leather Glove", "Training Log"],
-    topics: ["A strong battalion…","Mighty weapons…","Overcoming weaknesses…","Our first meeting…","Potential training partners…","The last battle…","Things that bother you…","Working together…","The library's collection…","You're doing great work…"],
-    convos: [
-      { line: "Please join me for training when you have the time. Much I could learn…", answer: "Nod / Blush / Disagree" },
-      { line: "I apologize for troubling you. I am grateful for your support.", answer: "Nod / Blush" }
-    ]
-  },
-  {
-    name: "Dedue", house: "Blue Lions",
-    teas: ["Cinnamon Blend", "Four-Spice Blend", "Ginger Tea"],
-    gifts: ["Watering Can", "Floral Tea", "Iron Pot"],
-    lost: ["Gold Earring", "Old Cleaning Rag", "Gardening Shears"],
-    topics: ["A dinner invitation…","Cooking mishaps…","Dimitri…","Food in the dining hall…","Gardening mishaps…","I'm counting on you…","Overcoming weaknesses…","Perfect recipes…","Someone you look up to…","Working together…"],
-    convos: [
-      { line: "I do not like classrooms. I would rather learn at my own pace.", answer: "Disagree / Praise" },
-      { line: "I am the sword and shield of His Highness. I must constantly work to improve.", answer: "Commend / Praise" }
-    ]
-  },
-  {
-    name: "Felix", house: "Blue Lions",
-    teas: ["Almyran Pine Needles", "Four-Spice Blend"],
-    gifts: ["Smoked Meat", "Hunting Dagger", "Whetstone"],
-    lost: ["Black Iron Spur", "Toothed Dagger", "Sword Belt Fragment"],
-    topics: ["A new sword technique…","Capable comrades…","Children at the market…","Classes you might enjoy…","I'm counting on you…","Mighty weapons…","Monastery security…","Overcoming weaknesses…","Potential training partners…","Reliable allies…"],
-    convos: [
-      { line: "You intrigue me. What made you so strong?", answer: "Chat / Blush" },
-      { line: "Crests, lineage, knighthood… Trifles. Skill and survival are the only things…", answer: "Nod / Chat / Commend" }
-    ]
-  },
-  {
-    name: "Ashe", house: "Blue Lions",
-    teas: ["Angelica Tea", "Mint Leaves"],
-    gifts: ["Violet", "Ancient Coin", "Legends of Chivalry"],
-    lost: ["Leather Bow Sheath", "Bundle of Herbs", "Moon Knight's Tale"],
-    topics: ["A dinner invitation…","A word of advice…","Being the perfect knight…","Books you've read recently…","Children at the market…","Gardening mishaps…","Gifts you'd like to receive…","Tell me about yourself…","Thanks for everything…","The library's collection…"],
-    convos: [
-      { line: "I still have a lot to learn. I need to work harder.", answer: "Praise / Disagree" },
-      { line: "I'm good with children. I've taken care of my younger siblings since I was a kid.", answer: "Commend / Laugh" }
-    ]
-  },
-  {
-    name: "Mercedes", house: "Blue Lions",
-    teas: ["Crescent-Moon Tea", "Southern Fruit Blend", "Albinean Berry Blend"],
-    gifts: ["Armored Bear Stuffy", "Gemstone Beads", "Lavender"],
-    lost: ["Book of Ghost Stories", "Fruit Preserves", "How to Bake Sweets"],
-    topics: ["A dinner invitation…","A word of advice…","Cooking mishaps…","Fashion…","Ghost stories…","Heart-racing memories…","I heard some gossip…","School uniforms…","The courtyard couple…","The opera…"],
-    convos: [
-      { line: "I'm actually quite skilled at drawing. I wouldn't mind using you as a model!", answer: "Nod / Commend / Blush" },
-      { line: "The cathedral is nice and quiet. It's so relaxing!", answer: "Blush / Disagree" }
-    ]
-  },
-  {
-    name: "Annette", house: "Blue Lions",
-    teas: ["Almond Blend", "Sweet-Apple Blend", "Rose Petal Blend"],
-    gifts: ["Book of Sheet Music", "Stylish Hairclip", "Armored Bear Stuffy"],
-    lost: ["Unfinished Score", "Wax Diptych", "Clean Dusting Cloth"],
-    topics: ["A new gambit…","Books you've read recently…","Cooking mishaps…","Dreamy knights…","Exploring the monastery…","Food in the dining hall…","Guessing someone's age…","Kitchen catastrophes…","School days…","You're doing great work…"],
-    convos: [
-      { line: "Maybe I should have baked us a cake or something…", answer: "Nod / Laugh" },
-      { line: "The only way to clean is to clean with all your might! Otherwise you're wasting time!", answer: "Nod" }
-    ]
-  },
-  {
-    name: "Sylvain", house: "Blue Lions",
-    teas: ["Bergamot", "Seiros Tea"],
-    gifts: ["Landscape Painting", "Board Game"],
-    lost: ["Unused Lipstick", "Crumpled Love Letter", "The History of Sreng"],
-    topics: ["A dinner invitation…","Dining partners…","First crushes…","Hopes for your future…","Likable allies…","Our first meeting…","Relaxing at the sauna…","Tell me about yourself…","Things you find romantic…","You seem well…"],
-    convos: [
-      { line: "Opera, art, literature, I love 'em. They always give you something to talk about.", answer: "Commend / Chat" },
-      { line: "Everyone has their own reason to fight. At least I'm honest about mine.", answer: "Commend / Praise" }
-    ]
-  },
-  {
-    name: "Ingrid", house: "Blue Lions",
-    teas: ["Mint Leaves", "Chamomile"],
-    gifts: ["Smoked Meat", "Riding Boots", "Legends of Chivalry"],
-    lost: ["Pegasus Horseshoes", "Jeralt's Lite Treatise", "Curry Comb"],
-    topics: ["A new gambit…","A word of advice…","Favorite sweets…","Fodlan's future…","Potential training partners…","Reliable allies…","Your ambitions…","Someone you look up to…","The ideal professor…","The view from the bridge…","Working together…"],
-    convos: [
-      { line: "As a child, my father and brother used to yell at me for spending time with my horse.", answer: "Laugh / Admonish" },
-      { line: "I'm already thinking of my next meal…", answer: "Laugh" }
-    ]
-  },
-  {
-    name: "Claude", house: "Golden Deer",
-    teas: ["Almyran Pine Needles", "Chamomile", "Leicester Cortania"],
-    gifts: ["Riding Boots", "Book of Crest Designs", "Exotic Spices"],
-    lost: ["Leather Bow Case", "Mild Stomach Poison", "Board Game Piece"],
-    topics: ["Close calls…","Fodlan's future…","Hopes for your future…","Likable allies…","Monastery mysteries…","Our first meeting…","Perfect recipes…","Reliable allies…","Tell me about yourself…","The existence of Crests…"],
-    convos: [
-      { line: "Do you really have time for this? I know how busy you are…", answer: "Disagree / Sip Tea" },
-      { line: "I want to know more about you.", answer: "Nod" }
-    ]
-  },
-  {
-    name: "Lorenz", house: "Golden Deer",
-    teas: ["Bergamot", "Rose Petal Blend", "Seiros Tea"],
-    gifts: ["Rose", "Floral Tea", "Book of Sheet Music"],
-    lost: ["Artificial Flower", "A Treatise on Etiquette", "Silk Handkerchief"],
-    topics: ["A new gambit…","Cute monks…","Evaluating allies…","First crushes…","Heart-racing memories…","Likable allies…","Overcoming weaknesses…","Relaxing at the sauna…","School days…","Someone you look up to…"],
-    convos: [
-      { line: "A noble's life is full of rigid expectation. I sometimes envy the freedom of commoners.", answer: "Disagree / Praise" },
-      { line: "The rose perfectly embodies the blend of elegance and power that I seek to possess.", answer: "Nod / Sip Tea" }
-    ]
-  },
-  {
-    name: "Hilda", house: "Golden Deer",
-    teas: ["Mint Leaves", "Albinean Berry Blend", "Rose Petal Blend", "Southern Fruit Blend"],
-    gifts: ["Armored Bear Stuffy", "Stylish Hairclip", "Gemstone Beads"],
-    lost: ["Handmade Hairclip", "Spotless Bandage", "Book of Ghost Stories"],
-    topics: ["Cute accessories…","Cute monks…","Dining partners…","Fashion…","First crushes…","I heard some gossip…","Likable allies…","Shareable snacks…","The opera…","You seem well…"],
-    convos: [
-      { line: "You know? I love hearing myself talk!", answer: "Nod / Sip Tea" },
-      { line: "Have you ever cried, Professor? It's hard to imagine you crying.", answer: "Sip Tea" }
-    ]
-  },
-  {
-    name: "Raphael", house: "Golden Deer",
-    teas: ["Almond Blend", "Ginger Tea"],
-    gifts: ["Smoked Meat", "Whetstone"],
-    lost: ["Wooden Button", "Burlap Sack of Wheat", "Big Spoon"],
-    topics: ["A word of advice…","Classes you might enjoy…","Dining partners…","Food in the dining hall…","I'm counting on you…","Potential training partners…","Someone you look up to…","Thanks for everything…","Things that bother you…","You're doing great work…"],
-    convos: [
-      { line: "I gotta become a proper knight so I can take care of my little sis!", answer: "Commend / Praise" },
-      { line: "No one else comes close to having muscles like me, but that's not good enough, is it?", answer: "Laugh / Chat" }
-    ]
-  },
-  {
-    name: "Lysithea", house: "Golden Deer",
-    teas: ["Crescent Moon Tea", "Honeyed-Fruit Blend", "Sweet-Apple Blend", "Southern Fruit Blend"],
-    gifts: ["Armored Bear Stuffy", "Lily", "Book of Crest Designs"],
-    lost: ["Encyclopedia of Sweets", "Princess Doll", "New Bottle of Ink"],
-    topics: ["A dinner invitation…","Books you've read recently…","Classes you might enjoy…","Evaluating allies…","Fodlan's future…","Hopes for your future…","Likable allies…","Our first meeting…","Perfect recipes…","School days…"],
-    convos: [
-      { line: "I know I could stand to lighten up from time to time.", answer: "Admonish / Chat / Praise" },
-      { line: "One of the few pleasures I find is in eating sweets. It's…kind of embarrassing.", answer: "Nod / Laugh" }
-    ]
-  },
-  {
-    name: "Ignatz", house: "Golden Deer",
-    teas: ["Dagda Fruit Blend", "Lavender Blend", "Seiros Tea"],
-    gifts: ["Landscape Painting", "Ancient Coin", "Goddess Statuette"],
-    lost: ["Blue Stone", "Art Book", "Letter to the Goddess"],
-    topics: ["A word of advice…","Cats…","Close calls…","Evaluating allies…","Fodlan's future…","Guessing someone's age…","Likable allies…","Monastery rules…","Past laughs…","Someone you look up to…"],
-    convos: [
-      { line: "I wanna support my family, but I don't know if I can handle being a knight.", answer: "Nod / Praise" },
-      { line: "I think it's good to have a hobby. Some people say it's a waste of time, but it's nice.", answer: "Nod / Chat" }
-    ]
-  },
-  {
-    name: "Marianne", house: "Golden Deer",
-    teas: ["Cinnamon Blend", "Dagda Fruit Blend", "Lavender Blend"],
-    gifts: ["Lily", "Dromund Prowess Book", "Floral Tea"],
-    lost: ["Bag of Seeds", "Confessional Letter", "How to Purify Water"],
-    topics: ["A word of advice…","Cats…","Children at the market…","Fodlan's future…","Hopes for your future…","Monastery mysteries…","Plans for the future…","Strange fish in the pond…","The existence of Crests…","The library's collection…"],
-    convos: [
-      { line: "Spending time with me must be boring, isn't it?", answer: "Disagree / Admonish" },
-      { line: "You'll be met with misfortune if you spend too much time with me…", answer: "Disagree / Admonish / Chat" }
-    ]
-  },
-  {
-    name: "Leonie", house: "Golden Deer",
-    teas: ["Angelica Tea", "Four-Spice Blend"],
-    gifts: ["Hunting Dagger", "Fishing Float"],
-    lost: ["Drawing of a Back", "Crude Arrowheads", "Fur Scarf"],
-    topics: ["A strong battalion…","Capable comrades…","Equipment upkeep…","Evaluating enemies…","Fodlan's future…","Mighty weapons…","Past laughs…","Potential training partners…","Reliable allies…","The last battle…"],
-    convos: [
-      { line: "Hope you've been keeping up with your training. If not careful, I'll surpass you.", answer: "Nod / Commend" },
-      { line: "Don't throw away anything that's still usable, OK? I'll take whatever you don't need.", answer: "Nod / Commend" }
-    ]
-  },
-  {
-    name: "Yuri", house: "Ashen Wolves",
-    teas: ["Albinean Berry Blend", "Honeyed-Fruit Blend", "Seiros Tea"],
-    gifts: ["Goddess Statuette", "Board Game", "Tasty Baked Treat"],
-    lost: ["Makeup Brush", "Aft-Market Ledger", "Unsent Letter to Mother"],
-    topics: ["A dinner invitation…","Books you've read recently…","Children at the market…","Equipment upkeep…","Fashion…","Hopes for your future…","Keeping Abyss safe…","Monastery security…","Perfect recipes…","Reliable allies…","Someone you look up to…","The existence of Crests…","The view from the bridge…","Working together…"],
-    convos: [
-      { line: "If I established a monopoly on tea, I imagine I'd see no end to the gold…", answer: "Nod / Chat / Praise" },
-      { line: "I don't dislike dogs or cats by any stretch… I'm just deathly allergic.", answer: "Sigh / Chat / Praise" }
-    ]
-  },
-  {
-    name: "Constance", house: "Ashen Wolves",
-    teas: ["Albinean Berry Blend", "Bergamot", "Rose Petal Blend", "Sweet-Apple Blend"],
-    gifts: ["Tea Leaves", "Book of Crest Designs", "Arnica Flower"],
-    lost: ["Sunshade Fragment", "Nuvelle Crest Chart", "Pegasus Flute"],
-    topics: ["A dinner invitation…","Capable comrades…","Close calls…","Favorite sweets…","Food in the dining hall…","I heard some gossip…","Our first meeting…","Reliable allies…","The existence of Crests…","The opera…","Working together…"],
-    convos: [
-      { line: "Should you decide to lend your aid to the restoration of House Nuvelle, seek me…", answer: "Nod / Sip Tea / Praise" },
-      { line: "Tea parties such as this were once so…commonplace for me. And they will be again!", answer: "Laugh / Praise" }
-    ]
-  },
-  {
-    name: "Balthus", house: "Ashen Wolves",
-    teas: ["Almyran Pine Needles", "Ginger Tea"],
-    gifts: ["Whetstone", "Smoked Meat", "Ancient Coin"],
-    lost: ["Brewing Stopper", "Book of Ledger", "Sturdy Wrapping Cloth"],
-    topics: ["A dinner invitation…","A strong battalion…","Classes you might enjoy…","Cute monks…","Evaluating allies…","Gardening mishaps…","I'm counting on you…","Our first meeting…","Potential training partners…","Shareable snacks…","Thanks for everything…","Things that bother you…","You seem well…"],
-    convos: [
-      { line: "I'm not big on stuffy formalities. Do what you like and drink what you like.", answer: "Commend / Admonish / Chat" },
-      { line: "Since I gave up my noble status, my tea invitations have really dried up…", answer: "Nod / Sip Tea" }
-    ]
-  },
-  {
-    name: "Hapi", house: "Ashen Wolves",
-    teas: ["Cinnamon Blend", "Dagda Fruit Blend", "Four-Spice Blend"],
-    gifts: ["Exotic Spices", "Hunting Dagger", "Smoked Meat"],
-    lost: ["Smoked Meat Wrap", "Glossy Pebble", "Shed Wolf Skin"],
-    topics: ["A dinner invitation…","Close calls…","Favorite sweets…","Gifts you'd like to receive…","Hopes for your future…","Past laughs…","Stargazing…","Working hours for guards…"],
-    convos: [
-      { line: "You're in no hurry to wrap this up. Don't you have some actual, y'know…work to do?", answer: "Laugh / Disagree / Sip Tea" },
-      { line: "Everyone knows about my curse, so I've got no shortage of alone time.", answer: "Disagree / Sigh" }
-    ]
-  },
-  {
-    name: "Rhea", house: "Church",
-    teas: ["Angelica Tea", "Crescent-Moon Tea", "Chamomile"],
-    gifts: ["Goddess Statuette", "Landscape Painting", "Ancient Coin"],
-    lost: [],
-    topics: ["A dinner invitation…","Children at the market…","Dreams of a throne…","Fodlan's future…","Heart-racing memories…","I'm counting on you…","Our first meeting…","Plans for the future…","Tell me about yourself…","The ideal relationship…","Things that bother you…","You seem different…"],
-    convos: [
-      { line: "Have you grown accustomed to living in the monastery?", answer: "Disagree / Nod" },
-      { line: "Have confidence. I truly believe you can lead your students down the right path.", answer: "Nod" }
-    ]
-  },
-  {
-    name: "Seteth", house: "Church",
-    teas: ["Angelica Tea", "Four-Spice Blend", "Ginger Tea"],
-    gifts: ["Fishing Float", "Dromund Prowess Book"],
-    lost: ["Old Map of Fodlan", "Snapped Writing Quill", "Unfinished Fable"],
-    topics: ["A new gambit…","Books you've read recently…","Classes you might enjoy…","Evaluating allies…","Fodlan's future…","I heard some gossip…","Mighty weapons…","Our first meeting…","Tell me about yourself…","The last battle…"],
-    convos: [
-      { line: "I wonder why the archbishop is so interested in you.", answer: "Chat / Sip Tea" },
-      { line: "I know I speak harshly at times, but I hope you understand that I am merely doing my job.", answer: "Nod / Sigh" }
-    ]
-  },
-  {
-    name: "Manuela", house: "Church",
-    teas: ["Lavender Blend", "Mint Leaves"],
-    gifts: ["Blue Cheese", "Gemstone Beads", "Book of Sheet Music"],
-    lost: ["Clean Dusting Rag", "Light Purple Veil", "Wellness Treatise"],
-    topics: ["Best performance venues…","Dining partners…","Fashion…","Food in the dining hall…","Likable allies…","Past laughs…","Perfect recipes…","Tell me about yourself…","Working together…","You seem well…"],
-    convos: [
-      { line: "Who are you really? Such a mystery. I don't really understand you… Tell me everything.", answer: "Chat / Sigh" },
-      { line: "Am I that terrible of a woman? So, I'm a little unkempt, what for it?", answer: "Admonish / Disagree" }
-    ]
-  },
-  {
-    name: "Hanneman", house: "Church",
-    teas: ["Bergamot", "Cinnamon Blend", "Honeyed-Fruit Blend", "Sweet-Apple Blend"],
-    gifts: ["Book of Crest Designs", "Tea Leaves"],
-    lost: ["Lens of Saint Cethleann", "Hammer and Chisel", "Sketch of a Crest"],
-    topics: ["A dinner invitation…","A word of advice…","Cooking mishaps…","Exploring the monastery…","Fodlan's future…","Heart-racing memories…","I'm counting on you…","Monastery rules…","Overcoming weaknesses…","Relaxing at the sauna…"],
-    convos: [
-      { line: "The Crest of Flames shares many traits with other Crests. Yet, it also has unique…", answer: "Nod / Chat" },
-      { line: "Why don't you come by later? I'd very much like to dive into some research together.", answer: "Commend / Sip Tea" }
-    ]
-  }
+// ─── DATA ───────────────────────────────────────────────────────────────────
+
+const MONTHS = [
+  "Garland Moon","Blue Sea Moon","Verdant Rain Moon",
+  "Horsebow Moon","Wyvern Moon","Red Wolf Moon",
+  "Ethereal Moon","Guardian Moon","Pegasus Moon"
 ];
 
-const HOUSES = ['All', 'Black Eagles', 'Blue Lions', 'Golden Deer', 'Ashen Wolves', 'Church'];
+const LOST_ITEMS = {
+  "Garland Moon": [
+    {name:"Wooden Flask", location:"2nd Floor Lobby", owner:"Jeralt"},
+    {name:"Sketch of a Sigil", location:"2nd Floor Hallway", owner:"Hanneman"},
+    {name:"Hand Drawn Map", location:"Dining Hall Gardens", owner:"Leonie"},
+    {name:"White Glove", location:"Black Eagle Classroom", owner:"Edelgard"},
+    {name:"Wooden Button", location:"Training Grounds", owner:"Raphael"},
+    {name:"Tattered Overcoat", location:"Training Grounds", owner:"Caspar"},
+    {name:"School of Sorcery Book", location:"Dining Hall", owner:"Annette"},
+    {name:"Leather Bow Sheath", location:"Reception Hall", owner:"Claude"},
+    {name:"Elegant Hair Clip", location:"2nd Floor Audience Chamber", owner:"Rhea"},
+  ],
+  "Blue Sea Moon": [
+    {name:"Used Bottle of Perfume", location:"Marketplace", owner:"Hilda"},
+    {name:"Confessional Letter", location:"Stables", owner:"Marianne"},
+    {name:"Artificial Flower", location:"North of Knight's Hall", owner:"Lorenz"},
+    {name:"Bag of Tea Leaves", location:"Black Eagles Classroom", owner:"Ferdinand"},
+    {name:"Thunderbrand Replica", location:"Training Grounds", owner:"Caspar"},
+    {name:"Badge of Graduation", location:"Training Grounds", owner:"Catherine"},
+    {name:"Noxious Handkerchief", location:"Training Grounds", owner:"Hubert"},
+    {name:"Mysterious Notebook", location:"Cathedral Holy Mausoleum", owner:"Alois"},
+    {name:"Wellness Herbs", location:"2nd Floor Infirmary", owner:"Manuela"},
+    {name:"Secret Ledger", location:"Dining Hall Gardens", owner:"Anna"},
+  ],
+  "Verdant Rain Moon": [
+    {name:"Needle and Thread", location:"Outside Bernadetta's Room", owner:"Bernadetta"},
+    {name:"Portrait of Rhea", location:"2nd Floor Dorm Hallway", owner:"Cyril"},
+    {name:"Feather Pillow", location:"Dining Hall", owner:"Linhardt"},
+    {name:"Curry Comb", location:"Entrance Hall", owner:"Ingrid"},
+    {name:"Encyclopedia of Sweets", location:"Golden Deer Classroom", owner:"Lysithea"},
+    {name:"Unused Lipstick", location:"Reception Hall", owner:"Sylvain"},
+    {name:"Exotic Flower", location:"Reception Hall", owner:"Petra"},
+    {name:"Sword Belt Fragment", location:"Training Hall", owner:"Felix"},
+    {name:"Art Book", location:"Cathedral", owner:"Ignatz"},
+    {name:"Nimbus Charm", location:"Abyss Entrance", owner:"Constance"},
+    {name:"Makeup Brush", location:"Sauna", owner:"Yuri"},
+  ],
+  "Horsebow Moon": [
+    {name:"Antique Clasp", location:"Fishing Pond", owner:"Flayn"},
+    {name:"Agricultural Survey", location:"Stables", owner:"Ferdinand"},
+    {name:"How to Be Tidy", location:"Stables", owner:"Marianne"},
+    {name:"Gardening Shears", location:"Training Grounds", owner:"Dedue"},
+    {name:"Black Leather Gloves", location:"Training Grounds", owner:"Dimitri"},
+    {name:"Silver Brooch", location:"Officer's Academy Courtyard", owner:"Dorothea"},
+    {name:"Spotless Bandage", location:"Golden Deer Classroom", owner:"Hilda"},
+    {name:"Silver Necklace", location:"Entrance Hall", owner:"Gilbert"},
+    {name:"How to Bake Sweets", location:"Cathedral", owner:"Mercedes"},
+    {name:"Bundle of Herbs", location:"Cathedral", owner:"Ashe"},
+    {name:"Seiros Scriptures", location:"Cathedral", owner:"Rhea"},
+    {name:"Hammer and Chisel", location:"Second Floor", owner:"Hanneman"},
+  ],
+  "Wyvern Moon": [
+    {name:"Bundle of Dry Hemp", location:"Marketplace", owner:"Shamir"},
+    {name:"Jousting Almanac", location:"Entrance Hall", owner:"Ingrid"},
+    {name:"Black Iron Spur", location:"Dining Hall", owner:"Felix"},
+    {name:"Burlap Sack of Rocks", location:"Dining Hall", owner:"Raphael"},
+    {name:"Small Tanned Hide", location:"Reception Hall", owner:"Petra"},
+    {name:"Letter to Rhea", location:"Training Grounds", owner:"Catherine"},
+    {name:"Shiny Striated Pebble", location:"1st Floor Dormitories", owner:"Hapi"},
+  ],
+  "Red Wolf Moon": [
+    {name:"Still Life Picture", location:"1st Floor Dormitory", owner:"Bernadetta"},
+    {name:"Well Used Hatchet", location:"Dining Hall Gardens", owner:"Cyril"},
+    {name:"Crude Arrowheads", location:"Dining Hall Balcony", owner:"Leonie"},
+    {name:"Foreign Gold Coin", location:"Fishing Pond", owner:"Alois"},
+    {name:"Old Map of Enbarr", location:"Fishing Pond", owner:"Flayn"},
+    {name:"A Treatise on Etiquette", location:"Entrance Hall", owner:"Lorenz"},
+    {name:"Songstress Poster", location:"Officer's Academy", owner:"Dorothea"},
+    {name:"The Saints Revealed", location:"Reception Hall", owner:"Linhardt"},
+    {name:"Crumpled Love Letter", location:"Knight's Hall", owner:"Sylvain"},
+    {name:"Unfinished Fable", location:"2nd Floor Advisory Room", owner:"Seteth"},
+    {name:"Clean Dusting Cloth", location:"2nd Floor Infirmary", owner:"Manuela"},
+    {name:"Fruit Preserves", location:"Cathedral", owner:"Mercedes"},
+    {name:"Mild Stomach Poison", location:"Golden Deer Classroom", owner:"Claude"},
+    {name:"Repellent Powder", location:"Dining Hall Gardens", owner:"Constance"},
+  ],
+  "Ethereal Moon": [
+    {name:"Evil-Repelling Amulet", location:"Fishing Pond", owner:"Ashe"},
+    {name:"Centipede Picture", location:"Stables", owner:"Shamir"},
+    {name:"Big Spoon", location:"Dining Hall", owner:"Raphael"},
+    {name:"Princess Doll", location:"Reception Hall", owner:"Lysithea"},
+    {name:"Blue Stone", location:"Golden Deer Classroom", owner:"Ignatz"},
+    {name:"Old Cleaning Cloth", location:"2nd Floor Lobby", owner:"Cyril"},
+    {name:"Carving Hammer", location:"Knight's Hall", owner:"Gilbert"},
+    {name:"Lens Cloth", location:"Knight's Hall", owner:"Hanneman"},
+    {name:"Book of Ghost Stories", location:"Cathedral East Side", owner:"Mercedes"},
+    {name:"Old Fishing Rod", location:"Cathedral Saint Statue Room", owner:"Seteth"},
+    {name:"Animated Bait", location:"Library", owner:"Linhardt"},
+    {name:"Unfinished Score", location:"Blue Lion Classroom", owner:"Annette"},
+  ],
+  "Guardian Moon": [
+    {name:"Introduction to Magic", location:"Fishing Pond", owner:"Alois"},
+    {name:"Light Purple Veil", location:"Greenhouse", owner:"Manuela"},
+    {name:"Lovely Comb", location:"Greenhouse", owner:"Dorothea"},
+    {name:"Pegasus Horseshoes", location:"Stables", owner:"Ingrid"},
+    {name:"Weathered Cloak", location:"Entrance Hall", owner:"Catherine"},
+    {name:"Noseless Puppet", location:"Knight's Hall Entrance", owner:"Gilbert"},
+    {name:"Iron Cooking Pot", location:"Knight's Hall", owner:"Dedue"},
+    {name:"Training Logbook", location:"Knight's Hall", owner:"Dimitri"},
+    {name:"Letter to the Goddess", location:"Golden Deer Classroom", owner:"Ignatz"},
+    {name:"Handmade Hair Clip", location:"Golden Deer Classroom", owner:"Hilda"},
+    {name:"Unfinished Score", location:"Blue Lions Classroom", owner:"Annette"},
+    {name:"Toothed Dagger", location:"Training Grounds", owner:"Felix"},
+    {name:"Animal Bone Dice", location:"Training Grounds", owner:"Shamir"},
+    {name:"Snapped Writing Quill", location:"2nd Floor Advisory Room", owner:"Seteth"},
+    {name:"Animated Bait", location:"2nd Floor Library", owner:"Linhardt"},
+    {name:"Bag of Seeds", location:"Cathedral", owner:"Marianne"},
+    {name:"Dusty Book of Fables", location:"Cathedral", owner:"Flayn"},
+    {name:"Fur Scarf", location:"Near Amiibo Gazebo", owner:"Leonie"},
+    {name:"Board Game Piece", location:"Entrance Hall (near Lysithea)", owner:"Claude"},
+  ],
+  "Pegasus Moon": [
+    {name:"Wax Diptych", location:"Dining Hall", owner:"Annette"},
+    {name:"Maintenance Oil", location:"Dining Hall", owner:"Ferdinand"},
+    {name:"Annotated Dictionary", location:"Dining Hall", owner:"Petra"},
+    {name:"Grounding Charm", location:"Dining Hall", owner:"Caspar"},
+    {name:"Hedgehog Case", location:"Graveyard", owner:"Bernadetta"},
+    {name:"New Bottle of Perfume", location:"Reception Hall", owner:"Lysithea"},
+    {name:"Silk Handkerchief", location:"Golden Deer Classroom", owner:"Lorenz"},
+    {name:"The History of Sreng", location:"Blue Lions Classroom", owner:"Sylvain"},
+    {name:"Moon Knight's Tale", location:"Cathedral", owner:"Ashe"},
+    {name:"Faded Star Chart", location:"2nd Floor Library", owner:"Rhea"},
+    {name:"Balance Scale", location:"Above Graveyard", owner:"Anna"},
+    {name:"Basket of Berries", location:"Greenhouse", owner:"Hapi"},
+    {name:"Stiff Hand Wrap", location:"Fishing Pond", owner:"Balthus"},
+  ],
+};
 
-const CLASSES = [
-  'Noble / Commoner',
-  'Myrmidon / Soldier / Fighter / Monk',
-  'Mercenary / Thief / Cavalier / Mage',
-  'Swordmaster / Paladin / Assassin / Warlock',
-  'Falcon Knight / Wyvern Lord / Mortal Savant / Gremory'
+const TEA_DATA = [
+  {name:"Dimitri",house:"blue",teas:["Chamomile"],
+   topics:["A new gambit","A place you'd like to visit","A strong battalion","A word of advice","Children at the market","Close calls","Cooking mishaps","Equipment upkeep","Evaluating allies","Exploring the Monastery","Fodlan's future","I'm counting on you","Mighty weapons","Monastery rules","Monastery security","Our first meeting","Overcoming weaknesses","Past laughs","Potential training partners","Reliable allies","School days","Someone you look up to","Sturdy weapons","Tell me about yourself","Thanks for everything","The ideal professor","The last battle","The library's collection","The view from the bridge","Things that bother you","Working hours for guards","Working together","You seem well","You're doing great work","Your ambitions"],
+   reactions:["Praise/Chat at breaking things","Nod at long rides","Blush/Nod at grateful for support","Disagree/Laugh at inviting to quarters","Nod/Blush/Disagree at joining training","Chat/Praise at last five years","Sip Tea/Laugh at relaxing","Nod/Laugh at day being over","Disagree/Praise/Blush at you helped me"]},
+  {name:"Dedue",house:"blue",teas:["Ginger Tea"],
+   topics:["A dinner invitation","A strong battalion","A word of advice","Capable comrades","Cooking mishaps","Dimitri","Equipment upkeep","Exploring the Monastery","Favorite sweets","Fodlan's future","Food in the Dining Hall","Gardening mishaps","Gifts you'd like to receive","I'm counting on you","Monastery security","Our first meeting","Overcoming weaknesses","Perfect recipes","Potential training partners","Reliable allies","Shareable snacks","Someone you look up to","Strange fish in the pond","Thanks for everything","The last battle","Working hours for guards","Working together","Your ambitions"],
+   reactions:["Praise/Chat/Sip Tea at Blood of Duscur","Disagree/Nod at bringing sweets","Disagree/Praise at not liking classrooms","Laugh/Blush at feeling comfortable","Nod/Laugh at greenhouse flowers","Chat/Commend at life given by Highness","Nod/Sip Tea at something to discuss","Commend/Praise at sword and shield","Blush/Nod at visiting him"]},
+  {name:"Felix",house:"blue",teas:["Almyran Pine Needles"],
+   topics:["A new gambit","A new sword technique","A strong battalion","Capable comrades","Cats","Children at the market","Classes you might enjoy","Equipment upkeep","Evaluating allies","Exploring the Monastery","Food in the Dining Hall","I'm counting on you","Mighty weapons","Monastery security","Our first meeting","Overcoming weaknesses","Plans for the future","Potential training partners","Reliable allies","Shareable snacks","Someone you look up to","The last battle","The opera","Working together","You're doing great work","Your ambitions"],
+   reactions:["Blush/Laugh at appreciating you","Commend at family of soldiers","Nod/Commend at sword training","Chat/Nod at resting too long","Laugh at room feeling peaceful","Nod/Chat/Commend at skill and survival","Sip Tea/Nod at snacking","Blush/Laugh at spending time","Chat/Blush at what made you strong"]},
+  {name:"Sylvain",house:"blue",teas:["Bergamot"],
+   topics:["A dinner invitation","A place you'd like to visit","Books you've read recently","Capable comrades","Classes you might enjoy","Close calls","Cooking mishaps","Cute monks","Dating escapades","Dining partners","Evaluating allies","Exploring the Monastery","Fashion","Favorite sweets","First crushes","Food in the Dining Hall","Gifts you'd like to receive","Guessing someone's age","Heart-racing memories","Hopes for your future","I heard some gossip","I'm counting on you","Likeable allies","Monastery mysteries","Our first meeting","Overcoming weaknesses","Past laughs","Perfect recipes","Plans for the future","Potential training partners","Relaxing at the Sauna","Reliable allies","School days","School uniforms","Shareable snacks","Strange fish in the pond","Tell me about yourself","Thanks for everything","The courtyard couple","The ideal relationship","The library's collection","The opera","The view from the bridge","Things that bother you","Things you find romantic","Working together","You seem different","You seem well","You're doing great work"],
+   reactions:["Nod/Commend/Praise at girl trouble","Laugh/Blush at being curious","Sip Tea/Chat at stoic","Sip Tea/Nod at candy","Disagree/Sip Tea at seeing through me","Praise/Chat at warm Monastery","Praise/Sip Tea at proper training","Commend/Chat at opera/art/literature","Commend/Praise at reason to fight"]},
+  {name:"Ashe",house:"blue",teas:["Mint Tea"],
+   topics:["A dinner invitation","A place you'd like to visit","A strong battalion","A word of advice","Being the perfect knight","Books you've read recently","Cats","Children at the market","Close calls","Dreamy knights","Equipment upkeep","Favorite sweets","Gardening mishaps","Gifts you'd like to receive","I'm counting on you","Monastery security","Past laughs","Perfect recipes","Plans for the future","School days","Shareable snacks","Someone you look up to","Strange fish in the pond","Tell me about yourself","Thanks for everything","The existence of Crests","The ideal professor","The last battle","The Library's collection","Things that bother you","Working hours for guards","Working together","You seem well","Your ambitions"],
+   reactions:["Laugh/Commend at good with children","Nod/Commend at nothing in vain","Commend at confidence in speed","Disagree/Sip Tea at ghost","Sip Tea/Laugh at feeling relaxed","Praise/Laugh at letters from siblings","Sigh/Praise/Nod at years with Lord Lonato","Blush/Nod at time flying","Disagree/Praise at working harder"]},
+  {name:"Annette",house:"blue",teas:["Sweet-Apple Blend"],
+   topics:["A dinner invitation","A new gambit","A place you'd like to visit","A word of advice","Books you've read recently","Children at the market","Close calls","Cooking mishaps","Cute monks","Dining partners","Dreamy knights","Equipment upkeep","Evaluating allies","Exploring the Monastery","Fashion","Favorite sweets","Food in the Dining Hall","Gardening mishaps","Gifts you'd like to receive","Guessing someone's age","Hopes for your future","I'm counting on you","Kitchen catastrophes","Likeable allies","Our first meeting","Overcoming weaknesses","Past laughs","Perfect recipes","Plans for the future","Relaxing at the Sauna","School days","School uniforms","Shareable snacks","Someone you look up to","Tell me about yourself","Thanks for everything","The courtyard couple","The ideal professor","The ideal relationship","The last battle","The Library's collection","The opera","Things that bother you","Things you find romantic","Working together","You seem different","You seem well","You're doing great work","Your ambitions"],
+   reactions:["Laugh/Nod at baking a cake","Praise/Disagree/Chat at breaking plate","Nod at cleaning","Blush/Laugh at being myself","Nod at going to confectioner","Nod/Commend/Praise at helping equation","Praise/Commend/Chat at no effort wasted","Nod/Laugh at spending time","Blush/Laugh at first time I met you"]},
+  {name:"Ingrid",house:"blue",teas:["Mint Tea"],
+   topics:["A dinner invitation","A new gambit","A strong battalion","A word of advice","Books you've read recently","Cats","Classes you might enjoy","Cooking mishaps","Dreamy knights","Equipment upkeep","Evaluating allies","Exploring the Monastery","Favorite sweets","First crushes","Fodlan's future","Food for life","Food in the Dining Hall","Gifts you'd like to receive","I'm counting on you","Mighty weapons","Monastery rules","Monastery security","Our first meeting","Overcoming weaknesses","Past laughs","Perfect recipes","Plans for the future","Potential training partners","Reliable allies","School days","Shareable snacks","Someone you look up to","Strange fish in the pond","Tell me about yourself","Thanks for everything","The existence of Crests","The ideal professor","The last battle","The Library's collection","The view from the bridge","Things you find romantic","Working hours for guards","Working together","You seem well","You're doing great work","Your ambitions"],
+   reactions:["Chat/Praise at envious of Monastery","Disagree/Blush at calming nerves","Laugh/Praise at forgetting fighting","Admonish/Laugh at meal with me","Blush/Disagree at speaking with you","Admonish/Laugh at so much time with horse","Chat at starting sword training","Laugh at thinking of next meal","Chat/Laugh at your favorite food"]},
+  {name:"Mercedes",house:"blue",teas:["Albinean Berry Blend","Southern Fruit Blend"],
+   topics:["A dinner invitation","A place you'd like to visit","A word of advice","Books you've read recently","Cats","Children at the market","Cooking mishaps","Cute monks","Dining partners","Dreamy knights","Exploring the Monastery","Fashion","Favorite sweets","First crushes","Food in the Dining Hall","Gardening mishaps","Ghost stories","Gifts you'd like to receive","Heart-racing memories","Heard some gossip","I'm counting on you","Likeable allies","Monastery rules","Overcoming weaknesses","Past laughs","Perfect recipes","Relaxing at the Sauna","School days","School uniforms","Shareable snacks","Tell me about yourself","Thanks for everything","The courtyard couple","The ideal relationship","The last battle","The Library's collection","The opera","Things that bother you","You seem different","You're doing great work"],
+   reactions:["Sip Tea/Blush/Nod at staying longer","Nod/Sip Tea at bringing cake","Blush/Disagree at cathedral relaxing","Commend on quiet beautiful church","Praise/Commend at no regrets","Commend/Nod at flowers in window","Blush/Commend/Nod at drawing model","Nod/Chat/Praise at writing to mother"]},
+  {name:"Edelgard",house:"black",teas:["Bergamot","Hresvelg Blend"],
+   topics:["A new gambit","A strong battalion","A word of advice","Books you've read recently","Capable comrades","Cats","Classes you might enjoy","Close calls","Dreaming of lazy days","Equipment upkeep","Evaluating allies","Exploring the Monastery","Favorite sweets","Fodlan's future","Gifts you'd like to receive","Hopes for your future","I heard some gossip","I'm counting on you","Monastery mysteries","Monastery security","Our first meeting","Overcoming weaknesses","Past laughs","Plans for the future","Reliable allies","School days","School uniforms","Tell me about yourself","Thanks for everything","The existence of Crests","The ideal professor","The last battle","The Library's collection","The opera","The view from the bridge","Things that bother you","Things you find romantic","You seem different","You're doing great work","Your ambitions"],
+   reactions:["Sigh/Disagree/Sip Tea at always calm","Nod/Blush/Laugh at comfortable","Nod/Blush/Disagree at meticulous","Praise/Commend/Chat at imperial throne","Laugh/Praise/Sigh at simpler life","Laugh/Nod at not telling Hubert","Nod/Blush at day we met","Nod at showing you around Enbarr","Blush/Sip Tea/Nod at quiet moments"]},
+  {name:"Hubert",house:"black",teas:["Cinnamon Blend","Hresvelg Blend"],
+   topics:["A new gambit","A place you'd like to visit","A strong battalion","Books you've read recently","Capable comrades","Close calls","Equipment upkeep","Evaluating allies","Fodlan's future","Guessing someone's age","I heard some gossip","I'm counting on you","Mighty weapons","Monastery mysteries","Monastery security","Reliable allies","Someone you look up to","Successful plots","The last battle","The Library's collection","Working together","Your ambitions"],
+   reactions:["Admonish/Praise/Disagree at bored/depressed","Sigh/Sip Tea at observing you","Nod/Disagree at Edelgard hearing","Disagree/Praise/Chat at status from Majesty","Blush/Nod for eternal gratitude","Commend/Chat at House Vestra territory","Chat/Blush at rival of goddess","Commend/Praise at head of Vestra","Disagree/Sip Tea at keen insights"]},
+  {name:"Caspar",house:"black",teas:["Ginger Tea"],
+   topics:["A dinner invitation","A new gambit","A place you'd like to visit","A strong battalion","A word of advice","Cats","Children at the market","Classes you might enjoy","Close calls","Cooking mishaps","Dreamy knights","Equipment upkeep","Exploring the Monastery","Food in the Dining Hall","Gardening mishaps","Hopes for the future","I'm counting on you","Methods for growing taller","Mighty weapons","Our first meeting","Overcoming weaknesses","Past laughs","Perfect recipes","Plans for the future","Potential training partners","Relaxing at the Sauna","School days","Shareable snacks","Someone you look up to","Strange fish in the pond","Tell me about yourself","Thanks for everything","The last battle","The view from the bridge","Things that bother you","Working hours for guards","Working together","You seem well","You're doing great work","Your ambitions"],
+   reactions:["Laugh/Praise/Commend at doing things my way","Nod/Laugh/Blush at fighting alongside","Praise at getting hung up","Sigh/Laugh at getting hungry","Praise/Commend at hard work","Blush/Disagree at keep training","Chat/Admonish at out front next battle","Chat/Nod at suspicious guy","Chat/Commend on justice"]},
+  {name:"Ferdinand",house:"black",teas:["Southern Fruit Blend"],
+   topics:["A dinner invitation","A strong battalion","A word of advice","Capable comrades","Children at the market","Classes you might enjoy","Close calls","Cooking mishaps","Cute monks","Dining partners","Dreamy knights","Equipment upkeep","Evaluating allies","Exploring the Monastery","Fashion","First crushes","Fodlan's future","Food in the Dining Hall","Gifts you'd like to receive","Guessing someone's age","Heart-racing memories","Hopes for your future","I heard some gossip","I'm counting on you","Likeable allies","Mighty weapons","Monastery rules","Past laughs","Plans for the future","Potential training partners","Relaxing at the Sauna","School days","School uniforms","Someone you look up to","Tell me about yourself","Thanks for everything","The existence of Crests","The ideal professor","The ideal relationship","The last battle","The meaning of nobility","The opera","Things that bother you","Things you find romantic","Working together","You seem different","You seem well","You're doing great work","Your ambitions"],
+   reactions:["Disagree/Laugh/Praise at jack-of-all-trades","Sigh/Chat/Praise at bestowing happiness","Disagree/Blush/Commend at comfortable","Commend/Nod/Chat at nobles/commoners love","Nod/Laugh at playing a game","Sip Tea/Blush at remembering me","Laugh/Commend at riding horses","Chat/Nod at Sword of Creator dull","Blush/Commend/Praise at treating equally"]},
+  {name:"Linhardt",house:"black",teas:["Angelica Tea"],
+   topics:["A dinner invitation","A place you'd like to visit","A word of advice","Books you've read recently","Capable comrades","Cats","Exploring the Monastery","Favorite sweets","Gardening mishaps","Gifts you'd like to receive","I heard some gossip","Monastery mysteries","Our first meeting","Overcoming weaknesses","Past laughs","Plants for the future","Strange fish in the pond","Tell me about yourself","Thanks for everything","The art of napping","The existence of Crests","The Library's collection","The view from the bridge","Things that bother you","Working hours for guards"],
+   reactions:["Praise/Nod at becoming librarian","Chat/Disagree at full of mysteries","Admonish/Chat at Crest's power in blood","Chat about Crests vs. Nurture","Praise/Laugh at keeping up","Commend at studying Crest of Flames","Nod/Commend/Chat at Relics and Crests","Sip Tea/Admonish at waking if I sleep","Praise/Nod at understanding Crestology"]},
+  {name:"Bernadetta",house:"black",teas:["Albinean Berry Blend"],
+   topics:["A place you'd like to visit","A word of advice","Books you've read recently","Cats","Children at the market","Close calls","Cooking mishaps","Cute monks","Exploring the Monastery","Fashion","Favorite sweets","Food in the Dining Hall","Gifts you'd like to receive","I heard some gossip","I'm counting on you","Insectivorous plants","Likeable allies","Our first meeting","Overcoming weaknesses","Past laughs","Perfect recipes","Plans for the future","School days","School uniforms","Shareable snacks","Tell me about yourself","Thanks for everything","The courtyard couple","The ideal relationship","The last battle","The Library's collection","The view from the bridge","Things that bother you","Things you find romantic","You seem different","You seem well","You're doing great work"],
+   reactions:["Chat/Laugh at being recluses","Nod at sewing kit","Nod/Praise at eavesdropping singing","Nod at hiding in greenhouse","Commend/Laugh at mother a genius","Disagree/Admonish/Laugh at room","Laugh/Admonish at more cuteness","Praise/Admonish at spoiling me","Admonish at worried about punishment"]},
+  {name:"Dorothea",house:"black",teas:["Sweet-Apple Blend"],
+   topics:["A dinner invitation","A new gambit","Books you've read recently","Close calls","Cute monks","Dining partners","Dreamy knights","Evaluating allies","Exploring the Monastery","Fashion","First crushes","Gifts you'd like to receive","Heart-racing memories","Hopes for your future","I heard some gossip","I'm counting on you","Likeable allies","Monastery rules","Monastery security","Our first meeting","Past laughs","Plans for the future","Potential training partners","Relaxing at the Sauna","School days","School uniforms","Someone you look up to","Strange fish in the pond","Tell me about yourself","Thanks for everything","The courtyard couple","The ideal relationship","The melody of words","The opera","Things that bother you","Things you find romantic","Working hours for guards","Working together","You seem different","You seem well","You're doing great work"],
+   reactions:["Nod/Praise at feeling better with you","Nod/Chat at stronger affection","Blush at glad to have met you","Blush/Praise at enough money","Commend on nobles pilgrimage","Sigh/Chat at not fan of hymns","Sip Tea/Disagree at no weaknesses","Sip Tea/Laugh/Blush at no judgment","Sip Tea/Chat at vain men's lies"]},
+  {name:"Petra",house:"black",teas:["Four-Spice Tea"],
+   topics:["A dinner invitation","A new gambit","A place you'd like to visit","A strong battalion","A word of advice","Books you've read recently","Capable comrades","Cats","Classes you might enjoy","Close calls","Equipment upkeep","Evaluating allies","Exploring the Monastery","Fashion","Fodlan's future","Gifts you'd like to receive","Guessing someone's age","Heart-racing memories","Hopes for your future","I'm counting on you","Likeable allies","Mighty weapons","Monastery mysteries","Monastery rules","Overcoming weaknesses","Past laughs","Plans for the future","Potential training partners","Relaxing at the Sauna","School days","Shareable snacks","Someone you look up to","Strange fish in the pond","Swimming in the ocean","Tell me about yourself","Thanks for everything","The ideal relationship","The last battle","The Library's collection","The view from the bridge","Things you find romantic","Working hours for guards","Working together","You seem different","You seem well","You're doing great work","Your ambitions"],
+   reactions:["Laugh/Disagree at admiring diligence","Praise/Sigh at hostage in Enbarr","Praise/Sigh at feeling lonely","Sip Tea/Blush at great pleasure speaking","Chat at listening to problems","Chat/Sigh at not knowing homeland","Laugh/Admonish at needing much sleep","Praise/Admonish at studying/training","Nod/Blush at showing you Brigid"]},
+  {name:"Claude",house:"golden",teas:["Almyran Pine Needles","Chamomile","Leicester Cortania"],
+   topics:["A dinner invitation","A new gambit","A place you'd like to visit","A strong battalion","A word of advice","Books you've read recently","Capable comrades","Celebrations","Children at the market","Classes you might enjoy","Close calls","Equipment upkeep","Evaluating allies","Exploring the Monastery","Fodlan's future","Food in the Dining Hall","Gardening mishaps","Gifts you'd like to receive","Guessing someone's age","Hopes for your future","I heard some gossip","I'm counting on you","Likeable allies","Mighty weapons","Monastery mysteries","Monastery security","Our first meeting","Overcoming weaknesses","Past laughs","Perfect recipes","Plans for the future","Reliable allies","School days","Strange fish in the pond","Tell me about yourself","Thanks for everything","The existence of Crests","The ideal professor","The last battle","The Library's collection","Things that bother you","Working together","You seem different","You seem well","Your ambitions"],
+   reactions:["Blush/Laugh/Nod at expressive","Nod/Chat at outsider like me","Disagree at being a mystery","Commend/Laugh at poison mushroom","Sip Tea/Disagree at having time","Laugh/Blush at fascinated by you","Nod/Laugh at hometown someday","Nod at knowing more about you","Praise/Nod at solving mysteries"]},
+  {name:"Hilda",house:"golden",teas:["Southern Fruit Blend","Mint Leaves","Rose Petal Blend"],
+   topics:["A dinner invitation","A place you'd like to visit","Classes you might enjoy","Close calls","Cute accessories","Cute monks","Dining partners","Dreamy knights","Evaluating allies","Fashion","Favorite sweets","First crushes","Food in the Dining Hall","Gardening mishaps","Gifts you'd like to receive","Guessing someone's age","Heart-racing memories","Hopes for your future","I heard some gossip","Likeable allies","Our first meeting","Past laughs","Plans for the future","Relaxing at the Sauna","Reliable allies","School days","School uniforms","Shareable snacks","Tell me about yourself","Thanks for everything","The courtyard couple","The ideal relationship","The opera","Things that bother you","Things you find romantic","You seem different","You seem well","You're doing great work"],
+   reactions:["Laugh/Admonish at easy to talk to","Disagree/Nod at cleaning my room","Laugh/Nod at everyone serious","Blush/Laugh/Nod at trip together","Sip Tea at have you ever cried","Chat/Nod at always safe by your side","Nod/Sip Tea at loving hearing myself talk","Nod/Laugh at mind drifting","Laugh/Praise at wishing to stay and chat"]},
+  {name:"Ignatz",house:"golden",teas:["Lavender Blend"],
+   topics:["A place you'd like to visit","A word of advice","Books you've read recently","Capable comrades","Cats","Children at the market","Classes you might enjoy","Close calls","Equipment upkeep","Evaluating allies","Exploring the Monastery","First crushes","Fodlan's future","Gardening mishaps","Gifts you'd like to receive","Guessing someone's age","I heard some gossip","I'm counting on you","Likeable allies","Mixing pigments","Monastery mysteries","Monastery rules","Our first meeting","Overcoming weaknesses","Past laughs","Plans for the future","School days","Someone you look up to","Strange fish in the pond","Tell me about yourself","Thanks for everything","The courtyard couple","The Library's collection","The opera","The view from the bridge","Things that bother you","Working together","You seem different","You seem well","You're doing great work"],
+   reactions:["Disagree/Sip Tea/Blush at admiring you","Laugh at glad I came","Blush/Praise/Chat at brush/canvas","Nod/Laugh/Praise at letting me do art","Blush/Sip Tea at not minding","Commend/Praise for responsibility","Laugh at learning from you","Nod/Chat at good to have hobby","Nod/Praise for supporting family"]},
+  {name:"Lorenz",house:"golden",teas:["Bergamot"],
+   topics:["A dinner invitation","A new gambit","A word of advice","Capable comrades","Cute monks","Dining partners","Dreamy knights","Evaluating allies","Exploring the Monastery","Fashion","Fodlan's future","Gifts you'd like to receive","Heart-racing memories","Hopes for your future","I'm counting on you","Likeable allies","Monastery rules","Our first meeting","Overcoming weaknesses","Past laughs","Plans for the future","Relaxing at the Sauna","Reliable allies","Roses","School days","School uniforms","Shareable snacks","Someone you look up to","Tell me about yourself","Thanks for everything","The existence of Crests","The ideal professor","The ideal relationship","The opera","Things that bother you","Things you find romantic","Working together","You seem different","You seem well","Your ambitions"],
+   reactions:["Laugh/Blush/Nod at staying longer","Praise/Nod at heartache soothed","Commend/Praise/Chat at making choices","Disagree/Praise at commoner freedom","Laugh/Blush at finding you fascinating","Praise/Disagree/Commend at not equal","Admonish/Sip Tea at not irritating","Praise/Nod at not best all the time","Nod/Sip Tea at roses = elegance/power"]},
+  {name:"Raphael",house:"golden",teas:["Almond Blend"],
+   topics:["A dinner invitation","A strong battalion","A word of advice","Cats","Children at the market","Classes you might enjoy","Close calls","Cooking mishaps","Dining partners","Dreamy knights","Favorite sweets","Food in the Dining Hall","Gardening mishaps","Gifts you'd like to receive","I'm counting on you","Muscle growth","Overcoming weaknesses","Past laughs","Perfect recipes","Plans for the future","Potential training partners","School days","Shareable snacks","Someone you look up to","Strange fish in the pond","Tell me about yourself","Thanks for everything","The last battle","The opera","Things that bother you","You seem well","You're doing great work","Your ambitions"],
+   reactions:["Sigh/Nod at parents still alive","Disagree/Laugh at sleep cures sleep","Sip Tea/Nod at new techniques","Praise/Chat/Nod at not missing lecture","Chat/Laugh at muscles like me","Admonish/Commend/Laugh at snack time","Commend/Laugh at grandpa was strong","Disagree/Blush/Laugh at put some muscle on","Praise/Commend at becoming knight for sis"]},
+  {name:"Leonie",house:"golden",teas:["Four-Spice Blend"],
+   topics:["A dinner invitation","A new gambit","A place you'd like to visit","A strong battalion","A word of advice","Books you've read recently","Capable comrades","Children at the market","Classes you might enjoy","Close calls","Equipment upkeep","Evaluating allies","Exploring the Monastery","Fodlan's future","Food in the Dining Hall","Gifts you'd like to receive","Hopes for your future","I heard some gossip","I'm counting on you","Jeralt","Mighty weapons","Monastery mysteries","Monastery security","Our first meeting","Overcoming weaknesses","Past laughs","Plans for the future","Potential training partners","Reliable allies","School days","Shareable snacks","Someone you look up to","Tell me about yourself","Thanks for everything","The ideal professor","The last battle","The view from the bridge","Things that bother you","Working together","You seem different","You seem well","You're doing great work","Your ambitions"],
+   reactions:["Nod/Laugh at always here for you","Nod/Praise/Sigh at trained alone","Praise/Nod at greatest apprentice","Praise/Commend/Nod at frugal life","Admonish/Commend at not lose to you","Chat/Disagree/Laugh at acting out","Nod/Commend at keeping up training","Praise/Chat/Commend at people talk romance","Nod/Commend at taking what you don't need"]},
+  {name:"Marianne",house:"golden",teas:["Lavender Blend"],
+   topics:["A dinner invitation","A new gambit","A word of advice","Books you've read recently","Cats","Children at the market","Close calls","Exploring the Monastery","Fodlan's future","Forest birds","Gardening mishaps","Hopes for your future","I heard some gossip","Likeable allies","Monastery mysteries","Our first meeting","Overcoming weaknesses","Plans for the future","Relaxing at the Sauna","School days","Strange fish in the pond","Tell me about yourself","Thanks for everything","The existence of Crests","The ideal professor","The last battle","The Library's collection","The view from the bridge","You seem different"],
+   reactions:["Nod/Disagree at more comfortable talking","Laugh/Blush at never leave me","Disagree/Chat/Admonish at misfortune near me","Praise/Chat at not knowing what to say","Praise/Chat at not like I can go home","Admonish/Disagree at boring","Commend/Laugh/Nod at looking forward to living","Disagree at wasting time with me","Sigh/Nod at not good at talking"]},
+  {name:"Lysithea",house:"golden",teas:["Sweet-Apple Blend"],
+   topics:["A dinner invitation","A new gambit","A place you'd like to visit","Books you've read recently","Capable comrades","Cats","Classes you might enjoy","Close calls","Cooking mishaps","Evaluating allies","Fashion","Favorite sweets","Fodlan's future","Food in the Dining Hall","Gifts you'd like to receive","Hopes for your future","I heard some gossip","I'm counting on you","Likeable allies","Monastery mysteries","Monastery rules","Our first meeting","Overcoming weaknesses","Past laughs","Perfect recipes","Plans for the future","Relaxing at the Sauna","School days","School uniforms","Shareable snacks","Someone you look up to","Strange fish in the pond","Tell me about yourself","Thanks for everything","The existence of Crests","The ideal professor","The last battle","The Library's collection","The thrill of sweets","Working together","You seem different","Your ambitions"],
+   reactions:["Nod/Sip Tea/Laugh at incessant thoughts","Chat/Laugh at believing in ghosts","Blush/Laugh at learning from you","Laugh/Nod at pleasure eating sweets","Praise/Chat/Admonish at lightening up","Admonish/Chat at no wasted energy","Disagree/Laugh at wouldn't be me without you","Sigh/Chat/Praise at world peaceful without Crests","Chat/Nod at freedom"]},
+  {name:"Hanneman",house:"church",teas:["Bergamot","Sweet-Apple Blend"],
+   topics:["A dinner invitation","A new gambit","A place you'd like to visit","A word of advice","Books you've read recently","Capable comrades","Cooking mishaps","Equipment upkeep","Evaluating allies","Exploring the Monastery","Fashion","Favorite sweets","Fodlan's future","Food in the Dining Hall","Gifts you'd like to receive","Heart-racing memories","I heard some gossip","I'm counting on you","Likeable allies","Monastery mysteries","Monastery rules","Monastery security","Our first meeting","Overcoming weaknesses","Past laughs","Plans for the future","Relaxing at the Sauna","School days","Shareable snacks","Tell me about yourself","Thanks for everything","The existence of Crests","The ideal professor","The last battle","The Library's collection","Things that bother you","You seem well","You're doing great work","Your research"],
+   reactions:["Disagree/Sip Tea at Ashen Demon title","Nod/Chat at Crest of Flames traits","Commend/Sip Tea at research together","Commend/Praise at leaving noble title","Praise/Sigh at unrelenting study for sister","Laugh/Admonish at can't stop about Crests","Blush/Chat at birth secret","Sip Tea/Admonish/Laugh at favorite food","Praise/Chat/Commend at Library documents"]},
+  {name:"Manuela",house:"church",teas:["Mint Tea"],
+   topics:["A dinner invitation","A strong battalion","A word of advice","Best performance venues","Children at the market","Classes you might enjoy","Close calls","Cooking mishaps","Cute monks","Dining partners","Dreamy knights","Exploring the Monastery","Fashion","Favorite sweets","First crushes","Food in the Dining Hall","Gardening mishaps","Gifts you'd like to receive","Guessing someone's age","Heart-racing memories","Hopes for your future","I heard some gossip","I'm counting on you","Likeable allies","Monastery security","Our first meeting","Overcoming weaknesses","Past laughs","Perfect recipes","Plans for the future","Relaxing at the Sauna","Reliable allies","School days","Shareable snacks","Tell me about yourself","Thanks for everything","The courtyard couple","The ideal professor","The ideal relationship","The opera","Things that bother you","Things you find romantic","Working hours for guards","Working together","You seem well","You're doing great work"],
+   reactions:["Admonish/Disagree at terrible woman","Chat/Disagree at keeping room clean","Sigh/Chat at don't understand you","Praise/Chat at not spending days alone","Sip Tea/Nod at thinking of being songstress","Praise/Laugh at time spent with me","Sip Tea/Admonish at no alcohol here","Sip Tea/Blush at you are so kind","Praise/Disagree at you think I complain"]},
+  {name:"Flayn",house:"church",teas:["Sweet-Apple Blend"],
+   topics:["A dinner invitation","A word of advice","Books you've read recently","Cats","Children at the market","Close calls","Cooking mishaps","Cute monks","Dining partners","Dreamy knights","Favorite sweets","First crushes","Fish and the sea","Fodlan's future","Gardening mishaps","Gifts you'd like to receive","Guessing someone's age","Heart-racing memories","Hopes for your future","I heard some gossip","I'm counting on you","Likeable allies","Our first meeting","Past laughs","Perfect recipes","Plans for the future","Potential training partners","School days","Shareable snacks","Strange fish in the pond","Tell me about yourself","Thanks for everything","The courtyard couple","The ideal professor","The ideal relationship","The Library's collection","The opera","The view from the bridge","Things that bother you","Things you find romantic","Working together","You seem well","You're doing great work"],
+   reactions:["Sip Tea/Laugh at nostalgia when looking at you","Nod at born in Enbarr","Disagree/Nod/Chat at seeing ocean again","Blush/Commend at types of fish","Disagree/Praise at fear of sleeping","Nod at lively places favorite","Nod/Blush/Laugh at stay near me","Nod at taking care of each other","Disagree/Nod at not knowing yourself"]},
+  {name:"Shamir",house:"church",teas:["Crescent-Moon Tea"],
+   topics:["A dinner invitation","A new gambit","A place you'd like to visit","A strong battalion","Capable comrades","Cats","Children at the market","Classes you might enjoy","Close calls","Equipment upkeep","Evaluating allies","Food in the dining hall","Gifts you'd like to receive","Hopes for your future","I heard some gossip","I'm counting on you","Mighty weapons","Monastery security","Overcoming weaknesses","Past laughs","Plans for the future","Potential training partners","Reliable allies","Shareable snacks","Strange fish in the pond","Survival skills","Tell me about yourself","Thanks for everything","The courtyard couple","The ideal relationship","The last battle","The view from the bridge","Working together","You're doing great work","Your ambitions"],
+   reactions:["Disagree/Sip Tea/Blush at interesting look","Sip Tea/Nod at no conversation","Nod/Blush at next battle","Disagree at not much for conversation","Disagree/Sigh at tactless compare","Nod/Chat at Sword of the Creator","Blush/Nod at this room suiting you","Laugh/Commend at fair price","Admonish/Praise/Chat at months to Dagda"]},
+  {name:"Catherine",house:"church",teas:["Leicester Cortania"],
+   topics:["A dinner invitation","A new gambit","A strong battalion","A word of advice","Academy memories","Capable comrades","Classes you might enjoy","Close calls","Cooking mishaps","Equipment upkeep","Evaluating allies","Exploring the Monastery","Food in the Dining Hall","Gardening mishaps","Hopes for your future","I heard some gossip","I'm counting on you","Likeable allies","Mighty weapons","Monastery security","Our first meeting","Past laughs","Potential training partners","School days","Shareable snacks","Someone you look up to","Strange fish in the pond","Tell me about yourself","Thanks for everything","The existence of Crests","The ideal relationship","The last battle","Working hours for guards","Working together","You seem well","You're doing great work","Your ambitions"],
+   reactions:["Nod/Sigh at I'm always watching you","Nod/Laugh at zero desire for Faerghus","Admonish/Sip Tea/Commend at war strategy","Chat/Disagree at not waiting around","Sigh/Sip Tea at I'm not going to hurt you","Nod/Commend/Praise at sparring with relics","Sip Tea/Laugh at train together","Admonish/Sip Tea/Blush at when you're nervous","Sip Tea/Blush/Disagree at Thunder Catherine"]},
+  {name:"Cyril",house:"church",teas:["Almyran Pine Needles"],
+   topics:["A dinner invitation","Cats","Children at the market","Classes you might enjoy","Close calls","Cute monks","Equipment upkeep","Exploring the Monastery","Favorite sweets","Food in the Dining Hall","Gardening mishaps","Gifts you'd like to receive","Guessing someone's age","I heard some gossip","I'm counting on you","Lady Rhea","Likeable allies","Monastery security","Overcoming weaknesses","Perfect recipes","Shareable snacks","Strange fish in the pond","Tell me about yourself","Thanks for everything","The view from the bridge","Things that bother you","Working hours for guards","You're doing great work","You seem different","You seem well","Your ambitions"],
+   reactions:["Nod/Sip Tea at anything about Lady Rhea","Commend/Praise at feels good to be needed","Nod/Laugh at getting sleepy","Disagree/Praise/Commend at no place to go","Commend at best at cleaning","Nod/Sip Tea at Lady Rhea likes you","Laugh/Blush at this gets me excited","Laugh/Nod at thinking you're amazing","Disagree/Praise/Chat at Goddess/Almyrans"]},
+  {name:"Alois",house:"church",teas:["Crescent-Moon Tea"],
+   topics:["A dinner invitation","A new gambit","A place you'd like to visit","A strong battalion","A word of advice","Cats","Children at the market","Close calls","Cooking mishaps","Equipment upkeep","Exploring the Monastery","Favorite sweets","First crushes","Fodlan's future","Food in the Dining Hall","Gardening mishaps","Gifts you'd like to receive","Good jokes","I heard some gossip","I'm counting on you","Mighty weapons","Monastery rules","Monastery security","Our first meeting","Overcoming weaknesses","Past laughs","Perfect recipes","Plans for the future","School days","Shareable snacks","Someone you look up to","Strange fish in the pond","Tell me about yourself","Thanks for everything","The ideal professor","The last battle","The opera","The view from the bridge","Things that bother you","Working hours for guards","Working together","You seem well","You're doing great work","Your ambitions"],
+   reactions:["Laugh/Nod/Commend at big brother Alois","Laugh at ghostly presence in bed","Nod/Praise at going home to wife/daughter","Laugh at ghosts/sailing/spicy foods","Nod/Chat at how are you today","Nod/Praise at if you need anything","Nod/Commend/Disagree at not like Captain Jeralt","Commend at explaining a joke","Laugh/Chat/Praise at go fishing soon"]},
+  {name:"Seteth",house:"church",teas:["Four-Spice Blend"],
+   topics:["A dinner invitation","A new gambit","A strong battalion","A word of advice","Books you've read recently","Capable comrades","Children at the market","Classes you might enjoy","Close calls","Equipment upkeep","Evaluating allies","Exploring the Monastery","Flayn","Fodlan's future","Guessing someone's age","Hopes for your future","I heard some gossip","I'm counting on you","Likeable allies","Mighty weapons","Monastery rules","Monastery security","Our first meeting","Relaxing at the Sauna","Reliable allies","Tell me about yourself","Thanks for everything","The ideal professor","The last battle","The Library's collection","The opera","Things that bother you","Working hours for guards","Working together","You're doing great work","Your ambitions"],
+   reactions:["Nod/Sigh at merely doing my job","Nod at informing me of issues","Blush/Laugh/Nod at is there anything I can do","Blush/Chat at proud to support you","Blush/Laugh/Nod at stiff front","Chat/Nod at more paths open","Sip Tea/Chat at archbishop interested in you","Nod/Chat at very special to us","Nod/Laugh at join me fishing"]},
+  {name:"Gilbert",house:"church",teas:["Almond Blend"],
+   topics:["A new gambit","A place you'd like to visit","A strong battalion","A word of advice","Books you've read recently","Capable comrades","Children at the market","Equipment upkeep","Evaluating allies","Favorite sweets","Fodlan's future","I'm counting on you","Mighty weapons","Monastery rules","Monastery security","Overcoming weaknesses","Perfect recipes","Potential training partners","Reliable allies","Shareable snacks","Someone you look up to","Strange fish in the pond","Thanks for everything","The ideal professor","The last battle","The Library's collection","Wood carving","Working hours for guards","Working together","Your ambitions"],
+   reactions:["Nod at enjoying fishing","Nod at Faerghus proud knights","Disagree/Praise at unforgivable sinner","Nod at mastered things worth mastering","Sigh/Praise at not even goddess brings justice","Laugh/Praise at relaxing not a skill","Nod/Sigh at serving royals for decades","Chat at strength alone not powerful","Nod at walking in the morning"]},
+  {name:"Rhea",house:"church",teas:["Angelica Tea","Chamomile","Crescent-Moon Tea"],
+   topics:["A dinner invitation","A word of advice","Books you've read recently","Children at the market","Close calls","Cooking mishaps","Dreams of a throne","Exploring the monastery","Fodlan's future","Gardening mishaps","Gifts you'd like to receive","Heart-racing memories","Hopes for your future","I heard some gossip","I'm counting on you","Monastery mysteries","Monastery rules","Our first meeting","Overcoming weaknesses","Past laughs","Plans for the future","School days","Someone you look up to","Tell me about yourself","Thanks for everything","The existence of Crests","The ideal relationship","The library's collection","The view from the bridge","Things that bother you","Things you find romantic","Working together","You seem different","You seem well","You're doing great work"],
+   reactions:["Blush at talking as myself","Blush at spreading wings","Nod/Chat at pillar of support","Nod/Chat at sensing great potential","Disagree/Nod at accustomed to monastery","Chat/Disagree/Praise at no friend to trust","Sigh/Praise at Archbishop can be lonely","Chat at truly special","Nod at guiding students"]},
+  {name:"Balthus",house:"wolves",teas:["Almyran Pine Needles","Ginger Tea"],
+   topics:["A dinner invitation","A new gambit","A place you'd like to visit","A strong battalion","A word of advice","Capable comrades","Classes you might enjoy","Close calls","Cooking mishaps","Cute monks","Dining partners","Equipment upkeep","Evaluating allies","Exploring the monastery","First crushes","Food in the dining hall","Gardening mishaps","Hopes for your future","I heard some gossip","I'm counting on you","Likeable allies","Mighty weapons","Mountain folk traditions","Our first meeting","Overcoming weaknesses","Past laughs","Relaxing at the sauna","School days","Shareable snacks","Strange fish in the pond","Tell me about yourself","Thanks for everything","The last battle","The view from the bridge","Things that bother you","Things you find romantic","Working together","You seem well","You're doing great work","Your ambitions"],
+   reactions:[]},
+  {name:"Constance",house:"wolves",teas:["Bergamot","Dagda Fruit Blend"],
+   topics:["A dinner invitation","Books you've read recently","Close calls","Cute monks","Dining partners","Equipment upkeep","Fashion","Favorite sweets","First crushes","Fodlan's future","Heart-racing memories","Hopes for your future","I heard some gossip","I'm counting on you","Likeable allies","Monastery mysteries","Past laughs","Perfect recipes","Plans for the future","School days","School uniforms","Shareable snacks","Tell me about yourself","Thanks for everything","The ideal relationship","The opera","Things you find romantic","Working hours for guards","You seem well","You're doing great work","Your ambitions"],
+   reactions:[]},
+  {name:"Hapi",house:"wolves",teas:["Albinean Berry Blend"],
+   topics:["A dinner invitation","A new gambit","A place you'd like to visit","A strong battalion","A word of advice","Books you've read recently","Children at the market","Close calls","Cooking mishaps","Exploring the Monastery","Favorite sweets","First crushes","Forest birds","Gardening mishaps","Gifts you'd like to receive","Hopes for your future","I heard some gossip","I'm counting on you","Monastery mysteries","Our first meeting","Overcoming weaknesses","Past laughs","Plans for the future","Relaxing at the Sauna","Shareable snacks","Tell me about yourself","Thanks for everything","The ideal relationship","Things that bother you","Working together","You seem different","You seem well","Your ambitions"],
+   reactions:[]},
+  {name:"Yuri",house:"wolves",teas:["Crescent-Moon Tea"],
+   topics:["A dinner invitation","A new gambit","A strong battalion","A word of advice","Books you've read recently","Capable comrades","Close calls","Cute monks","Dining partners","Equipment upkeep","Evaluating allies","Exploring the Monastery","Fashion","Favorite sweets","First crushes","Gardening mishaps","Gifts you'd like to receive","Heart-racing memories","I heard some gossip","I'm counting on you","Likeable allies","Monastery mysteries","Monastery security","Our first meeting","Past laughs","Plans for the future","Potential training partners","Relaxing at the Sauna","Reliable allies","School days","Shareable snacks","Strange fish in the pond","Tell me about yourself","Thanks for everything","The ideal relationship","The last battle","Things that bother you","Working together","You seem different","You seem well","Your ambitions"],
+   reactions:[]},
 ];
 
-const WEAPONS = ['Sword','Lance','Axe','Bow','Brawling','Reason','Faith','Authority'];
+const ALL_CHARS = TEA_DATA.map(c => c.name);
 
-let activeHouse = 'All';
-let searchStr = '';
-let slotCount = 0;
+// ─── STATE ────────────────────────────────────────────────────────────────────
 
-function houseDotClass(house) {
-  return {
-    'Black Eagles': 'dot-black-eagles',
-    'Blue Lions': 'dot-blue-lions',
-    'Golden Deer': 'dot-golden-deer',
-    'Ashen Wolves': 'dot-ashen-wolves',
-    'Church': 'dot-church'
-  }[house] || 'dot-other';
+function loadState() {
+  try { return JSON.parse(localStorage.getItem('fe3h_state') || '{}'); } 
+  catch { return {}; }
+}
+function saveState(s) {
+  localStorage.setItem('fe3h_state', JSON.stringify(s));
 }
 
-/* ── TAB SWITCHING ── */
-function switchTab(tabId) {
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  document.querySelectorAll('.app-section').forEach(s => s.classList.remove('active'));
-  document.getElementById(tabId + 'Tab').classList.add('active');
-  document.querySelector(`button[onclick="switchTab('${tabId}')"]`).classList.add('active');
-}
+let state = loadState();
+if (!state.collectedItems) state.collectedItems = {};
+if (!state.supports) state.supports = {};
+if (!state.bonds) state.bonds = {};
+if (!state.markedTopics) state.markedTopics = {};
+if (!state.notes) state.notes = '';
+if (!state.currentMonth) state.currentMonth = MONTHS[0];
 
-/* ── HOUSE FILTERS ── */
-function renderFilters() {
-  const container = document.getElementById('houseFilters');
-  container.innerHTML = '';
-  HOUSES.forEach(h => {
-    const btn = document.createElement('button');
-    btn.className = 'house-btn' + (activeHouse === h ? ' active' : '');
-    btn.textContent = h;
-    btn.onclick = () => { activeHouse = h; renderFilters(); renderLookup(); };
-    container.appendChild(btn);
+// ─── TABS ─────────────────────────────────────────────────────────────────────
+
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
   });
-}
-
-/* ── LOOKUP GRID ── */
-function renderLookup() {
-  const grid = document.getElementById('lookupGrid');
-  grid.innerHTML = '';
-  const q = searchStr.toLowerCase();
-
-  const filtered = CHARS.filter(c => {
-    if (activeHouse !== 'All' && c.house !== activeHouse) return false;
-    if (!q) return true;
-    return (
-      c.name.toLowerCase().includes(q) ||
-      c.teas.some(t => t.toLowerCase().includes(q)) ||
-      c.gifts.some(g => g.toLowerCase().includes(q)) ||
-      c.topics.some(tp => tp.toLowerCase().includes(q)) ||
-      c.lost.some(l => l.toLowerCase().includes(q))
-    );
-  });
-
-  if (!filtered.length) {
-    grid.innerHTML = '<div class="no-results">No units found matching criteria.</div>';
-    return;
-  }
-
-  filtered.forEach(c => {
-    const card = document.createElement('div');
-    card.className = 'char-card';
-
-    const teasHtml  = c.teas.map(t => `<span class="item-tag tea">${t}</span>`).join('');
-    const giftsHtml = c.gifts.length
-      ? c.gifts.map(g => `<span class="item-tag gift">${g}</span>`).join('')
-      : '<span class="item-tag none">—</span>';
-    const lostHtml  = c.lost.length
-      ? c.lost.map(l => `<span class="item-tag lost">${l}</span>`).join('')
-      : '<span class="item-tag none">—</span>';
-    const topicsHtml = c.topics.map(tp => `<span class="topic-tag">${tp}</span>`).join('');
-    const convosHtml = c.convos.map(co => `
-      <div class="convo-block">
-        <div class="convo-line">"${co.line}"</div>
-        <div class="convo-answer">✓ ${co.answer}</div>
-      </div>`).join('');
-
-    const expandSection = (c.topics.length || c.convos.length) ? `
-      <div class="expand-hint">Tap to see tea topics &amp; conversations ▾</div>
-      <div class="expand-pane">
-        ${c.topics.length ? `
-          <div class="section-label" style="color:var(--gold-light)">Tea Topics</div>
-          <div class="topics-list" style="margin-bottom:0.6rem">${topicsHtml}</div>` : ''}
-        ${c.convos.length ? `
-          <div class="section-label" style="color:var(--gold-light);margin-top:0.5rem">Final Conversations</div>
-          ${convosHtml}` : ''}
-      </div>` : '';
-
-    card.innerHTML = `
-      <div class="card-header">
-        <div class="house-dot ${houseDotClass(c.house)}"></div>
-        <div class="char-name">${c.name}</div>
-        <div class="house-label">${c.house}</div>
-      </div>
-      <div class="card-body">
-        <div class="section-label">Favorite Teas</div>
-        <div class="tag-list" style="margin-bottom:0.5rem">${teasHtml}</div>
-        <div class="section-label">Gifts (+2 Support)</div>
-        <div class="tag-list" style="margin-bottom:0.5rem">${giftsHtml}</div>
-        <div class="section-label">Lost Items</div>
-        <div class="tag-list" style="margin-bottom:0.3rem">${lostHtml}</div>
-        ${expandSection}
-      </div>`;
-
-    card.onclick = () => card.classList.toggle('expanded');
-    grid.appendChild(card);
-  });
-}
-
-/* ── ROSTER PLANNER ── */
-const sortedChars = [...CHARS].sort((a, b) => a.name.localeCompare(b.name));
-
-function charOptions() {
-  return sortedChars.map(c => `<option value="${c.name}">${c.name} (${c.house})</option>`).join('');
-}
-
-function classOptions() {
-  return CLASSES.map(cl => `<option>${cl}</option>`).join('');
-}
-
-function weaponOptions() {
-  return WEAPONS.map(w => `<option>${w}</option>`).join('');
-}
-
-function addRosterSlot() {
-  slotCount++;
-  const grid = document.getElementById('rosterGrid');
-  const slot = document.createElement('div');
-  slot.className = 'roster-slot';
-  slot.id = 'slot-' + slotCount;
-
-  slot.innerHTML = `
-    <div class="slot-header">
-      <div class="slot-title">Slot #${String(slotCount).padStart(2, '0')}</div>
-      <button class="remove-slot-btn" onclick="removeSlot('slot-${slotCount}')" title="Remove slot">✕</button>
-    </div>
-    <div class="row-field">
-      <label>Assigned Unit</label>
-      <select>
-        <option value="">— Unassigned —</option>
-        ${charOptions()}
-      </select>
-    </div>
-    <div class="row-field">
-      <label>Target Class</label>
-      <select>${classOptions()}</select>
-    </div>
-    <div class="row-field">
-      <label>Weapon Focus</label>
-      <select>${weaponOptions()}</select>
-    </div>
-    <div class="row-field">
-      <label>Status</label>
-      <div class="toggle-group">
-        <button class="toggle-btn active" onclick="setStatus(this, 'active')">Deployed</button>
-        <button class="toggle-btn bench" onclick="setStatus(this, 'bench')">Benched</button>
-      </div>
-    </div>`;
-
-  grid.appendChild(slot);
-}
-
-function removeSlot(id) {
-  const el = document.getElementById(id);
-  if (el) el.remove();
-}
-
-function clearRoster() {
-  document.getElementById('rosterGrid').innerHTML = '';
-  slotCount = 0;
-}
-
-function setStatus(btn, _status) {
-  btn.parentElement.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-}
-
-/* ── INIT ── */
-document.getElementById('searchInput').addEventListener('input', e => {
-  searchStr = e.target.value;
-  renderLookup();
 });
 
-renderFilters();
-renderLookup();
-// Start roster with one slot ready
-addRosterSlot();
+// ─── LOST ITEMS ───────────────────────────────────────────────────────────────
+
+function renderMonthPicker() {
+  const picker = document.getElementById('monthPicker');
+  picker.innerHTML = '';
+  MONTHS.forEach(m => {
+    const btn = document.createElement('button');
+    btn.className = 'month-btn' + (m === state.currentMonth ? ' active' : '');
+    btn.textContent = m;
+    btn.onclick = () => {
+      state.currentMonth = m;
+      saveState(state);
+      renderMonthPicker();
+      renderItems();
+    };
+    picker.appendChild(btn);
+  });
+}
+
+function renderItems() {
+  const container = document.getElementById('itemsContainer');
+  const items = LOST_ITEMS[state.currentMonth] || [];
+  
+  const collected = items.filter((it, i) => state.collectedItems[state.currentMonth + '_' + i]).length;
+  const pct = items.length ? Math.round(collected / items.length * 100) : 0;
+  document.getElementById('itemsProgressBar').style.width = pct + '%';
+  document.getElementById('itemsProgressPct').textContent = pct + '%';
+
+  container.innerHTML = `
+    <div class="items-panel">
+      <div class="item-col-header-row">
+        <div class="item-col-header">Item</div>
+        <div class="item-col-header">Location</div>
+        <div class="item-col-header" style="text-align:right">Owner</div>
+      </div>
+      ${items.map((it, i) => {
+        const key = state.currentMonth + '_' + i;
+        const done = !!state.collectedItems[key];
+        return `<div class="item-row${done ? ' collected' : ''}" onclick="toggleItem('${key}')">
+          <div class="item-name"><span class="check-icon"></span>${it.name}</div>
+          <div class="item-location">${it.location}</div>
+          <div class="item-owner">${it.owner}</div>
+        </div>`;
+      }).join('')}
+    </div>`;
+}
+
+function toggleItem(key) {
+  state.collectedItems[key] = !state.collectedItems[key];
+  saveState(state);
+  renderItems();
+}
+
+// ─── TEA TIME ─────────────────────────────────────────────────────────────────
+
+let currentHouseFilter = 'all';
+
+function filterHouse(btn) {
+  document.querySelectorAll('.house-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  currentHouseFilter = btn.dataset.house;
+  renderTeaCards();
+}
+
+function filterTeaChars() { renderTeaCards(); }
+
+function renderTeaCards() {
+  const query = document.getElementById('teaSearch').value.toLowerCase();
+  const container = document.getElementById('teaContainer');
+  const filtered = TEA_DATA.filter(c => {
+    const houseOk = currentHouseFilter === 'all' || c.house === currentHouseFilter;
+    const nameOk = c.name.toLowerCase().includes(query);
+    return houseOk && nameOk;
+  });
+  if (!filtered.length) {
+    container.innerHTML = '<div class="empty-state">No characters found.</div>';
+    return;
+  }
+  container.innerHTML = filtered.map(c => buildTeaCard(c)).join('');
+}
+
+const HOUSE_LABELS = {blue:'Blue Lions',black:'Black Eagles',golden:'Golden Deer',church:'Church',wolves:'Ashen Wolves'};
+
+function buildTeaCard(c) {
+  const bondKey = 'bond_' + c.name;
+  const bondLevel = state.bonds[bondKey] || 0;
+  const dots = [0,1].map(i => `<div class="bond-dot${bondLevel > i ? ' filled' : ''}" onclick="event.stopPropagation();setBond('${c.name}',${i+1})"></div>`).join('');
+  const topics = c.topics.map(t => {
+    const tKey = `topic_${c.name}_${t}`;
+    const marked = state.markedTopics[tKey];
+    return `<span class="topic-chip${marked ? ' marked' : ''}" onclick="event.stopPropagation();toggleTopic('${c.name}','${t.replace(/'/g,"\\'")}');this.classList.toggle('marked')">${t}</span>`;
+  }).join('');
+  const teas = c.teas.map(t => `<span class="tea-name">${t}</span>`).join('');
+  const reactions = c.reactions.length ? c.reactions.map(r => `<div class="reaction-row">⚜ ${r}</div>`).join('') : '<div style="color:var(--ink-muted);font-style:italic;font-size:0.75rem">No reactions documented yet.</div>';
+  return `<div class="char-card" id="card_${c.name}">
+    <div class="char-card-header" onclick="toggleCard('${c.name}')">
+      <div style="display:flex;align-items:center">
+        <span class="char-name">${c.name}</span>
+        <span class="char-house-badge badge-${c.house}">${HOUSE_LABELS[c.house]}</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <span class="tea-fav">☕ ${c.teas[0]}</span>
+        <span class="expand-arrow">▾</span>
+      </div>
+    </div>
+    <div class="char-card-body">
+      <div class="tea-label">FAVORITE TEA</div>
+      ${teas}
+      <div class="tea-label" style="margin-top:10px">CONVERSATION TOPICS</div>
+      <div class="topics-grid">${topics}</div>
+      <div class="tea-label" style="margin-top:10px">FINAL REACTIONS</div>
+      <div class="reactions-grid">${reactions}</div>
+      <div class="bond-tracker">
+        <span class="bond-label">PERFECT TEA DONE</span>
+        <div class="bond-dots">${dots}</div>
+        <span style="font-size:0.7rem;color:var(--ink-muted);margin-left:4px">${bondLevel}/2</span>
+      </div>
+    </div>
+  </div>`;
+}
+
+function toggleCard(name) {
+  document.getElementById('card_' + name).classList.toggle('open');
+}
+
+function toggleTopic(charName, topic) {
+  const k = `topic_${charName}_${topic}`;
+  state.markedTopics[k] = !state.markedTopics[k];
+  saveState(state);
+}
+
+function setBond(charName, val) {
+  const k = 'bond_' + charName;
+  state.bonds[k] = state.bonds[k] === val ? val - 1 : val;
+  saveState(state);
+  const card = document.getElementById('card_' + charName);
+  const dots = card.querySelectorAll('.bond-dot');
+  const level = state.bonds[k];
+  dots.forEach((d, i) => d.classList.toggle('filled', i < level));
+  card.querySelector('.bond-tracker span:last-child').textContent = level + '/2';
+}
+
+// ─── SUPPORTS ─────────────────────────────────────────────────────────────────
+
+const SUPPORT_LEVELS = ['C','B','A','S'];
+
+function renderSupports() {
+  const table = document.getElementById('supportTable');
+  table.innerHTML = ALL_CHARS.map(name => {
+    const current = state.supports[name] || '';
+    const btns = SUPPORT_LEVELS.map(lvl => 
+      `<button class="support-lvl${current === lvl ? ' active-' + lvl : ''}" onclick="setSupport('${name}','${lvl}')">${lvl}</button>`
+    ).join('');
+    return `<div class="support-row">
+      <span class="support-char-name">${name}</span>
+      <div class="support-level-btns">${btns}</div>
+    </div>`;
+  }).join('');
+}
+
+function setSupport(name, lvl) {
+  state.supports[name] = state.supports[name] === lvl ? '' : lvl;
+  saveState(state);
+  renderSupports();
+}
+
+// ─── NOTES ───────────────────────────────────────────────────────────────────
+
+function saveNotes() {
+  state.notes = document.getElementById('notesField').value;
+  saveState(state);
+}
+
+// ─── RESET ───────────────────────────────────────────────────────────────────
+
+function clearAllData() {
+  if (!confirm('Reset ALL progress? This cannot be undone.')) return;
+  localStorage.removeItem('fe3h_state');
+  state = {collectedItems:{},supports:{},bonds:{},markedTopics:{},notes:'',currentMonth:MONTHS[0]};
+  init();
+  showToast('Progress reset.');
+}
+
+// ─── TOAST ───────────────────────────────────────────────────────────────────
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+
+function init() {
+  renderMonthPicker();
+  renderItems();
+  renderTeaCards();
+  renderSupports();
+  document.getElementById('notesField').value = state.notes || '';
+}
+
+init();
 </script>
 </body>
 </html>
