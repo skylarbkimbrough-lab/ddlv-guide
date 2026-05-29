@@ -606,6 +606,120 @@
     transition: all 0.2s;
   }
   .reset-btn:hover { color: var(--red-soft); border-color: var(--red-soft); }
+
+  /* ROSTER */
+  .roster-add-btn {
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    color: var(--gold);
+    background: rgba(201,168,76,0.08);
+    border: 1px dashed rgba(201,168,76,0.4);
+    padding: 10px 28px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+    width: 100%;
+  }
+  .roster-add-btn:hover { background: rgba(201,168,76,0.15); border-color: var(--gold); }
+  .roster-add-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+  .roster-card {
+    background: #1a1208;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+  .roster-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .roster-card-header:hover { background: rgba(201,168,76,0.04); }
+  .roster-slot-num {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    color: var(--gold);
+    opacity: 0.6;
+    margin-right: 8px;
+    min-width: 20px;
+  }
+  .roster-char-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    color: var(--gold-pale);
+    flex: 1;
+  }
+  .roster-char-label.empty { color: var(--ink-muted); font-style: italic; }
+  .roster-remove-btn {
+    background: none;
+    border: none;
+    color: var(--ink-muted);
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 0 4px;
+    line-height: 1;
+    transition: color 0.15s;
+  }
+  .roster-remove-btn:hover { color: var(--red-soft); }
+
+  .roster-card-body {
+    display: none;
+    padding: 0 14px 14px;
+    border-top: 1px solid rgba(201,168,76,0.1);
+  }
+  .roster-card.open .roster-card-body { display: block; }
+  .roster-expand { color: var(--gold); font-size: 0.7rem; transition: transform 0.2s; margin-left: 8px; }
+  .roster-card.open .roster-expand { transform: rotate(180deg); }
+
+  .roster-field-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    color: var(--gold);
+    opacity: 0.8;
+    margin: 10px 0 5px;
+  }
+  .roster-select, .roster-textarea {
+    width: 100%;
+    background: #0e0b06;
+    border: 1px solid rgba(201,168,76,0.2);
+    color: var(--parchment);
+    font-family: 'Crimson Pro', serif;
+    font-size: 0.88rem;
+    padding: 7px 10px;
+    border-radius: 3px;
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+    transition: border-color 0.15s;
+  }
+  .roster-select:focus, .roster-textarea:focus { border-color: var(--gold); }
+  .roster-select option { background: #1a1208; color: var(--parchment); }
+  .roster-textarea { resize: vertical; min-height: 60px; line-height: 1.6; }
+  .roster-select-wrap {
+    position: relative;
+  }
+  .roster-select-wrap::after {
+    content: '▾';
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gold);
+    font-size: 0.8rem;
+    pointer-events: none;
+  }
+  .roster-two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
 </style>
 </head>
 <body>
@@ -621,6 +735,7 @@
   <button class="tab-btn" data-tab="tea-time">Tea Time</button>
   <button class="tab-btn" data-tab="supports">Supports</button>
   <button class="tab-btn" data-tab="notes">Notes</button>
+  <button class="tab-btn" data-tab="roster">Roster</button>
 </nav>
 
 <main class="main-content">
@@ -669,6 +784,19 @@
     </div>
     <div style="margin-top:12px; display:flex; justify-content:flex-end;">
       <button class="reset-btn" onclick="clearAllData()">Reset All Progress</button>
+    </div>
+  </div>
+
+  <!-- ROSTER TAB -->
+  <div class="tab-panel" id="tab-roster">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
+      <div class="section-title" style="margin:0;flex:1">Battle Roster</div>
+      <span id="rosterCount" style="font-family:'Cinzel',serif;font-size:0.65rem;color:var(--ink-muted);margin-left:12px">0/12</span>
+    </div>
+    <p style="font-size:0.75rem;color:var(--ink-muted);font-style:italic;margin-bottom:14px">Plan your team of up to 12 units.</p>
+    <div id="rosterSlots"></div>
+    <div id="rosterAddRow" style="margin-top:10px;text-align:center">
+      <button class="roster-add-btn" onclick="addRosterSlot()">＋ Add Unit</button>
     </div>
   </div>
 
@@ -1139,7 +1267,7 @@ function saveNotes() {
 function clearAllData() {
   if (!confirm('Reset ALL progress? This cannot be undone.')) return;
   localStorage.removeItem('fe3h_state');
-  state = {collectedItems:{},supports:{},bonds:{},markedTopics:{},notes:'',currentMonth:MONTHS[0]};
+  state = {collectedItems:{},supports:{},bonds:{},markedTopics:{},roster:[],notes:'',currentMonth:MONTHS[0]};
   init();
   showToast('Progress reset.');
 }
@@ -1160,7 +1288,159 @@ function init() {
   renderItems();
   renderTeaCards();
   renderSupports();
+  if (!state.roster) state.roster = [];
+  renderRoster();
   document.getElementById('notesField').value = state.notes || '';
+}
+
+// ─── ROSTER ──────────────────────────────────────────────────────────────────
+
+const CLASSES = {
+  "Beginner & Intermediate": [
+    "Myrmidon","Soldier","Fighter","Monk","Ruffian","Lord (Judith)","Pegasus Knight",
+    "Lord","Mercenary","Thief","Armored Knight","Cavalier","Brigand","Archer",
+    "Brawler","Mage","Dark Mage","Priest","Thief (Prologue)"
+  ],
+  "Advanced": [
+    "Paladin","Pegasus Knight (enemy)","Wyvern Rider","Warrior","Sniper","Grappler",
+    "Warlock","Dark Bishop","Bishop","Hero","Swordmaster","Assassin","Fortress Knight"
+  ],
+  "Master": [
+    "Falcon Knight","Wyvern Lord","Mortal Savant","Great Knight","Bow Knight",
+    "Dark Knight","Holy Knight","War Master","Gremory"
+  ],
+  "Unique & Special": [
+    "Noble","Commoner","Barbarossa","Emperor","Agastya","Enlightened One","Dancer",
+    "Great Lord","King of Liberation","Saint","Flame Emperor","Flame Emperor (duplicate)",
+    "Archbishop","Armored Lord","High Lord","Wyvern Master","Death Knight (non-playable)",
+    "Death Knight (playable)","Trickster","War Monk / War Cleric","Dark Flier","Valkyrie"
+  ]
+};
+
+function buildClassOptions(selected) {
+  let html = '<option value="">— Select Class —</option>';
+  for (const [group, classes] of Object.entries(CLASSES)) {
+    html += `<optgroup label="${group}">`;
+    for (const cls of classes) {
+      html += `<option value="${cls}"${selected===cls?' selected':''}>${cls}</option>`;
+    }
+    html += '</optgroup>';
+  }
+  return html;
+}
+
+function buildCharOptions(selected) {
+  let html = '<option value="">— Select Character —</option>';
+  // Byleth first, then alphabetical
+  const chars = ['Byleth', ...ALL_CHARS.filter(c => c !== 'Byleth').sort()];
+  for (const c of chars) {
+    html += `<option value="${c}"${selected===c?' selected':''}>${c}</option>`;
+  }
+  return html;
+}
+
+function buildAdjutantOptions(selected) {
+  let html = '<option value="">— None —</option>';
+  const chars = ['Byleth', ...ALL_CHARS.filter(c => c !== 'Byleth').sort()];
+  for (const c of chars) {
+    html += `<option value="${c}"${selected===c?' selected':''}>${c}</option>`;
+  }
+  return html;
+}
+
+function renderRoster() {
+  const slots = state.roster || [];
+  const container = document.getElementById('rosterSlots');
+  const addBtn = document.querySelector('.roster-add-btn');
+  document.getElementById('rosterCount').textContent = `${slots.length}/12`;
+  if (addBtn) addBtn.disabled = slots.length >= 12;
+
+  container.innerHTML = slots.map((slot, i) => {
+    const label = slot.char || `Unit ${i+1}`;
+    const isOpen = slot.open || false;
+    return `<div class="roster-card${isOpen?' open':''}" id="rslot_${i}">
+      <div class="roster-card-header" onclick="toggleRosterCard(${i})">
+        <span class="roster-slot-num">${i+1}.</span>
+        <span class="roster-char-label${slot.char?'':' empty'}">${label}</span>
+        ${slot.currentClass ? `<span style="font-size:0.7rem;color:var(--ink-muted);font-style:italic;margin:0 8px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100px">${slot.currentClass}</span>` : ''}
+        <span class="roster-expand">▾</span>
+        <button class="roster-remove-btn" onclick="event.stopPropagation();removeRosterSlot(${i})" title="Remove">✕</button>
+      </div>
+      <div class="roster-card-body">
+        <div class="roster-field-label">CHARACTER</div>
+        <div class="roster-select-wrap">
+          <select class="roster-select" onchange="updateRosterField(${i},'char',this.value)">
+            ${buildCharOptions(slot.char)}
+          </select>
+        </div>
+
+        <div class="roster-two-col">
+          <div>
+            <div class="roster-field-label">CURRENT CLASS</div>
+            <div class="roster-select-wrap">
+              <select class="roster-select" onchange="updateRosterField(${i},'currentClass',this.value)">
+                ${buildClassOptions(slot.currentClass)}
+              </select>
+            </div>
+          </div>
+          <div>
+            <div class="roster-field-label">TARGET CLASS</div>
+            <div class="roster-select-wrap">
+              <select class="roster-select" onchange="updateRosterField(${i},'targetClass',this.value)">
+                ${buildClassOptions(slot.targetClass)}
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="roster-field-label">ADJUTANT</div>
+        <div class="roster-select-wrap">
+          <select class="roster-select" onchange="updateRosterField(${i},'adjutant',this.value)">
+            ${buildAdjutantOptions(slot.adjutant)}
+          </select>
+        </div>
+
+        <div class="roster-field-label">NOTES</div>
+        <textarea class="roster-textarea" placeholder="Skills to learn, battalions to equip, notes…" oninput="updateRosterField(${i},'notes',this.value)">${slot.notes||''}</textarea>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function addRosterSlot() {
+  if (!state.roster) state.roster = [];
+  if (state.roster.length >= 12) return;
+  state.roster.push({char:'',currentClass:'',targetClass:'',adjutant:'',notes:'',open:true});
+  saveState(state);
+  renderRoster();
+}
+
+function removeRosterSlot(i) {
+  state.roster.splice(i, 1);
+  saveState(state);
+  renderRoster();
+}
+
+function toggleRosterCard(i) {
+  state.roster[i].open = !state.roster[i].open;
+  saveState(state);
+  renderRoster();
+}
+
+function updateRosterField(i, field, value) {
+  state.roster[i][field] = value;
+  saveState(state);
+  // just update the header label without full re-render to avoid losing focus
+  const card = document.getElementById('rslot_' + i);
+  if (!card) return;
+  const label = card.querySelector('.roster-char-label');
+  if (label) {
+    label.textContent = state.roster[i].char || `Unit ${i+1}`;
+    label.classList.toggle('empty', !state.roster[i].char);
+  }
+  const classSpan = card.querySelector('.roster-card-header span[style]');
+  // update count
+  document.getElementById('rosterCount').textContent = `${state.roster.length}/12`;
 }
 
 init();
